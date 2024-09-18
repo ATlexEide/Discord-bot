@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import { SlashCommandBuilder } from 'discord.js';
 import { Client, GatewayIntentBits, Guild, messageLink } from 'discord.js';
+import('./commands/utility/test.cjs')
 
 const client = new Client({
     intents: [
@@ -14,7 +15,8 @@ const client = new Client({
 });
 client.login(process.env.DISCORD_TOKEN)
 client.on("messageCreate", async (message) => {
-    if (!message?.author.bot) {
+    if (!message.author.bot) {
+        console.log(message.channel.roles)
         if (message.content === '!btn')
             message.channel.send({
                 'content': 'test',
@@ -24,20 +26,16 @@ client.on("messageCreate", async (message) => {
                         'components': [
                             {
                                 'type': 2,
-                                'label': 'test btn',
-                                'style': 1,
-                                'custom_id': 'test_button',
+                                'style': 5,
+                                'label': 'Link',
+                                'url': 'https://www.google.com',
                             }, {
                                 'type': 2,
                                 'label': 'test btn2',
-                                'style': 2,
+                                'style': 1,
+                                'disabled': true,
                                 'custom_id': 'test_button2',
-                            }, {
-                                'type': 2,
-                                'label': 'test btn3',
-                                'style': 3,
-                                'custom_id': 'test_button3',
-                            }
+                            },
                         ],
                     }
                 ],
@@ -48,12 +46,3 @@ client.on("messageCreate", async (message) => {
         };
     };
 })
-
-
-const data = new SlashCommandBuilder()
-    .setName('echo')
-    .setName('echo')
-    .setDescription('Replies with your input!')
-    .addStringOption(option =>
-        option.setName('input')
-            .setDescription('The input to echo back'));
