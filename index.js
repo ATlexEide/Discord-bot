@@ -16,7 +16,9 @@ const client = new Client({
 client.login(process.env.DISCORD_TOKEN)
 client.on("messageCreate", async (message) => {
     if (!message.author.bot) {
+        // Log info to console – Used for testing
         console.log(message.channel.roles)
+        // Buttons for testing
         if (message.content === '!btn')
             message.channel.send({
                 'content': 'test',
@@ -40,6 +42,7 @@ client.on("messageCreate", async (message) => {
                     }
                 ],
             })
+            // Message reply for testing
         if (message.content === 'radio check') {
             message.react('🫡');
             message.reply('lima charlie')
