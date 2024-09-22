@@ -1,2 +1,2 @@
 # discordbot
-figuring out how to make a discord bot
+Figuring out how to make a discord bot
