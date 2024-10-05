@@ -45,6 +45,9 @@ client.on('interactionCreate', async interaction => {
 
   const currCmd = commands.find(command => command.name === interaction.commandName)
     if (currCmd) {
-      currCmd.response(interaction)
+      console.log(interaction.user)
+      console.log(`Current command: ${JSON.stringify(currCmd)}`);
+      console.log(`Current interaction: ${interaction}`);
+      currCmd.response(interaction);
   }
 });
