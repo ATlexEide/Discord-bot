@@ -18,4 +18,9 @@ export const commands = [
       await interaction.reply(`It is now ${date}`)
     },
   },
+  { 
+    name: 'oppai',
+    description: 'Cave...',
+    response: async (interaction) => await interaction.reply(`:regional_indicator_b: :a: :regional_indicator_n: `),
+  },
 ];
