@@ -1,8 +1,9 @@
 import dotenv from 'dotenv'
 dotenv.config()
+import { REST, Routes } from 'discord.js';
 import { SlashCommandBuilder } from 'discord.js';
 import { Client, GatewayIntentBits, Guild, messageLink } from 'discord.js';
-import('./commands/utility/test.cjs')
+import {commands} from './commands.js';
 
 const client = new Client({
     intents: [
@@ -14,38 +15,36 @@ const client = new Client({
     ],
 });
 client.login(process.env.DISCORD_TOKEN)
-client.on("messageCreate", async (message) => {
-    if (!message.author.bot) {
-        // Log info to console – Used for testing
-        console.log(message.channel.roles)
-        // Buttons for testing
-        if (message.content === '!btn')
-            message.channel.send({
-                'content': 'test',
-                'components': [
-                    {
-                        'type': 1,
-                        'components': [
-                            {
-                                'type': 2,
-                                'style': 5,
-                                'label': 'Link',
-                                'url': 'https://www.google.com',
-                            }, {
-                                'type': 2,
-                                'label': 'test btn2',
-                                'style': 1,
-                                'disabled': true,
-                                'custom_id': 'test_button2',
-                            },
-                        ],
-                    }
-                ],
-            })
-            // Message reply for testing
-        if (message.content === 'radio check') {
-            message.react('🫡');
-            message.reply('lima charlie')
-        };
-    };
-})
+
+
+
+const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+
+
+try {
+  console.log('Started refreshing application (/) commands.');
+
+  await rest.put(Routes.applicationCommands("1248660696535924858"),{ body: commands });
+
+  console.log('Successfully reloaded application (/) commands.');
+  console.log(commands)
+} catch (error) {
+  console.error(error);
+}
+
+
+
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+});
+
+client.on('interactionCreate', async interaction => {
+  // console.log(interaction)
+  // console.log(interaction.commandName)
+  if (!interaction.isChatInputCommand()) return;
+
+  const currCmd = commands.find(command => command.name === interaction.commandName)
+    if (currCmd) {
+      currCmd.response(interaction)
+  }
+});
