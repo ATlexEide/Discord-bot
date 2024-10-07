@@ -23,16 +23,6 @@ client.on('ready', () => {
 
 client.on('interactionCreate', async interaction => {
   console.log(`Interaction: ${interaction}`)
-  if(interaction.isStringSelectMenu()){
-    if(interaction.customId === 'projects'){
-      console.clear()
-      const currProj = projects.find(obj => obj.id === interaction.values[0])
-      console.log(currProj)
-        interaction.reply({content: `> ## Project: ${currProj.projectName}\n> ${currProj.projectDesc}`,components:[ await createProjectButtons(currProj)]})
-      
-    }
-  }
-
   if (interaction.isChatInputCommand())
   {
     const currCmd = commands.find(command => command.name === interaction.commandName)
@@ -42,5 +32,8 @@ client.on('interactionCreate', async interaction => {
       console.log(`Current interaction: ${interaction}`);
       currCmd.response(interaction);
     }
+  }
+  if(interaction.isStringSelectMenu()){
+    commands.find(command => command.name === interaction.customId).reply(interaction)
   }
   });

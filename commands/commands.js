@@ -1,6 +1,7 @@
 
 import { SlashCommandBuilder } from "discord.js";
-import { testaction } from "../actionRows/testrow.js";
+import { testaction, createProjectButtons } from "../actionRows/testrow.js";
+import { projects } from "../projects/projects.js";
 
 export const commands = [
  {
@@ -38,5 +39,11 @@ export const commands = [
       const selectResponse = interaction.replied
       console.log(selectResponse)
       },
+      reply:async(interaction)=>{
+        console.log(String(interaction.values))
+        const currProj = projects.find(obj => obj.id === String(interaction.values))
+        console.log(currProj)
+        interaction.reply({content: `> ## Project: ${currProj.projectName}\n> ${currProj.projectDesc}`,components:[ await createProjectButtons(currProj)]})
+      }
   },
 ];
