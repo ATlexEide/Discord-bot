@@ -40,12 +40,9 @@ export const commands = [
       console.log(selectResponse)
       },
       reply:async(interaction,message)=>{
-        console.log(String(interaction.values))
         const currProj = projects.find(obj => obj.id === String(interaction.values))
-        console.log(currProj)
-        console.log("MESSAGE:")
         message.message.delete()
-        interaction.channel.send({content: `> ## Project: ${currProj.projectName}\n> ${currProj.projectDesc}`,components:[ await createProjectButtons(currProj)]})
+        interaction.channel.send({content: `> ## ${currProj.projectName}\n> ${currProj.projectDesc}`,components:[ await createProjectButtons(currProj)]})
       }
   },
 ];

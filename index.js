@@ -37,4 +37,7 @@ client.on('interactionCreate', async interaction => {
   if(interaction.isStringSelectMenu()){
     commands.find(command => command.name === interaction.customId).reply(interaction,message)
   }
+  if(interaction.customId === "remove-proj-message"){
+    interaction.message.delete()
+  }
   });
