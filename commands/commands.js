@@ -1,4 +1,7 @@
 
+import { SlashCommandBuilder } from "discord.js";
+import { myActionRow } from "../actionRows/testrow.js";
+
 export const commands = [
  {
     name: 'ping',
@@ -24,6 +27,13 @@ export const commands = [
     response: (interaction) =>{
         interaction.reply(`:regional_indicator_b: :a: :regional_indicator_n: `)
         interaction.user.send(':regional_indicator_b: :a: :regional_indicator_n:')
+      },
+  },
+  { 
+    name: 'menu',
+    description: 'Test menu',
+    response: (interaction) =>{
+      interaction.reply({components: [myActionRow]});
       },
   },
 ];
