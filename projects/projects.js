@@ -20,28 +20,31 @@ export const projects = [
   {
     id: "weather-app",
     projectName: "Weather App",
-    projectDesc: "none",
+    projectDesc:
+      "A project made to practice working with APIs (and dom manipulation; see index.html)",
     repoURL: "https://github.com/ATlexEide/weather-app",
     previewURL: "https://atlexeide.github.io/weather-app/dist/index.html",
   },
   {
     id: "todo-list",
     projectName: "Todo List",
-    projectDesc: "none",
+    projectDesc: "To do list! Made to practice using NPM and JSON",
     repoURL: "https://github.com/ATlexEide/todolist",
     previewURL: "https://atlexeide.github.io/todolist/dist/",
   },
   {
     id: "book-library",
     projectName: "Book Library",
-    projectDesc: "none",
+    projectDesc:
+      "A library project to practice and play around with objects and prototypes",
     repoURL: "https://github.com/ATlexEide/book-library",
     previewURL: "https://atlexeide.github.io/book-library/",
   },
   {
     id: "tic-tac-toe",
     projectName: "Tic Tac Toe",
-    projectDesc: "none",
+    projectDesc:
+      "Tic tac toe! Made to practice using private variables and functions",
     repoURL: "https://github.com/ATlexEide/TicTacToe",
     previewURL: "https://atlexeide.github.io/TicTacToe/",
   },
