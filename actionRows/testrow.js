@@ -1,22 +1,22 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Component, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
+import { projects } from "../projects/projects.js";
 
 export async function createProjectButtons(proj){
-    let cont;
+    let response;
     const repoButton = new ButtonBuilder()
-    .setURL(proj.repoURL)
+    .setStyle(ButtonStyle.Link)
     .setLabel(`Repo`)
-    .setStyle(ButtonStyle.Link)
-if(proj.previewURL !== ""){
-    const previewLinkButton = new ButtonBuilder()
-    .setURL(proj.previewURL)
-    .setLabel(`Live Preview`)
-    .setStyle(ButtonStyle.Link)
-    cont = new ActionRowBuilder().addComponents([repoButton,previewLinkButton])
-    return cont;
-}
-
-    cont = new ActionRowBuilder().addComponents([repoButton])
-    return cont;
+    .setURL(proj.repoURL);
+    if(proj.previewURL !== ""){
+        const previewLinkButton = new ButtonBuilder()
+        .setStyle(ButtonStyle.Link)
+        .setLabel(`Live Preview`)
+        .setURL(proj.previewURL)
+        response = new ActionRowBuilder().addComponents([repoButton,previewLinkButton])
+        return response;
+    }
+    response = new ActionRowBuilder().addComponents([repoButton])
+    return response
 }
 
 
@@ -25,18 +25,11 @@ if(proj.previewURL !== ""){
 const select = new StringSelectMenuBuilder()
 .setCustomId('projects')
 .setPlaceholder('Project list')
-.addOptions(
-    new StringSelectMenuOptionBuilder()
-    .setLabel('Discord bot')
-    .setDescription('This bot, figuring out how discord works')
-    .setValue('discord-bot'),
-    new StringSelectMenuOptionBuilder()
-    .setLabel('Weather App')
-    .setDescription('Lorem')
-    .setValue('weather-app'),
-    new StringSelectMenuOptionBuilder()
-    .setLabel('Todo List')
-    .setDescription('ipsum')
-    .setValue('todo-list')
-)
+projects.forEach((project) =>{
+        console.log(project)
+        select.addOptions(new StringSelectMenuOptionBuilder()
+        .setLabel(project.projectName)
+        .setValue(project.id)
+        .setDescription(project.projectDesc)
+    )})
 export const testaction = new ActionRowBuilder().addComponents([select])

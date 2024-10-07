@@ -22,22 +22,19 @@ client.on('ready', () => {
 });
 
 client.on('interactionCreate', async interaction => {
-  // console.log(interaction)
-  // console.log(interaction.commandName)
+  console.log(`Interaction: ${interaction}`)
   if(interaction.isStringSelectMenu()){
     if(interaction.customId === 'projects'){
-      let choice;
-      await interaction.values
       console.clear()
       const currProj = projects.find(obj => obj.id === interaction.values[0])
       console.log(currProj)
-        interaction.reply({content: `> ## Project: ${currProj.projectName}\n> Desc: ${currProj.projectDesc}`,components:[ await createProjectButtons(currProj)]})
+        interaction.reply({content: `> ## Project: ${currProj.projectName}\n> ${currProj.projectDesc}`,components:[ await createProjectButtons(currProj)]})
       
     }
   }
 
-  if (!interaction.isChatInputCommand()){return;}
-  else{
+  if (interaction.isChatInputCommand())
+  {
     const currCmd = commands.find(command => command.name === interaction.commandName)
     if (currCmd) {
       console.log(interaction.user)
