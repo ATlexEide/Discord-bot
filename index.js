@@ -22,6 +22,7 @@ client.on('ready', () => {
 });
 
 client.on('interactionCreate', async interaction => {
+  const message = interaction
   console.log(`Interaction: ${interaction}`)
   if (interaction.isChatInputCommand())
   {
@@ -34,6 +35,6 @@ client.on('interactionCreate', async interaction => {
     }
   }
   if(interaction.isStringSelectMenu()){
-    commands.find(command => command.name === interaction.customId).reply(interaction)
+    commands.find(command => command.name === interaction.customId).reply(interaction,message)
   }
   });

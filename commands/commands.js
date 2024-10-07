@@ -39,11 +39,13 @@ export const commands = [
       const selectResponse = interaction.replied
       console.log(selectResponse)
       },
-      reply:async(interaction)=>{
+      reply:async(interaction,message)=>{
         console.log(String(interaction.values))
         const currProj = projects.find(obj => obj.id === String(interaction.values))
         console.log(currProj)
-        interaction.reply({content: `> ## Project: ${currProj.projectName}\n> ${currProj.projectDesc}`,components:[ await createProjectButtons(currProj)]})
+        console.log("MESSAGE:")
+        message.message.delete()
+        interaction.channel.send({content: `> ## Project: ${currProj.projectName}\n> ${currProj.projectDesc}`,components:[ await createProjectButtons(currProj)]})
       }
   },
 ];
