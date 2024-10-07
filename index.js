@@ -3,6 +3,8 @@ dotenv.config()
 import { SlashCommandBuilder } from 'discord.js';
 import { Client, GatewayIntentBits, Guild, messageLink } from 'discord.js';
 import {commands} from './commands/commands.js';
+import { createProjectButtons } from './actionRows/testrow.js';
+import { projects } from './projects/projects.js';
 
 const client = new Client({
     intents: [
@@ -22,13 +24,26 @@ client.on('ready', () => {
 client.on('interactionCreate', async interaction => {
   // console.log(interaction)
   // console.log(interaction.commandName)
-  if (!interaction.isChatInputCommand()) return;
+  if(interaction.isStringSelectMenu()){
+    if(interaction.customId === 'projects'){
+      let choice;
+      await interaction.values
+      console.clear()
+      const currProj = projects.find(obj => obj.id === interaction.values[0])
+      console.log(currProj)
+        interaction.reply({content: `> ## Project: ${currProj.projectName}\n> Desc: ${currProj.projectDesc}`,components:[ await createProjectButtons(currProj)]})
+      
+    }
+  }
 
-  const currCmd = commands.find(command => command.name === interaction.commandName)
+  if (!interaction.isChatInputCommand()){return;}
+  else{
+    const currCmd = commands.find(command => command.name === interaction.commandName)
     if (currCmd) {
       console.log(interaction.user)
       console.log(`Current command: ${JSON.stringify(currCmd)}`);
       console.log(`Current interaction: ${interaction}`);
       currCmd.response(interaction);
+    }
   }
-});
+  });

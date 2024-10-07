@@ -1,6 +1,6 @@
 
 import { SlashCommandBuilder } from "discord.js";
-import { myActionRow } from "../actionRows/testrow.js";
+import { testaction } from "../actionRows/testrow.js";
 
 export const commands = [
  {
@@ -30,10 +30,13 @@ export const commands = [
       },
   },
   { 
-    name: 'menu',
+    name: 'projects',
     description: 'Test menu',
-    response: (interaction) =>{
-      interaction.reply({components: [myActionRow]});
+    response: async (interaction) =>{
+      interaction.reply({components: [testaction]})
+      console.log(interaction)
+      const selectResponse = interaction.replied
+      console.log(selectResponse)
       },
   },
 ];
