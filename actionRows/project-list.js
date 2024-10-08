@@ -49,4 +49,4 @@ projects.forEach((project) => {
       .setDescription(project.projectDesc)
   );
 });
-export const testaction = new ActionRowBuilder().addComponents([select]);
+export const projectList = new ActionRowBuilder().addComponents([select]);

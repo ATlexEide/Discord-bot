@@ -1,5 +1,8 @@
-import { SlashCommandBuilder } from "discord.js";
-import { testaction, createProjectButtons } from "../actionRows/testrow.js";
+import { InteractionResponse, SlashCommandBuilder } from "discord.js";
+import {
+  projectList,
+  createProjectButtons,
+} from "../actionRows/project-list.js";
 import { projects } from "../projects/projects.js";
 
 export const commands = [
@@ -35,20 +38,27 @@ export const commands = [
     name: "projects",
     description: "Test menu",
     response: async (interaction) => {
-      interaction.reply({ components: [testaction] });
+      interaction.reply({ components: [projectList] });
       console.log(interaction);
       const selectResponse = interaction.replied;
       console.log(selectResponse);
     },
-    reply: async (interaction, message) => {
+    reply: async (interaction) => {
       const currProj = projects.find(
         (obj) => obj.id === String(interaction.values)
       );
-      message.message.delete();
+      interaction.message.delete();
       interaction.channel.send({
         content: `> ## ${currProj.projectName}\n> ${currProj.projectDesc}`,
         components: [await createProjectButtons(currProj)],
       });
+    },
+  },
+  {
+    name: "cat",
+    description: "CAT GIFs!",
+    response: async (interaction) => {
+      interaction.reply("Message recieved");
     },
   },
 ];
