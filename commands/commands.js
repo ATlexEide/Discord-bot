@@ -1,15 +1,20 @@
-import { InteractionResponse, SlashCommandBuilder } from "discord.js";
+import dotenv from "dotenv";
+dotenv.config();
 import {
   projectList,
   createProjectButtons,
 } from "../actionRows/project-list.js";
 import { projects } from "../projects/projects.js";
+import { EmbedBuilder } from "@discordjs/builders";
 
 export const commands = [
   {
     name: "ping",
     description: "Replies with Pong!",
-    response: (interaction) => interaction.reply("Pong!"),
+    response: (interaction) => {
+      interaction.reply("Pong!");
+      console.log(interaction);
+    },
   },
   {
     name: "radiocheck",
@@ -57,8 +62,19 @@ export const commands = [
   {
     name: "cat",
     description: "CAT GIFs!",
+    apiKey: process.env.GIPHY_API_KEY,
     response: async (interaction) => {
-      interaction.reply("Message recieved");
+      let data = await fetch(
+        `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_KEY}&q=CATS&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
+      );
+      const cat_data = await data.json();
+      console.log(cat_data.data[0]);
+      const catGIF = await cat_data.data[
+        Math.floor(Math.random() * cat_data.data.length)
+      ].images.fixed_width_downsampled.url;
+      const catEmbed = new EmbedBuilder().setTitle("CAT!").setImage(catGIF);
+      console.log(catEmbed);
+      interaction.reply({ embeds: [catEmbed] });
     },
   },
 ];
