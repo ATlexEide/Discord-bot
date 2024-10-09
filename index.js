@@ -1,10 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { SlashCommandBuilder } from "discord.js";
 import { Client, GatewayIntentBits, Guild, messageLink } from "discord.js";
 import { commands } from "./commands/commands.js";
-import { createProjectButtons } from "./actionRows/project-list.js";
-import { projects } from "./projects/projects.js";
 
 const client = new Client({
   intents: [

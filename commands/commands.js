@@ -68,12 +68,16 @@ export const commands = [
         `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_KEY}&q=CATS&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
       );
       const cat_data = await data.json();
-      console.log(cat_data.data[0]);
-      const catGIF = await cat_data.data[
+      const currCat = await cat_data.data[
         Math.floor(Math.random() * cat_data.data.length)
-      ].images.fixed_width_downsampled.url;
-      const catEmbed = new EmbedBuilder().setTitle("CAT!").setImage(catGIF);
-      console.log(catEmbed);
+      ];
+      console.log(cat_data.data[0]);
+      const catGIF = currCat.images.fixed_width_downsampled.url;
+      const catEmbed = new EmbedBuilder()
+        .setTitle(currCat.title)
+        .setImage(catGIF);
+      console.clear();
+      console.log(currCat);
       interaction.reply({ embeds: [catEmbed] });
     },
   },
