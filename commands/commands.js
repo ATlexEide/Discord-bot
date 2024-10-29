@@ -81,4 +81,15 @@ export const commands = [
       interaction.reply({ embeds: [catEmbed] });
     },
   },
+  {
+    name: "ip",
+    description: "Minecraft server ip",
+    ip: process.env.MINECRAFT_SERVER_IP,
+    port: process.env.MINECRAFT_SERVER_PORT,
+    response: async (interaction) => {
+      interaction.reply(
+        `${process.env.MINECRAFT_SERVER_IP}:${process.env.MINECRAFT_SERVER_PORT}`
+      );
+    },
+  },
 ];
