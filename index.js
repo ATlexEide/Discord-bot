@@ -49,4 +49,7 @@ client.on("interactionCreate", async (interaction) => {
 });
 const regex = /.*Update/;
 console.log(regex);
-client.on("interactionCreate", (interaction) => {});
+client.on("messageDelete", (interaction) => {
+  console.log(dadad);
+  console.log(interaction);
+});
