@@ -42,16 +42,10 @@ client.on("interactionCreate", async (interaction) => {
   currCmd.response(interaction);
 
   if (interaction.isStringSelectMenu()) {
-    commands
-      .find(({ command }) => command.name === interaction.customId)
-      .reply(interaction);
+    const command = command.find(({ name }) => name === interaction.customId);
+    command.reply(interaction);
   }
   if (interaction.customId === "remove-proj-message") {
     interaction.message.delete();
   }
-});
-const regex = /.*Update/;
-console.log(regex);
-client.on("messageDelete", (interaction) => {
-  console.log(interaction);
 });
