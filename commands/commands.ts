@@ -92,4 +92,8 @@ export const commands = [
       );
     },
   },
+  {
+    name: "mctest",
+    description: "Testing minecraft server util",
+  },
 ];

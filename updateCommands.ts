@@ -2,7 +2,9 @@ import { REST, Routes } from "discord.js";
 import dotenv from "dotenv";
 dotenv.config();
 import { commands } from "./commands/commands.js";
-
+if (!process.env.DISCORD_TOKEN) {
+  throw new Error("You're being stupid, no token dumbass");
+}
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
 try {
