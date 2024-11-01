@@ -34,23 +34,16 @@ client.on("messageCreate", (message) => {
   channel.send("reply");
 });
 client.on("interactionCreate", async (interaction) => {
-  console.log(interaction);
-  const message = interaction;
-  console.log(`Interaction: ${interaction}`);
-  if (interaction.isChatInputCommand()) {
-    const currCmd = commands.find(
-      (command) => command.name === interaction.commandName
-    );
-    if (currCmd) {
-      console.log(interaction.user);
-      console.log(`Current command: ${JSON.stringify(currCmd)}`);
-      console.log(`Current interaction: ${interaction}`);
-      currCmd.response(interaction);
-    }
-  }
+  if (!interaction.isChatInputCommand()) throw new Error("No command");
+
+  const currCmd = commands.find(({ name }) => name === interaction.commandName);
+  if (!currCmd) throw new Error("No command");
+  if (!currCmd.response) throw new Error("No response on command");
+  currCmd.response(interaction);
+
   if (interaction.isStringSelectMenu()) {
     commands
-      .find((command) => command.name === interaction.customId)
+      .find(({ command }) => command.name === interaction.customId)
       .reply(interaction);
   }
   if (interaction.customId === "remove-proj-message") {
