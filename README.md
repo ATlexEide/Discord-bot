@@ -15,8 +15,9 @@ I'm using this project to learn how to make a discord bot with different functio
 ### Minecraft server integration
 > I want to be able to display events happening on a minecraft server on a discord server / on a webpage
 > #### Needs
+> - Discord server ✔️
 > - Minecraft server ✔️
-> - Plugin for event listening on server ❎
+> - Plugin for event listening on server
 >   
 > Tools I need to implement to achieve this:
 > 
