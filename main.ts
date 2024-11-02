@@ -40,11 +40,13 @@ client.on("interactionCreate", async (interaction) => {
     console.log(cmd);
     cmd.response(interaction);
   }
+  // If interaction is on a select menu
   if (interaction.isStringSelectMenu()) {
     console.log("MENU INTERACTION //");
     console.log(interaction);
     commands[interaction.customId].menuResponse(interaction);
   }
+  // If interaction is on a button
   if (interaction.isButton()) {
     const id = interaction.customId;
     if (id === "remove-proj-message") {
