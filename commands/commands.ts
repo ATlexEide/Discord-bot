@@ -37,6 +37,7 @@ export const commands = {
     },
     menuResponse: async (interaction) => {
       const currProj = projects.find((obj) => obj.id === interaction.values[0]);
+      if (!currProj) throw new Error("No project found");
       interaction.message.delete();
       interaction.channel.send({
         content: `> ## ${currProj.projectName}\n> ${currProj.projectDesc}`,
