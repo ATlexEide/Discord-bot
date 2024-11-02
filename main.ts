@@ -7,7 +7,7 @@ import {
   messageLink,
   TextChannel,
 } from "discord.js";
-import { commands } from "./commands/commands.js";
+import { commands } from "./commands/commands.ts";
 
 const client = new Client({
   intents: [
@@ -42,7 +42,10 @@ client.on("interactionCreate", async (interaction) => {
   currCmd.response(interaction);
 
   if (interaction.isStringSelectMenu()) {
-    const command = command.find(({ name }) => name === interaction.customId);
+    console.clear();
+    console.log(interaction);
+    const command = commands.find((command) => command.name === interaction.id);
+    if (!command || !command.reply) throw new Error("No command");
     command.reply(interaction);
   }
   if (interaction.customId === "remove-proj-message") {

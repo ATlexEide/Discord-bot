@@ -3,8 +3,8 @@ dotenv.config();
 import {
   projectList,
   createProjectButtons,
-} from "../actionRows/project-list.js";
-import { projects } from "../projects/projects.js";
+} from "../actionRows/project-list.ts";
+import { projects } from "../projects/projects.ts";
 import { EmbedBuilder } from "@discordjs/builders";
 
 export const commands = [
@@ -44,7 +44,6 @@ export const commands = [
     description: "Test menu",
     response: async (interaction) => {
       interaction.reply({ components: [projectList] });
-      console.log(interaction);
       const selectResponse = interaction.replied;
       console.log(selectResponse);
     },
