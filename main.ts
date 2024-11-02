@@ -30,6 +30,7 @@ client.on("ready", () => {
 // Listen for interactions
 client.on("interactionCreate", async (interaction) => {
   console.log(interaction.isCommand());
+  console.log(interaction);
   if (interaction.isCommand()) {
     const id = interaction.commandName;
     console.log("ID //");
@@ -41,6 +42,13 @@ client.on("interactionCreate", async (interaction) => {
   }
   if (interaction.isStringSelectMenu()) {
     console.log("MENU INTERACTION //");
-    console.log(commands[interaction.customId].menuResponse(interaction));
+    console.log(interaction);
+    commands[interaction.customId].menuResponse(interaction);
+  }
+  if (interaction.isButton()) {
+    const id = interaction.customId;
+    if (id === "remove-proj-message") {
+      interaction.message.delete();
+    }
   }
 });
