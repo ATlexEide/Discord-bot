@@ -18,37 +18,25 @@ const client = new Client({
     GatewayIntentBits.MessageContent,
   ],
 });
+//////
+// Load bot
 client.login(process.env.DISCORD_TOKEN);
 client.on("ready", () => {
   if (!client.user) throw new Error("No client user");
   console.log(`Logged in as ${client.user.tag}, ready to serve!`);
 });
-client.on("messageCreate", (message) => {
-  console.log(message);
-  if (message.content !== "test") return;
 
-  const channel = client.channels.cache.get("1293123587385069628");
-  if (!channel) throw new Error("No matching channel");
-  if (!(channel instanceof TextChannel))
-    throw new Error("Not instance of TextChannel");
-  channel.send("reply");
-});
+//////
+// Check if interaction is ___
 client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isChatInputCommand()) throw new Error("No command");
-
-  const currCmd = commands.find(({ name }) => name === interaction.commandName);
-  if (!currCmd) throw new Error("No command");
-  if (!currCmd.response) throw new Error("No response on command");
-  currCmd.response(interaction);
-
-  if (interaction.isStringSelectMenu()) {
-    console.clear();
-    console.log(interaction);
-    const command = commands.find((command) => command.name === interaction.id);
-    if (!command || !command.reply) throw new Error("No command");
-    command.reply(interaction);
-  }
-  if (interaction.customId === "remove-proj-message") {
-    interaction.message.delete();
+  console.log(interaction.isCommand());
+  if (interaction.isCommand()) {
+    const id = interaction.commandName;
+    console.log("ID //");
+    console.log(id);
+    const cmd = commands[interaction.commandName];
+    console.log("CMD //");
+    console.log(cmd);
+    cmd.response(interaction);
   }
 });

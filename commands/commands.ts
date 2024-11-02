@@ -7,8 +7,8 @@ import {
 import { projects } from "../projects/projects.ts";
 import { EmbedBuilder } from "@discordjs/builders";
 
-export const commands = [
-  {
+export const commands = {
+  ping: {
     name: "ping",
     description: "Replies with Pong!",
     response: (interaction) => {
@@ -16,12 +16,12 @@ export const commands = [
       console.log(interaction);
     },
   },
-  {
+  radiocheck: {
     name: "radiocheck",
     description: "Replies with Lima charlie!",
     response: (interaction) => interaction.reply("Lima charlie"),
   },
-  {
+  date: {
     name: "date",
     description: "Replies with the time!",
     response: (interaction) => {
@@ -29,28 +29,17 @@ export const commands = [
       interaction.reply(`It is now ${date}`);
     },
   },
-  {
-    name: "oppai",
-    description: "Cave...",
-    response: (interaction) => {
-      interaction.reply(`:regional_indicator_b: :a: :regional_indicator_n: `);
-      interaction.user.send(
-        ":regional_indicator_b: :a: :regional_indicator_n:"
-      );
-    },
-  },
-  {
+  projects: {
     name: "projects",
     description: "Test menu",
     response: async (interaction) => {
       interaction.reply({ components: [projectList] });
       const selectResponse = interaction.replied;
+      console.log("SELECT RESPONSE");
       console.log(selectResponse);
     },
     reply: async (interaction) => {
-      const currProj = projects.find(
-        (obj) => obj.id === String(interaction.values)
-      );
+      const currProj = projects.find((obj) => obj.id === interaction.values[0]);
       interaction.message.delete();
       interaction.channel.send({
         content: `> ## ${currProj.projectName}\n> ${currProj.projectDesc}`,
@@ -58,7 +47,7 @@ export const commands = [
       });
     },
   },
-  {
+  cat: {
     name: "cat",
     description: "CAT GIFs!",
     apiKey: process.env.GIPHY_API_KEY,
@@ -80,7 +69,7 @@ export const commands = [
       interaction.reply({ embeds: [catEmbed] });
     },
   },
-  {
+  ip: {
     name: "ip",
     description: "Minecraft server ip",
     ip: process.env.MINECRAFT_SERVER_IP,
@@ -91,8 +80,11 @@ export const commands = [
       );
     },
   },
-  {
+  mctest: {
     name: "mctest",
     description: "Testing minecraft server util",
+    response: async (interaction) => {
+      interaction.reply("mctest");
+    },
   },
-];
+};

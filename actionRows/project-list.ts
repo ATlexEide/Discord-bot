@@ -41,7 +41,6 @@ const select = new StringSelectMenuBuilder()
   .setCustomId("projects")
   .setPlaceholder("Project list");
 projects.forEach((project) => {
-  console.log(project);
   select.addOptions(
     new StringSelectMenuOptionBuilder()
       .setLabel(project.projectName)
