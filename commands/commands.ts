@@ -34,11 +34,8 @@ export const commands = {
     description: "Test menu",
     response: async (interaction) => {
       interaction.reply({ components: [projectList] });
-      const selectResponse = interaction.replied;
-      console.log("SELECT RESPONSE");
-      console.log(selectResponse);
     },
-    reply: async (interaction) => {
+    menuResponse: async (interaction) => {
       const currProj = projects.find((obj) => obj.id === interaction.values[0]);
       interaction.message.delete();
       interaction.channel.send({

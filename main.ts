@@ -27,7 +27,7 @@ client.on("ready", () => {
 });
 
 //////
-// Check if interaction is ___
+// Listen for interactions
 client.on("interactionCreate", async (interaction) => {
   console.log(interaction.isCommand());
   if (interaction.isCommand()) {
@@ -38,5 +38,9 @@ client.on("interactionCreate", async (interaction) => {
     console.log("CMD //");
     console.log(cmd);
     cmd.response(interaction);
+  }
+  if (interaction.isStringSelectMenu()) {
+    console.log("MENU INTERACTION //");
+    console.log(commands[interaction.customId].menuResponse(interaction));
   }
 });
