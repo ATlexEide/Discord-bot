@@ -3,7 +3,7 @@ dotenv.config();
 import {
   projectList,
   createProjectButtons,
-} from "../actionRows/project-list.ts";
+} from "../action_rows/project-list.ts";
 import { projects } from "../projects/projects.ts";
 import { EmbedBuilder } from "@discordjs/builders";
 
