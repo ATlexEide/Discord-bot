@@ -1,6 +1,10 @@
 # Discord Bot //
+## Built with
+<img height="5%" src="https://skillicons.dev/icons?i=ts,discordjs,deno">
+
+## Why am I building this?
 I'm using this project to learn how to make a discord bot with different functionalities.
-> #### What I hope to learn:
+> ### What I hope to learn:
 > - A bit of how discord works under the hood
 > - How to use Discords API through the use of [discord.js](https://discord.js.org/)
 ## Current flow for handling interactions //
