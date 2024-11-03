@@ -1,6 +1,6 @@
 # Discord Bot //
 ## Built with
-<img height="5%" src="https://skillicons.dev/icons?i=ts,discordjs,java,deno,express">
+<img height="5%" src="https://skillicons.dev/icons?i=ts,discordjs,deno,express,java">
 
 ## Why am I building this?
 I'm using this project to learn how to make a discord bot with different functionalities.
