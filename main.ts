@@ -1,3 +1,4 @@
+import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import {
@@ -8,7 +9,24 @@ import {
   TextChannel,
 } from "discord.js";
 import { commands } from "./commands/commands.ts";
+////////
+// Node Server
+const app = express();
+const port = 3000;
 
+app.get("/", (req, res) => {
+  res.send("Welcome to my server!");
+});
+app.get("/test", (req, res) => {
+  res.send("Welcome to my server/test!");
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+/////////
+// Discord Bot
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
