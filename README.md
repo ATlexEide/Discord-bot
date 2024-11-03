@@ -1,6 +1,6 @@
 # Discord Bot //
 ## Built with
-<img height="5%" src="https://skillicons.dev/icons?i=ts,discordjs,deno">
+<img height="5%" src="https://skillicons.dev/icons?i=ts,discordjs,java,deno,express">
 
 ## Why am I building this?
 I'm using this project to learn how to make a discord bot with different functionalities.
@@ -16,9 +16,12 @@ I'm using this project to learn how to make a discord bot with different functio
 > I want to be able to display events happening on a minecraft server on a discord server / on a webpage
 > #### Needs
 > - Discord server ✔️
+> - Node server ✔️
 > - Minecraft server ✔️
-> - Plugin for event listening on server
+> - Plugin for event listening on server(WIP) ✔️
+> - Communicate the right data between servers
+> - Display data with bot
 >   
 > Tools I need to implement to achieve this:
 > 
-> <img height="1%" src="https://skillicons.dev/icons?i=java">
+> <img height="1%" src="https://skillicons.dev/icons?i=java,express">
