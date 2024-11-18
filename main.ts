@@ -9,21 +9,6 @@ import {
   TextChannel,
 } from "discord.js";
 import { commands } from "./commands/commands.ts";
-////////
-// Node Server
-const app = express();
-const port = 3000;
-
-app.get("/", (req, res) => {
-  res.send("Welcome to my server!");
-});
-app.get("/test", (req, res) => {
-  res.send("Welcome to my server/test!");
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
 
 /////////
 // Discord Bot
@@ -71,4 +56,27 @@ client.on("interactionCreate", async (interaction) => {
       interaction.message.delete();
     }
   }
+});
+
+////////
+// Node Server
+const app = express();
+const port = 3000;
+
+app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Welcome to my server!");
+});
+app.get("/test", (req, res) => {
+  res.send("Welcome to my server/test!");
+});
+app.post("/events", async (req, res) => {
+  console.log("Post request recieved");
+  console.log(req.body.player);
+  res.json({ status: "OK" });
+  // res.json(req.body);
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
