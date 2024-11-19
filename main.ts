@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import {
+  channelLink,
   Client,
   GatewayIntentBits,
   Guild,
@@ -72,7 +73,19 @@ app.get("/test", (req, res) => {
 });
 app.post("/events", async (req, res) => {
   console.log("Post request recieved");
-  console.log(req.body.player);
+  const channel = client.channels.cache.get("1293123587385069628");
+  if (!channel) throw new Error("Invalid channel");
+  if (req.body.event === "PlayerJoinEvent") {
+    channel.send(
+      `${req.body.player} joined the server!\nCurrent players online: ${req.body.playerCount}`
+    );
+  }
+  if (req.body.event === "PlayerQuitEvent") {
+    channel.send(
+      `${req.body.player} left the server :(\nCurrent players online: ${req.body.playerCount}`
+    );
+  }
+  console.log(req.body);
   res.json({ status: "OK" });
   // res.json(req.body);
 });
