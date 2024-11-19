@@ -10,10 +10,11 @@ import {
   TextChannel,
 } from "discord.js";
 import { commands } from "./commands/commands.ts";
+import { handleEvent } from "./event_handler.ts";
 
 /////////
 // Discord Bot
-const client = new Client({
+export const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -72,19 +73,9 @@ app.get("/test", (req, res) => {
   res.send("Welcome to my server/test!");
 });
 app.post("/events", async (req, res) => {
+  const event = await req.body;
+  handleEvent(event);
   console.log("Post request recieved");
-  const channel = client.channels.cache.get("1293123587385069628");
-  if (!channel) throw new Error("Invalid channel");
-  if (req.body.event === "PlayerJoinEvent") {
-    channel.send(
-      `${req.body.player} joined the server!\nCurrent players online: ${req.body.playerCount}`
-    );
-  }
-  if (req.body.event === "PlayerQuitEvent") {
-    channel.send(
-      `${req.body.player} left the server :(\nCurrent players online: ${req.body.playerCount}`
-    );
-  }
   console.log(req.body);
   res.json({ status: "OK" });
   // res.json(req.body);
