@@ -1,9 +1,12 @@
 import { EmbedBuilder } from "@discordjs/builders";
-
+import dotenv from "dotenv";
+dotenv.config();
 import { client } from "./main.ts";
 export function handleEvent(gameEvent) {
-  const channel = client.channels.cache.get("1293123587385069628");
-  if (!channel) throw new Error("Invalid channel");
+  if (!process.env.DISCORD_LOG_CHANNEL_ID)
+    throw new Error("No channel id in local enviroment");
+  const channel = client.channels.cache.get(process.env.DISCORD_LOG_CHANNEL_ID);
+  if (!channel || !channel.isSendable()) throw new Error("Invalid channel");
   if (gameEvent.event === "PlayerJoinEvent") {
     channel.send(getEmbed("join", gameEvent.player, gameEvent.playerCount));
   }
