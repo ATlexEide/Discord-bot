@@ -1,6 +1,6 @@
 # Discord Bot //
 ## Built with
-<img height="5%" src="https://skillicons.dev/icons?i=ts,discordjs,deno,express,java">
+<img height="50px" src="https://skillicons.dev/icons?i=ts,discordjs,deno,express,java">&nbsp;&nbsp;<span><img src="https://minotar.net/avatar/_ATlex_/50"></span>
 
 ## Why am I building this?
 I'm using this project to learn how to make a discord bot with different functionalities.
@@ -19,13 +19,15 @@ I'm using this project to learn how to make a discord bot with different functio
 > - Node server ✔️
 > - Minecraft server ✔️
 > - Plugin for event listening on server(WIP) ✔️
+>
+> #### To do
 > - Communicate the right data between servers ✔️
 > - Display data with bot ✔️
 > - Add more listeners and expand functionality
+> - Display data on web
 >   
 > Tools I need to implement to achieve this:
 > 
-> <img height="1%" src="https://skillicons.dev/icons?i=java,express">
 >
 > ### Other tools I've used during the project
 >
