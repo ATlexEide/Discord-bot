@@ -17,6 +17,7 @@ export function handleEvent(gameEvent) {
 
 function getEmbed(event, player, playerCount) {
   const chatEmbed = new EmbedBuilder()
+    .setThumbnail(`https://minotar.net/avatar/${player}.png`)
     .setTitle(
       event === "join"
         ? `${player} joined the server!`
