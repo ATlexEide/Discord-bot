@@ -6,7 +6,11 @@ export function getConnectionEmbed(event) {
       name: event.player,
       iconURL: `https://minotar.net/avatar/${event.player}.png`,
     })
-    .setTitle(event === "join" ? `joined the server!` : `left the server ):`)
+    .setTitle(
+      event.event === "PlayerJoinEvent"
+        ? `joined the server!`
+        : `left the server ):`
+    )
     .setDescription(`*Current players online:* ${event.playerCount}`);
   return { embeds: [chatEmbed] };
 }
