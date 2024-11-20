@@ -8,8 +8,8 @@ export function getConnectionEmbed(event) {
     })
     .setTitle(
       event.event === "PlayerJoinEvent"
-        ? `joined the server!`
-        : `left the server ):`
+        ? `Joined the server!`
+        : `Left the server ):`
     )
     .setDescription(`*Current players online:* ${event.playerCount}`);
   return { embeds: [chatEmbed] };
