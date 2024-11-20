@@ -25,3 +25,7 @@ I'm using this project to learn how to make a discord bot with different functio
 > Tools I need to implement to achieve this:
 > 
 > <img height="1%" src="https://skillicons.dev/icons?i=java,express">
+>
+> ### Other tools I've used during the project
+>
+> [Minotar.net](https://minotar.net/avatar/_ATlex_.png) // API to get a players skin, for displaying face in the server log channel
