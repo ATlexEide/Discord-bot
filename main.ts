@@ -10,7 +10,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { commands } from "./commands/commands.ts";
-import { handleEvent } from "./event_handler.ts";
+import { handleEvent } from "./event-handler.ts";
 
 /////////
 // Discord Bot
