@@ -1,6 +1,8 @@
+import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import {
+  channelLink,
   Client,
   GatewayIntentBits,
   Guild,
@@ -8,8 +10,11 @@ import {
   TextChannel,
 } from "discord.js";
 import { commands } from "./commands/commands.ts";
+import { handleEvent } from "./event-handler.ts";
 
-const client = new Client({
+/////////
+// Discord Bot
+export const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -53,4 +58,29 @@ client.on("interactionCreate", async (interaction) => {
       interaction.message.delete();
     }
   }
+});
+
+////////
+// Node Server
+const app = express();
+const port = 3000;
+
+app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Welcome to my server!");
+});
+app.get("/test", (req, res) => {
+  res.send("Welcome to my server/test!");
+});
+app.post("/events", async (req, res) => {
+  const event = await req.body;
+  handleEvent(event);
+  console.log("Post request recieved");
+  console.log(req.body);
+  res.json({ status: "OK" });
+  // res.json(req.body);
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
