@@ -1,6 +1,6 @@
 # Discord Bot //
 ## Built with
-<img height="50px" src="https://skillicons.dev/icons?i=ts,discordjs,deno,express,java">&nbsp;&nbsp;<span><img src="https://minotar.net/avatar/_ATlex_/50"></span>
+<img height="50px" src="https://skillicons.dev/icons?i=ts,discordjs,deno,express,java">&nbsp;&nbsp;<span>[<img src="https://minotar.net/avatar/_ATlex_/50">](https://minotar.net/)</span>
 
 ## Why am I building this?
 I'm using this project to learn how to make a discord bot with different functionalities.
