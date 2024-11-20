@@ -19,8 +19,9 @@ I'm using this project to learn how to make a discord bot with different functio
 > - Node server ✔️
 > - Minecraft server ✔️
 > - Plugin for event listening on server(WIP) ✔️
-> - Communicate the right data between servers
-> - Display data with bot
+> - Communicate the right data between servers ✔️
+> - Display data with bot ✔️
+> - Add more listeners and expand functionality
 >   
 > Tools I need to implement to achieve this:
 > 
