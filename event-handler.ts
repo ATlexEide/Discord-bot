@@ -4,6 +4,7 @@ import { client } from "./main.ts";
 import { getConnectionEmbed } from "./event_embeds/connection-embed.ts";
 import { getGamemodeEmbed } from "./event_embeds/gamemode-embeds.ts";
 import { getServerStatusEmbed } from "./event_embeds/serverstatus-embed.ts";
+import { getChatEmbed } from "./event_embeds/chat-embed.ts";
 export function handleEvent(gameEvent) {
   if (!process.env.DISCORD_LOG_CHANNEL_ID)
     throw new Error("No log channel id in local enviroment");
@@ -17,6 +18,8 @@ export function handleEvent(gameEvent) {
   );
   if (!logChannel || !logChannel.isSendable())
     throw new Error("Invalid Channel");
+  if (!chatChannel || !chatChannel.isSendable())
+    throw new Error("Invalid Channel");
   console.log(gameEvent);
   switch (gameEvent.event) {
     case "ServerStart":
@@ -24,6 +27,9 @@ export function handleEvent(gameEvent) {
       break;
     case "ServerStop":
       logChannel.send(getServerStatusEmbed(gameEvent, "stop"));
+      break;
+    case "ChatEvent":
+      chatChannel.send(getChatEmbed(gameEvent));
       break;
     case "PlayerJoinEvent":
       logChannel.send(getConnectionEmbed(gameEvent));
