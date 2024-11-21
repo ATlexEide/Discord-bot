@@ -6,9 +6,14 @@ import { getGamemodeEmbed } from "./event_embeds/gamemode-embeds.ts";
 import { getServerStatusEmbed } from "./event_embeds/serverstatus-embed.ts";
 export function handleEvent(gameEvent) {
   if (!process.env.DISCORD_LOG_CHANNEL_ID)
-    throw new Error("No channel id in local enviroment");
+    throw new Error("No log channel id in local enviroment");
+  if (!process.env.DISCORD_CHAT_CHANNEL_ID)
+    throw new Error("No chat channel id in local enviroment");
   const logChannel = client.channels.cache.get(
     process.env.DISCORD_LOG_CHANNEL_ID
+  );
+  const chatChannel = client.channels.cache.get(
+    process.env.DISCORD_CHAT_CHANNEL_ID
   );
   if (!logChannel || !logChannel.isSendable())
     throw new Error("Invalid Channel");
