@@ -16,9 +16,12 @@ export function handleEvent(gameEvent) {
   const chatChannel = client.channels.cache.get(
     process.env.DISCORD_CHAT_CHANNEL_ID
   );
-  if (!logChannel || !logChannel.isSendable())
-    throw new Error("Invalid Channel");
-  if (!chatChannel || !chatChannel.isSendable())
+  if (
+    !logChannel ||
+    !chatChannel ||
+    !logChannel.isSendable() ||
+    !chatChannel.isSendable()
+  )
     throw new Error("Invalid Channel");
   console.log(gameEvent);
   switch (gameEvent.event) {
