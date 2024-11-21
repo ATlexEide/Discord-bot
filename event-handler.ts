@@ -3,22 +3,31 @@ dotenv.config();
 import { client } from "./main.ts";
 import { getConnectionEmbed } from "./event_embeds/connection-embed.ts";
 import { getGamemodeEmbed } from "./event_embeds/gamemode-embeds.ts";
-
+import { getServerStatusEmbed } from "./event_embeds/serverstatus-embed.ts";
 export function handleEvent(gameEvent) {
   if (!process.env.DISCORD_LOG_CHANNEL_ID)
     throw new Error("No channel id in local enviroment");
-  const channel = client.channels.cache.get(process.env.DISCORD_LOG_CHANNEL_ID);
-  if (!channel || !channel.isSendable()) throw new Error("Invalid channel");
-
+  const logChannel = client.channels.cache.get(
+    process.env.DISCORD_LOG_CHANNEL_ID
+  );
+  if (!logChannel || !logChannel.isSendable())
+    throw new Error("Invalid Channel");
+  console.log(gameEvent);
   switch (gameEvent.event) {
+    case "ServerStart":
+      logChannel.send(getServerStatusEmbed(gameEvent, "start"));
+      break;
+    case "ServerStop":
+      logChannel.send(getServerStatusEmbed(gameEvent, "stop"));
+      break;
     case "PlayerJoinEvent":
-      channel.send(getConnectionEmbed(gameEvent));
+      logChannel.send(getConnectionEmbed(gameEvent));
       break;
     case "PlayerQuitEvent":
-      channel.send(getConnectionEmbed(gameEvent));
+      logChannel.send(getConnectionEmbed(gameEvent));
       break;
     case "PlayerGameModeChangeEvent":
-      channel.send(getGamemodeEmbed(gameEvent));
+      logChannel.send(getGamemodeEmbed(gameEvent));
       break;
 
     default:
