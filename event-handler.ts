@@ -26,10 +26,10 @@ export function handleEvent(gameEvent) {
   console.log(gameEvent);
   switch (gameEvent.event) {
     case "ServerStart":
-      logChannel.send(getServerStatusEmbed(gameEvent, "start"));
+      logChannel.send(getServerStatusEmbed(gameEvent));
       break;
     case "ServerStop":
-      logChannel.send(getServerStatusEmbed(gameEvent, "stop"));
+      logChannel.send(getServerStatusEmbed(gameEvent));
       break;
     case "ChatEvent":
       chatChannel.send(getChatEmbed(gameEvent));
