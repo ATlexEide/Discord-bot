@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 
-export function getServerStatusEmbed(event, action) {
+export function getServerStatusEmbed(event) {
   const chatEmbed = new EmbedBuilder()
     .setAuthor({
       name: "Server",
@@ -12,7 +12,7 @@ export function getServerStatusEmbed(event, action) {
     .setTitle(
       event.event === "ServerStart" ? "Server started" : "Server stopped"
     );
-  if (action === "start") {
+  if (event.event === "ServerStart") {
     chatEmbed.setDescription(
       `${event.motd}
 
