@@ -65,20 +65,22 @@ client.on("interactionCreate", async (interaction) => {
 const app = express();
 const port = 3000;
 
+let lastEvent;
+
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Welcome to my server!");
 });
-app.get("/test", (req, res) => {
-  res.send("Welcome to my server/test!");
+app.get("/last-event ", (req, res) => {
+  res.send(lastEvent);
 });
 app.post("/events", async (req, res) => {
   const event = await req.body;
+  lastEvent = event;
   handleEvent(event);
   console.log("Post request recieved");
   console.log(req.body);
   res.json({ status: "OK" });
-  // res.json(req.body);
 });
 
 app.listen(port, () => {
