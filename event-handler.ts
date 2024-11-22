@@ -5,7 +5,15 @@ import { getConnectionEmbed } from "./event_embeds/connection-embed.ts";
 import { getGamemodeEmbed } from "./event_embeds/gamemode-embeds.ts";
 import { getServerStatusEmbed } from "./event_embeds/serverstatus-embed.ts";
 import { getChatEmbed } from "./event_embeds/chat-embed.ts";
+export { lastEvent, serverStatus };
+
+let lastEvent;
+let serverStatus;
 export function handleEvent(gameData) {
+  gameData.event === "ServerStart" || gameData.event === "ServerStop"
+    ? (serverStatus = gameData)
+    : (lastEvent = gameData);
+
   if (!process.env.DISCORD_LOG_CHANNEL_ID)
     throw new Error("No log channel id in local enviroment");
   if (!process.env.DISCORD_CHAT_CHANNEL_ID)
@@ -47,4 +55,5 @@ export function handleEvent(gameData) {
     default:
       break;
   }
+  return lastEvent;
 }

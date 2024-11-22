@@ -10,7 +10,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { commands } from "./commands/commands.ts";
-import { handleEvent } from "./event-handler.ts";
+import { handleEvent, lastEvent } from "./event-handler.ts";
 
 /////////
 // Discord Bot
@@ -65,8 +65,6 @@ client.on("interactionCreate", async (interaction) => {
 const app = express();
 const port = 3000;
 
-let lastEvent;
-
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Welcome to my server!");
@@ -76,7 +74,6 @@ app.get("/last-event ", (req, res) => {
 });
 app.post("/events", async (req, res) => {
   const event = await req.body;
-  lastEvent = event;
   handleEvent(event);
   console.log("Post request recieved");
   console.log(req.body);
