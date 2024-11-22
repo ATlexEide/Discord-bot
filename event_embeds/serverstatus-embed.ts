@@ -19,6 +19,5 @@ export function getServerStatusEmbed(event) {
       IP: *${event.ip}:${event.port}*`
     );
   }
-  // .setDescription(``);
   return { embeds: [chatEmbed] };
 }
