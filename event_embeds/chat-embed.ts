@@ -10,6 +10,7 @@ export function getChatEmbed(event) {
     name: `[${hours}:${minutes}]  <${event.player}>  ${event.messsage}`,
     iconURL: `https://minotar.net/avatar/${event.player}.png`,
   });
+  ///// Keep just in case i decide to use it later for whatever reason
   //   return { embeds: [chatEmbed] };
   return `[${hours}:${minutes}]  <\\${event.player}>  ${event.messsage}`;
 }
