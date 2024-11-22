@@ -10,9 +10,7 @@ export { lastEvent, serverStatus };
 let lastEvent;
 let serverStatus;
 export function handleEvent(gameData) {
-  gameData.event === "ServerStart" || gameData.event === "ServerStop"
-    ? (serverStatus = gameData)
-    : (lastEvent = gameData);
+  lastEvent = gameData;
 
   if (!process.env.DISCORD_LOG_CHANNEL_ID)
     throw new Error("No log channel id in local enviroment");
@@ -34,9 +32,11 @@ export function handleEvent(gameData) {
   console.log(gameData);
   switch (gameData.event) {
     case "ServerStart":
+      serverStatus = gameData;
       logChannel.send(getServerStatusEmbed(gameData));
       break;
     case "ServerStop":
+      serverStatus = gameData;
       logChannel.send(getServerStatusEmbed(gameData));
       break;
     case "ChatEvent":
@@ -55,5 +55,4 @@ export function handleEvent(gameData) {
     default:
       break;
   }
-  return lastEvent;
 }
