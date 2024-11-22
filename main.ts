@@ -10,7 +10,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { commands } from "./commands/commands.ts";
-import { handleEvent, lastEvent } from "./event-handler.ts";
+import { handleEvent, lastEvent, serverStatus } from "./event-handler.ts";
 
 /////////
 // Discord Bot
@@ -69,8 +69,11 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Welcome to my server!");
 });
-app.get("/last-event ", (req, res) => {
+app.get("/events/last", (req, res) => {
   res.send(lastEvent);
+});
+app.get("/server/status", (req, res) => {
+  res.send(serverStatus);
 });
 app.post("/events", async (req, res) => {
   const event = await req.body;
