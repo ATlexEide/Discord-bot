@@ -29,7 +29,6 @@ export function handleEvent(gameData) {
     !chatChannel.isSendable()
   )
     throw new Error("Invalid Channel");
-  console.log(gameData);
   switch (gameData.event) {
     case "ServerStart":
       serverStatus = gameData;
