@@ -84,17 +84,13 @@ app.post("/events", async (req, res) => {
 });
 if (!process.env.DISCORD_CHAT_CHANNEL_ID)
   throw new Error("No chat channel id in local enviroment");
-
+let payload;
 client.on("messageCreate", async (message) => {
   if (message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID) {
-    const messageObj = {
-      user: message.author.username,
-      message: message.content,
-    };
-    const messageJson = JSON.stringify(messageObj);
-    console.log(messageJson);
-    app.post("/server/chat", (req, res) => {
-      res.send(messageJson);
+    payload = `<${message.author.username}> ${message.content}`;
+    console.log(payload);
+    app.get("/server/chat", (req, res) => {
+      res.send(payload);
     });
   }
 });
