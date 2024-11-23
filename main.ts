@@ -34,21 +34,13 @@ client.on("ready", () => {
 //////
 // Listen for interactions
 client.on("interactionCreate", async (interaction) => {
-  console.log(interaction.isCommand());
-  console.log(interaction);
   if (interaction.isCommand()) {
     const id = interaction.commandName;
-    console.log("ID //");
-    console.log(id);
     const cmd = commands[interaction.commandName];
-    console.log("CMD //");
-    console.log(cmd);
     cmd.response(interaction);
   }
   // If interaction is on a select menu
   if (interaction.isStringSelectMenu()) {
-    console.log("MENU INTERACTION //");
-    console.log(interaction);
     commands[interaction.customId].menuResponse(interaction);
   }
   // If interaction is on a button
@@ -78,8 +70,8 @@ app.get("/server/status", (req, res) => {
 app.post("/events", async (req, res) => {
   const event = await req.body;
   handleEvent(event);
-  console.log("Post request recieved");
-  console.log(req.body);
+  console.log("Request recieved");
+  console.log(event);
   res.json({ status: "OK" });
 });
 if (!process.env.DISCORD_CHAT_CHANNEL_ID)
@@ -88,7 +80,6 @@ let payload;
 client.on("messageCreate", async (message) => {
   if (message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID) {
     payload = `<${message.author.username}> ${message.content}`;
-    console.log(payload);
     // TODO: Make this shit in java instead
     app.get("/server/chat", (req, res) => {
       res.send(payload);
