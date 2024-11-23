@@ -89,6 +89,7 @@ client.on("messageCreate", async (message) => {
   if (message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID) {
     payload = `<${message.author.username}> ${message.content}`;
     console.log(payload);
+    // TODO: Make this shit in java instead
     app.get("/server/chat", (req, res) => {
       res.send(payload);
     });
