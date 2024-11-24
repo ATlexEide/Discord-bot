@@ -7,11 +7,16 @@ import { getServerStatusEmbed } from "./event_embeds/serverstatus-embed.ts";
 import { getChatEmbed } from "./event_embeds/chat-embed.ts";
 export { lastEvent, serverStatus };
 
+function cacheEvent(event) {
+  cachedEvents.push(event);
+  lastEvent = event;
+}
+
+const cachedEvents: object[] = [];
 let lastEvent;
 let serverStatus;
 export function handleEvent(gameData) {
-  lastEvent = gameData;
-
+  cacheEvent(gameData);
   if (!process.env.DISCORD_LOG_CHANNEL_ID)
     throw new Error("No log channel id in local enviroment");
   if (!process.env.DISCORD_CHAT_CHANNEL_ID)
