@@ -71,8 +71,6 @@ export const commands = {
   ip: {
     name: "ip",
     description: "Minecraft server ip",
-    ip: process.env.MINECRAFT_SERVER_IP,
-    port: process.env.MINECRAFT_SERVER_PORT,
     response: async (interaction) => {
       interaction.reply(`${serverStatus.ip}:${serverStatus.port}`);
     },
