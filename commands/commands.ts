@@ -6,6 +6,7 @@ import {
 } from "../action_rows/project-list.ts";
 import { projects } from "../projects/projects.ts";
 import { EmbedBuilder } from "@discordjs/builders";
+import { serverStatus } from "../event-handler.ts";
 
 export const commands = {
   ping: {
@@ -73,9 +74,7 @@ export const commands = {
     ip: process.env.MINECRAFT_SERVER_IP,
     port: process.env.MINECRAFT_SERVER_PORT,
     response: async (interaction) => {
-      interaction.reply(
-        `${process.env.MINECRAFT_SERVER_IP}:${process.env.MINECRAFT_SERVER_PORT}`
-      );
+      interaction.reply(`${serverStatus.ip}:${serverStatus.port}`);
     },
   },
   mctest: {
