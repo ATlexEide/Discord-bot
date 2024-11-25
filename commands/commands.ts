@@ -6,6 +6,7 @@ import {
 } from "../action_rows/project-list.ts";
 import { projects } from "../projects/projects.ts";
 import { EmbedBuilder } from "@discordjs/builders";
+import { serverStatus } from "../event-handler.ts";
 
 export const commands = {
   ping: {
@@ -70,12 +71,17 @@ export const commands = {
   ip: {
     name: "ip",
     description: "Minecraft server ip",
-    ip: process.env.MINECRAFT_SERVER_IP,
-    port: process.env.MINECRAFT_SERVER_PORT,
     response: async (interaction) => {
-      interaction.reply(
-        `${process.env.MINECRAFT_SERVER_IP}:${process.env.MINECRAFT_SERVER_PORT}`
-      );
+      if (serverStatus) {
+        switch (serverStatus.ip) {
+          case false:
+            interaction.reply(`localhost:${serverStatus.port}`);
+            break;
+
+          case true:
+            interaction.reply(`${serverStatus.ip}:${serverStatus.port}`);
+        }
+      } else interaction.reply("I cant find any ip, is the server running?");
     },
   },
   mctest: {
