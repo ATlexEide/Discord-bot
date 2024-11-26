@@ -72,16 +72,13 @@ export const commands = {
     name: "ip",
     description: "Minecraft server ip",
     response: async (interaction) => {
-      if (serverStatus) {
-        switch (serverStatus.ip) {
-          case false:
-            interaction.reply(`localhost:${serverStatus.port}`);
-            break;
-
-          case true:
-            interaction.reply(`${serverStatus.ip}:${serverStatus.port}`);
-        }
-      } else interaction.reply("I cant find any ip, is the server running?");
+      if (!serverStatus) {
+        interaction.reply("I cant find any ip, is the server running?");
+        return;
+      }
+      if (!serverStatus.ip) interaction.reply(`localhost:${serverStatus.port}`);
+      if (serverStatus.ip)
+        interaction.reply(`${serverStatus.ip}:${serverStatus.port}`);
     },
   },
   mctest: {
