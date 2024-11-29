@@ -14,6 +14,14 @@ export const projects = [
     previewURL: "",
   },
   {
+    id: "minecraft-eventlistener",
+    projectName: "Minecraft event listener plugin",
+    projectDesc:
+      "Event listener plugin for minecraft, sends event data to discord bot",
+    repoURL: "https://github.com/ATlexEide/Minecraft-Server-EventListener",
+    previewURL: "",
+  },
+  {
     id: "leah-clicker",
     projectName: "Leah Clicker",
     projectDesc: "Cookie clicker with a twist",
