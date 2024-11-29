@@ -36,6 +36,13 @@ export const projects = [
     previewURL: "",
   },
   {
+    id: "hashmap",
+    projectName: "Hashmap",
+    projectDesc: "Hashmap in js",
+    repoURL: "https://github.com/ATlexEide/hashmap",
+    previewURL: "",
+  },
+  {
     id: "leah-clicker",
     projectName: "Leah Clicker",
     projectDesc: "Cookie clicker with a twist",
