@@ -3,7 +3,14 @@
 // All projects require a description or discord(api/optionBuilder) gets mad
 // All projects require repo links
 //
-
+///// Template project card
+// {
+//     id: "",
+//     projectName: "",
+//     projectDesc: "",
+//     repoURL: "",
+//     previewURL: "",
+//   },
 export const projects = [
   {
     id: "discord-bot",
