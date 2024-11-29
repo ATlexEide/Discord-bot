@@ -81,13 +81,13 @@ client.on("messageCreate", async (message) => {
   if (message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID) {
     payload = `<${message.author.username}> ${message.content}`;
     // TODO: Make this shit in java instead
-    fetch(`${serverStatus.ip}:${serverStatus.port}/chat`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      body: payload,
-    });
+    // fetch(`${serverStatus.ip}:${serverStatus.port}/chat`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-type": "application/json; charset=UTF-8",
+    //   },
+    //   body: payload,
+    // });
   }
 });
 

@@ -3,7 +3,14 @@
 // All projects require a description or discord(api/optionBuilder) gets mad
 // All projects require repo links
 //
-
+///// Template project card
+// {
+//     id: "",
+//     projectName: "",
+//     projectDesc: "",
+//     repoURL: "",
+//     previewURL: "",
+//   },
 export const projects = [
   {
     id: "discord-bot",
@@ -11,6 +18,28 @@ export const projects = [
     projectDesc:
       "Discord bot made by Alex for testing/learning how to create a discord bot",
     repoURL: "https://github.com/ATlexEide/discordbot",
+    previewURL: "",
+  },
+  {
+    id: "minecraft-eventlistener",
+    projectName: "Minecraft event listener plugin",
+    projectDesc:
+      "Event listener plugin for minecraft, sends event data to discord bot",
+    repoURL: "https://github.com/ATlexEide/Minecraft-Server-EventListener",
+    previewURL: "",
+  },
+  {
+    id: "binary-search-tree",
+    projectName: "Binary search tree",
+    projectDesc: "Binary search tree in js",
+    repoURL: "https://github.com/ATlexEide/binary-search-tree",
+    previewURL: "",
+  },
+  {
+    id: "hashmap",
+    projectName: "Hashmap",
+    projectDesc: "Hashmap in js",
+    repoURL: "https://github.com/ATlexEide/hashmap",
     previewURL: "",
   },
   {
