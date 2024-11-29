@@ -29,6 +29,13 @@ export const projects = [
     previewURL: "",
   },
   {
+    id: "binary-search-tree",
+    projectName: "Binary search tree",
+    projectDesc: "Binary search tree in js",
+    repoURL: "https://github.com/ATlexEide/binary-search-tree",
+    previewURL: "",
+  },
+  {
     id: "leah-clicker",
     projectName: "Leah Clicker",
     projectDesc: "Cookie clicker with a twist",
