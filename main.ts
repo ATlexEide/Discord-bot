@@ -11,7 +11,7 @@ import {
 } from "discord.js";
 import { commands } from "./commands/commands.ts";
 import { handleEvent, lastEvent, serverStatus } from "./event-handler.ts";
-
+// test commit
 /////////
 // Discord Bot
 export const client = new Client({
