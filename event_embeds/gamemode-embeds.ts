@@ -4,11 +4,11 @@ export function getGamemodeEmbed(event) {
   const chatEmbed = new EmbedBuilder()
     .setAuthor({
       name: event.player,
-      iconURL: `https://minotar.net/avatar/${event.player}.png`,
+      iconURL: `https://minotar.net/avatar/${event.player}.png`
     })
     .setTitle("Changed gamemode")
     .setDescription(
-      `*from ${event.gamemode.toLowerCase()} to ${event.newGamemode.toLowerCase()}*`
+      `*from ${event.gameMode.toLowerCase()} to ${event.newGameMode.toLowerCase()}*`
     );
   // .setDescription(``);
   return { embeds: [chatEmbed] };
