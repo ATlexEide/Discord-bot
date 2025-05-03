@@ -7,11 +7,11 @@ import {
   GatewayIntentBits,
   Guild,
   messageLink,
-  TextChannel,
+  TextChannel
 } from "discord.js";
 import { commands } from "./commands/commands.ts";
 import { handleEvent, lastEvent, serverStatus } from "./event-handler.ts";
-// test commit
+
 /////////
 // Discord Bot
 export const client = new Client({
@@ -20,9 +20,10 @@ export const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.MessageContent,
-  ],
+    GatewayIntentBits.MessageContent
+  ]
 });
+
 //////
 // Load bot
 client.login(process.env.DISCORD_TOKEN);
@@ -39,10 +40,12 @@ client.on("interactionCreate", async (interaction) => {
     const cmd = commands[interaction.commandName];
     cmd.response(interaction);
   }
+
   // If interaction is on a select menu
   if (interaction.isStringSelectMenu()) {
     commands[interaction.customId].menuResponse(interaction);
   }
+
   // If interaction is on a button
   if (interaction.isButton()) {
     const id = interaction.customId;
@@ -61,33 +64,42 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Welcome to my server!");
 });
+
 app.get("/events/last", (req, res) => {
   res.send(lastEvent);
 });
+
 app.get("/server/status", (req, res) => {
   res.send(serverStatus);
 });
+
 app.post("/events", async (req, res) => {
+  console.clear();
+  console.log(req.body);
   const event = await req.body;
   handleEvent(event);
   console.log("Request recieved");
   console.log(event);
   res.json({ status: "OK" });
 });
+
 if (!process.env.DISCORD_CHAT_CHANNEL_ID)
   throw new Error("No chat channel id in local enviroment");
+
 let payload;
 client.on("messageCreate", async (message) => {
+  console.log(message);
+
   if (message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID) {
-    payload = `<${message.author.username}> ${message.content}`;
-    // TODO: Make this shit in java instead
-    // fetch(`${serverStatus.ip}:${serverStatus.port}/chat`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-type": "application/json; charset=UTF-8",
-    //   },
-    //   body: payload,
-    // });
+    payload = `DISCORD <${message.author.username}> ${message.content}`;
+
+    fetch(`http://127.0.0.1:3001/chat`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+      body: JSON.stringify(payload)
+    });
   }
 });
 
