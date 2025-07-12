@@ -87,5 +87,17 @@ export const commands: any = {
     response: async (interaction: any) => {
       interaction.reply("mctest");
     }
+  },
+  help: {
+    name: "help",
+    description: "List commands",
+    response: async (interaction: any) => {
+      const result = [];
+      for (const [key, val] of Object.entries(commands)) {
+        console.log(key, val);
+        // result.push()
+      }
+      interaction.reply("result");
+    }
   }
 };
