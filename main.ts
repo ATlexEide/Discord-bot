@@ -90,7 +90,11 @@ let payload;
 client.on("messageCreate", async (message) => {
   console.log(message);
 
-  if (message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID) {
+  if (
+    message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID &&
+    message.author.id !== process.env.BOT_ID
+  ) {
+    console.log(message.author.id);
     payload = `DISCORD <${message.author.username}> ${message.content}`;
 
     fetch(`http://127.0.0.1:3001/chat`, {
