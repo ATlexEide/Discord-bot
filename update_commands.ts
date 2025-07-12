@@ -1,7 +1,7 @@
 import { REST, Routes } from "discord.js";
 import dotenv from "dotenv";
 dotenv.config();
-import { commands } from "./commands/commands.js";
+import { commands } from "./commands/commands.ts";
 if (!process.env.DISCORD_TOKEN) {
   throw new Error("You're being stupid, no token dumbass");
 }
@@ -11,7 +11,7 @@ try {
   console.log("Started refreshing application (/) commands.");
 
   await rest.put(Routes.applicationCommands("1248660696535924858"), {
-    body: commands,
+    body: commands
   });
 
   console.log("Successfully reloaded application (/) commands.");
