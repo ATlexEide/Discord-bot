@@ -5,11 +5,11 @@ import {
   ButtonStyle,
   Component,
   StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
+  StringSelectMenuOptionBuilder
 } from "discord.js";
-import { projects } from "../projects/projects.ts";
+import { projects } from "../projects/projects.js";
 
-export async function createProjectButtons(proj: object) {
+export async function createProjectButtons(proj: any) {
   const deleteButton = new ButtonBuilder()
     .setStyle(ButtonStyle.Danger)
     .setLabel("Remove")
@@ -29,7 +29,7 @@ export async function createProjectButtons(proj: object) {
     response = new ActionRowBuilder().addComponents([
       repoButton,
       previewLinkButton,
-      deleteButton,
+      deleteButton
     ]);
     return response;
   }

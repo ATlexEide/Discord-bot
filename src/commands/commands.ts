@@ -3,10 +3,10 @@ dotenv.config();
 import {
   projectList,
   createProjectButtons
-} from "../action_rows/project-list.ts";
-import { projects } from "../projects/projects.ts";
+} from "../action_rows/project-list.js";
+import { projects } from "../projects/projects.js";
 import { EmbedBuilder } from "@discordjs/builders";
-import { serverStatus } from "../event-handler.ts";
+import { serverStatus } from "../event-handler.js";
 
 export const commands: any = {
   ping: {

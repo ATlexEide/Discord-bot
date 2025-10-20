@@ -9,8 +9,8 @@ import {
   messageLink,
   TextChannel
 } from "discord.js";
-import { commands } from "./commands/commands.ts";
-import { handleEvent, lastEvent, serverStatus } from "./event-handler.ts";
+import { commands } from "./commands/commands.js";
+import { handleEvent, lastEvent, serverStatus } from "./event-handler.js";
 
 /////////
 // Discord Bot
@@ -27,7 +27,7 @@ export const client = new Client({
 //////
 // Load bot
 client.login(process.env.DISCORD_TOKEN);
-client.on("ready", () => {
+client.on("clientReady", () => {
   if (!client.user) throw new Error("No client user");
   console.log(`Logged in as ${client.user.tag}, ready to serve!`);
 });

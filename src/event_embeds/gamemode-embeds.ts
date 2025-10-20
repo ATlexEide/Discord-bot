@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "@discordjs/builders";
 
-export function getGamemodeEmbed(event) {
+export function getGamemodeEmbed(event: any) {
   const chatEmbed = new EmbedBuilder()
     .setAuthor({
       name: event.player,
