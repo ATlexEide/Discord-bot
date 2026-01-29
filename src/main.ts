@@ -1,4 +1,5 @@
-import express from "express";
+const { APIUser } = require("discord-api-types/v10");
+
 import dotenv from "dotenv";
 dotenv.config();
 import {
@@ -9,8 +10,7 @@ import {
   messageLink,
   TextChannel
 } from "discord.js";
-import { commands } from "./commands/commands.js";
-import { handleEvent, lastEvent, serverStatus } from "./event-handler.js";
+import { handleDiscordEvent } from "./discord/event-handler.js";
 
 /////////
 // Discord Bot
@@ -35,52 +35,7 @@ client.on("clientReady", () => {
 //////
 // Listen for interactions
 client.on("interactionCreate", async (interaction) => {
-  if (interaction.isCommand()) {
-    const id = interaction.commandName;
-    const cmd = commands[interaction.commandName];
-    cmd.response(interaction);
-  }
-
-  // If interaction is on a select menu
-  if (interaction.isStringSelectMenu()) {
-    commands[interaction.customId].menuResponse(interaction);
-  }
-
-  // If interaction is on a button
-  if (interaction.isButton()) {
-    const id = interaction.customId;
-    if (id === "remove-proj-message") {
-      interaction.message.delete();
-    }
-  }
-});
-
-////////
-// Node Server
-const app = express();
-const port = 3000;
-
-app.use(express.json());
-app.get("/", (req: any, res: any) => {
-  res.send("Welcome to my server!");
-});
-
-app.get("/events/last", (req: any, res: any) => {
-  res.send(lastEvent);
-});
-
-app.get("/server/status", (req: any, res: any) => {
-  res.send(serverStatus);
-});
-
-app.post("/events", async (req: any, res: any) => {
-  console.clear();
-  console.log(req.body);
-  const event = await req.body;
-  handleEvent(event);
-  console.log("Request recieved");
-  console.log(event);
-  res.json({ status: "OK" });
+  handleDiscordEvent(interaction);
 });
 
 if (!process.env.DISCORD_CHAT_CHANNEL_ID)
@@ -105,8 +60,4 @@ client.on("messageCreate", async (message) => {
       body: JSON.stringify(payload)
     });
   }
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
 });
