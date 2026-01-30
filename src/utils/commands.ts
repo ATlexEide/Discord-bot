@@ -75,7 +75,7 @@ export const commands: any = {
   ip: {
     name: "ip",
     description: "Minecraft server ip",
-    response: async (interaction: Interaction) => {
+    response: async (interaction: any) => {
       if (!serverStatus) {
         interaction.reply("I cant find any ip, is the server running?");
         return;

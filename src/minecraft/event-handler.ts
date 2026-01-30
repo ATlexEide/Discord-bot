@@ -21,7 +21,7 @@ enum ServerStatus {
 
 const cachedEvents: object[] = [];
 let lastEvent: any;
-let serverStatus: string;
+let serverStatus: any;
 export function handleEvent(gameData: any) {
   cacheEvent(gameData);
   if (!process.env.DISCORD_LOG_CHANNEL_ID)
