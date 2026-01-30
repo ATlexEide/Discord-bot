@@ -1,5 +1,3 @@
-const { APIUser } = require("discord-api-types/v10");
-
 import dotenv from "dotenv";
 dotenv.config();
 import {
