@@ -6,7 +6,7 @@ import {
 } from "./minecraft/event-handler.js";
 
 const app = express();
-const port = 3000;
+const port = 1337;
 
 app.use(express.json());
 app.get("/", (req: any, res: any) => {
