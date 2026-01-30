@@ -10,7 +10,14 @@ import { serverStatus } from "../minecraft/event-handler.js";
 import { Interaction } from "discord.js";
 import { refreshCommands } from "./update_commands.js";
 
-export const commands: any = {
+interface ICommand {
+  name: string;
+  description: string;
+  response: Function;
+  menuResponse?: Function;
+}
+
+export const commands: { [id: string]: ICommand } = {
   ping: {
     name: "ping",
     description: "Replies with Pong!",
@@ -19,11 +26,13 @@ export const commands: any = {
       console.log(interaction);
     }
   },
+
   radiocheck: {
     name: "radiocheck",
     description: "Replies with Lima charlie!",
     response: (interaction: any) => interaction.reply("Lima charlie")
   },
+
   date: {
     name: "date",
     description: "Replies with the time!",
@@ -53,7 +62,6 @@ export const commands: any = {
   cat: {
     name: "cat",
     description: "CAT GIFs!",
-    apiKey: process.env.GIPHY_API_KEY,
     response: async (interaction: any) => {
       let data = await fetch(
         `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_KEY}&q=CATS&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
