@@ -1,5 +1,5 @@
 # ---------- Build stage ----------
-FROM node:20-alpine AS builder
+FROM node:lts-alpine3.23 AS builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN npm run build
 
 
 # ---------- Runtime stage ----------
-FROM node:20-alpine
+FROM node:lts-alpine3.23
 
 WORKDIR /app
 
