@@ -3,6 +3,7 @@ dotenv.config();
 import { Client, GatewayIntentBits } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
 import { startServer } from "./server.js";
+import { refreshCommands } from "./utils/update_commands.js";
 
 /////////
 // Discord Bot
@@ -24,6 +25,7 @@ client.on("clientReady", () => {
   console.log(`Logged in as ${client.user.tag}, ready to serve!`);
   console.log("Starting HTTP server");
   startServer();
+  refreshCommands();
 });
 
 //////

@@ -12,7 +12,13 @@ export function handleDiscordEvent(interaction: Interaction) {
 
   // If interaction is on a select menu
   if (interaction.isStringSelectMenu()) {
-    commands[interaction.customId].menuResponse(interaction);
+    if (!interaction) return;
+    if (!commands[interaction.customId]) return;
+    if ("menuResponse" in commands[interaction.customId]) {
+      commands[interaction.customId].menuResponse
+        ? console.log("yay")
+        : console.log("nay");
+    }
   }
 
   // If interaction is on a button
