@@ -14,7 +14,7 @@ export const commands: any = {
     name: "ping",
     description: "Replies with Pong!",
     response: (interaction: any) => {
-      interaction.reply("Pong!");
+      interaction.reply("Pong AAAAAAAAAAAAAAAAAAAAAAA!");
       console.log(interaction);
     }
   },
