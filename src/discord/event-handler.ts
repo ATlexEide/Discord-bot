@@ -2,6 +2,7 @@ import { Interaction } from "discord.js";
 import { commands } from "../utils/commands.js";
 
 export function handleDiscordEvent(interaction: Interaction) {
+  console.log(interaction);
   if (!interaction) throw new Error("No interaction");
   if (interaction.isCommand()) {
     const id = interaction.commandName;
