@@ -8,13 +8,14 @@ import { projects } from "../projects/projects.js";
 import { EmbedBuilder } from "@discordjs/builders";
 import { serverStatus } from "../minecraft/event-handler.js";
 import { Interaction } from "discord.js";
+import { refreshCommands } from "./update_commands.js";
 
 export const commands: any = {
   ping: {
     name: "ping",
     description: "Replies with Pong!",
     response: (interaction: any) => {
-      interaction.reply("Pong AAAAAAAAAAAAAAAAAAAAAAA!");
+      interaction.reply("Pong Again!");
       console.log(interaction);
     }
   },
@@ -104,6 +105,18 @@ export const commands: any = {
         // result.push()
       }
       interaction.reply("result");
+    }
+  },
+
+  refreshCommands: {
+    name: "refresh commands",
+    description: "Refresh commands",
+    response: async (interaction: any) => {
+      const res = await refreshCommands();
+      await interaction.reply("Updating commands");
+      res
+        ? await interaction.editReply("Commands updated")
+        : await interaction.editReply("Updating failed");
     }
   }
 };
