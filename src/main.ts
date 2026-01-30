@@ -1,13 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import {
-  channelLink,
-  Client,
-  GatewayIntentBits,
-  Guild,
-  messageLink,
-  TextChannel
-} from "discord.js";
+import { Client, GatewayIntentBits } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
 
 /////////
