@@ -12,6 +12,9 @@ export function startServer() {
   app.get("/", (req: any, res: any) => {
     res.send("Welcome to my server!");
   });
+  app.get("/test", (req: any, res: any) => {
+    res.send("This is a test yippieeee");
+  });
 
   app.get("/events/last", (req: any, res: any) => {
     res.send(lastEvent);
