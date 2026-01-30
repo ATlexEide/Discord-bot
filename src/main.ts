@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import { Client, GatewayIntentBits } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
+import { startServer } from "./server.js";
 
 /////////
 // Discord Bot
@@ -21,6 +22,8 @@ client.login(process.env.DISCORD_TOKEN);
 client.on("clientReady", () => {
   if (!client.user) throw new Error("No client user");
   console.log(`Logged in as ${client.user.tag}, ready to serve!`);
+  console.log("Starting HTTP server");
+  startServer();
 });
 
 //////
