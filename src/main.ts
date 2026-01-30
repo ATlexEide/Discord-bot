@@ -1,5 +1,3 @@
-const { APIUser } = require("discord-api-types/v10");
-
 import dotenv from "dotenv";
 dotenv.config();
 import {
@@ -38,8 +36,8 @@ client.on("interactionCreate", async (interaction) => {
   handleDiscordEvent(interaction);
 });
 
-if (!process.env.DISCORD_CHAT_CHANNEL_ID)
-  throw new Error("No chat channel id in local enviroment");
+// if (!process.env.DISCORD_CHAT_CHANNEL_ID)
+//   throw new Error("No chat channel id in local enviroment");
 
 let payload;
 client.on("messageCreate", async (message) => {
