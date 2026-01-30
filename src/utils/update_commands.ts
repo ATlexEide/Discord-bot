@@ -1,7 +1,7 @@
 import { REST, Routes } from "discord.js";
 import dotenv from "dotenv";
 dotenv.config();
-import { commands } from "./commands";
+import { commands } from "./commands.js";
 if (!process.env.DISCORD_TOKEN) {
   throw new Error("You're being stupid, no token dumbass");
 }
