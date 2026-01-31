@@ -23,9 +23,7 @@ client.login(process.env.DISCORD_TOKEN);
 client.on("clientReady", () => {
   if (!client.user) throw new Error("No client user");
   console.log(`Logged in as ${client.user.tag}, ready to serve!`);
-  console.log("Starting HTTP server");
   startServer();
-  refreshCommands();
 });
 
 //////
