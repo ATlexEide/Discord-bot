@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+
 dotenv.config();
 import {
   projectList,
@@ -6,39 +7,31 @@ import {
 } from "../action_rows/project-list.js";
 import { projects } from "../projects/projects.js";
 import { EmbedBuilder } from "@discordjs/builders";
-import { serverStatus } from "../minecraft/event-handler.js";
-import { Interaction } from "discord.js";
 import { refreshCommands } from "./update_commands.js";
+import { Interaction, Message } from "discord.js";
 
-interface ICommand {
+export interface ICommand {
   name: string;
   description: string;
   response: Function;
   menuResponse?: Function;
 }
 
-export const commands: { [id: string]: ICommand } = {
+export let commands: { [id: string]: ICommand } = {
   ping: {
     name: "ping",
     description: "Replies with Pong!",
     response: (interaction: any) => {
-      interaction.reply("Pong Again!");
+      interaction.reply("Pong!");
       console.log(interaction);
     }
   },
 
-  radiocheck: {
-    name: "radiocheck",
-    description: "Replies with Lima charlie!",
-    response: (interaction: any) => interaction.reply("Lima charlie")
-  },
-
-  date: {
-    name: "date",
-    description: "Replies with the time!",
-    response: (interaction: any) => {
-      const date = new Date();
-      interaction.reply(`It is now ${date}`);
+  tarkovgod: {
+    name: "tarkovgod",
+    description: "Who is the god of tarkov",
+    response: async (interaction: any) => {
+      interaction.reply({ content: "Terrox is the tarkov god" });
     }
   },
 
@@ -81,50 +74,18 @@ export const commands: { [id: string]: ICommand } = {
     }
   },
 
-  ip: {
-    name: "ip",
-    description: "Minecraft server ip",
-    response: async (interaction: any) => {
-      if (!serverStatus) {
-        interaction.reply("I cant find any ip, is the server running?");
-        return;
-      }
-      if (!serverStatus.ip) interaction.reply(`localhost:${serverStatus.port}`);
-      if (serverStatus.ip)
-        interaction.reply(`${serverStatus.ip}:${serverStatus.port}`);
-    }
-  },
-
-  mctest: {
-    name: "mctest",
-    description: "Testing minecraft server util",
-    response: async (interaction: any) => {
-      interaction.reply("mctest");
-    }
-  },
-
-  help: {
-    name: "help",
-    description: "List commands",
-    response: async (interaction: any) => {
-      const result = [];
-      for (const [key, val] of Object.entries(commands)) {
-        console.log(key, val);
-        // result.push()
-      }
-      interaction.reply("result");
-    }
-  },
-
-  refreshCommands: {
-    name: "refresh commands",
+  refresh: {
+    name: "refresh",
     description: "Refresh commands",
     response: async (interaction: any) => {
       const res = await refreshCommands();
-      await interaction.reply("Updating commands");
+      await interaction.reply({
+        ephemeral: true,
+        content: "Updating commands . . ."
+      });
       res
-        ? await interaction.editReply("Commands updated")
-        : await interaction.editReply("Updating failed");
+        ? await interaction.editReply({ content: "Commands updated" })
+        : await interaction.editReply({ content: "Updating failed" });
     }
   }
 };
