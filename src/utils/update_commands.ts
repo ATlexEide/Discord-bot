@@ -1,26 +1,36 @@
-import { Interaction, REST, Routes } from "discord.js";
+import { REST, Routes } from "discord.js";
+import { commands, ICommand } from "./commands.js";
 import dotenv from "dotenv";
 dotenv.config();
-import { commands } from "./commands.js";
 
 export async function refreshCommands(): Promise<boolean> {
   if (!process.env.DISCORD_TOKEN) {
     throw new Error("You're being stupid, no token dumbass");
   }
+
   const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
   try {
+    let cmdArray: ICommand[] = [];
+    for (const [key, val] of Object.entries(commands)) {
+      cmdArray.push(val);
+    }
     console.log("Started refreshing application (/) commands.");
 
-    await rest.put(Routes.applicationCommands("1248660696535924858"), {
-      body: commands
-    });
+    const id = process.env.BOT_ID;
+    if (!id) throw new Error("No Bot id");
+    await rest.put(
+      Routes.applicationGuildCommands(id, "1440456875320807576" /*GUILD ID*/),
+      {
+        body: cmdArray
+      }
+    );
 
     console.log("Successfully reloaded application (/) commands.");
 
     return true;
-  } catch (error) {
-    console.error(error);
-    return false;
+  } catch (error: any) {
+    throw new Error({ ...error });
   }
+  return false;
 }
