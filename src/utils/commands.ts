@@ -13,6 +13,8 @@ import {
   SlashCommandBuilder,
   MessageFlags
 } from "discord.js";
+import createInformationalEmbed from "../discord/embeds/informationalEmbed.js";
+import createListEmbed from "../discord/embeds/listEmbed.js";
 
 export interface ICommand {
   name: string;
@@ -22,6 +24,21 @@ export interface ICommand {
 }
 
 export let commands: { [id: string]: ICommand } = {
+  help: {
+    name: "help",
+    description: "Lists all commands",
+    response: (interaction: ChatInputCommandInteraction) => {
+      let cmdArr: ICommand[] = [];
+      for (const [key, value] of Object.entries(commands)) {
+        cmdArr.push(value);
+      }
+      interaction.reply({
+        embeds: [createListEmbed("Commands", cmdArr)],
+        flags: MessageFlags.Ephemeral
+      });
+    }
+  },
+
   ping: {
     name: "ping",
     description: "Replies with Pong!",
@@ -86,14 +103,25 @@ export let commands: { [id: string]: ICommand } = {
     description: "Refresh commands",
 
     response: async (interaction: ChatInputCommandInteraction) => {
-      const res = await refreshCommands();
-      await interaction.reply({
-        ephemeral: true,
-        content: "Updating commands . . ."
+      if (!interaction.guild) throw new Error("No guild found");
+
+      const res = await refreshCommands(interaction.guild);
+
+      const embed = createInformationalEmbed({
+        author: interaction.guild.name,
+        title: "Updating commands ... "
       });
+
+      await interaction.reply({
+        embeds: [embed],
+        flags: ["Ephemeral"]
+      });
+
       res
-        ? await interaction.editReply({ content: "Commands updated" })
-        : await interaction.editReply({ content: "Updating failed" });
+        ? embed.setTitle("Commands updated")
+        : embed.setTitle("Failed to update commands");
+
+      await interaction.editReply({ embeds: [embed] });
     }
   },
 
@@ -113,15 +141,15 @@ export let commands: { [id: string]: ICommand } = {
   }
 };
 
-const builder = new SlashCommandBuilder();
-builder
-  .setName("test")
-  .setDescription("test desc")
-  .addStringOption((option) =>
-    option.setName("test option").setDescription("test option")
-  );
-builder.response = (interaction) => {
-  interaction.reply("THIS IS A TEST");
-};
+// const builder = new SlashCommandBuilder();
+// builder
+//   .setName("test")
+//   .setDescription("test desc")
+//   .addStringOption((option) =>
+//     option.setName("test option").setDescription("test option")
+//   );
+// builder.response = (interaction) => {
+//   interaction.reply("THIS IS A TEST");
+// };
 
-commands["test"] = builder;
+// commands["test"] = builder;
