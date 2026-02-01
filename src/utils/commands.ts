@@ -8,7 +8,11 @@ import {
 import { projects } from "../projects/projects.js";
 import { EmbedBuilder } from "@discordjs/builders";
 import { refreshCommands } from "./update_commands.js";
-import { Interaction, Message } from "discord.js";
+import {
+  ChatInputCommandInteraction,
+  SlashCommandBuilder,
+  MessageFlags
+} from "discord.js";
 
 export interface ICommand {
   name: string;
@@ -21,8 +25,11 @@ export let commands: { [id: string]: ICommand } = {
   ping: {
     name: "ping",
     description: "Replies with Pong!",
-    response: (interaction: any) => {
-      interaction.reply("Pong!");
+    response: (interaction: ChatInputCommandInteraction) => {
+      interaction.reply({
+        content: "pong",
+        flags: MessageFlags.Ephemeral
+      });
       console.log(interaction);
     }
   },
@@ -77,7 +84,8 @@ export let commands: { [id: string]: ICommand } = {
   refresh: {
     name: "refresh",
     description: "Refresh commands",
-    response: async (interaction: any) => {
+
+    response: async (interaction: ChatInputCommandInteraction) => {
       const res = await refreshCommands();
       await interaction.reply({
         ephemeral: true,
@@ -87,5 +95,33 @@ export let commands: { [id: string]: ICommand } = {
         ? await interaction.editReply({ content: "Commands updated" })
         : await interaction.editReply({ content: "Updating failed" });
     }
+  },
+
+  map: {
+    name: "map",
+    description: "show a tarkov map",
+    response: async (interaction: any) => {
+      switch ("map") {
+        case "map":
+          // files: [{ attachment: "YourImage.jpg" }];
+          break;
+
+        default:
+          break;
+      }
+    }
   }
 };
+
+const builder = new SlashCommandBuilder();
+builder
+  .setName("test")
+  .setDescription("test desc")
+  .addStringOption((option) =>
+    option.setName("test option").setDescription("test option")
+  );
+builder.response = (interaction) => {
+  interaction.reply("THIS IS A TEST");
+};
+
+commands["test"] = builder;
