@@ -37,8 +37,6 @@ client.on("interactionCreate", async (interaction) => {
 
 let payload;
 client.on("messageCreate", async (message) => {
-  console.log(message);
-
   if (
     message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID &&
     message.author.id !== process.env.BOT_ID
