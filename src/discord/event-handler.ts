@@ -5,8 +5,7 @@ export function handleDiscordEvent(interaction: Interaction) {
   if (!interaction) throw new Error("No interaction");
   if (interaction.isCommand()) {
     const id = interaction.commandName;
-    console.log(id);
-    console.log(interaction);
+    console.log(`${interaction.user.displayName} used ${id}`);
     const cmd = commands[interaction.commandName];
     cmd.response(interaction);
   }
