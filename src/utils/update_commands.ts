@@ -1,9 +1,9 @@
-import { REST, Routes } from "discord.js";
+import { Guild, InteractionCallback, REST, Routes } from "discord.js";
 import { commands, ICommand } from "./commands.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-export async function refreshCommands(): Promise<boolean> {
+export async function refreshCommands(guild: Guild): Promise<boolean> {
   if (!process.env.DISCORD_TOKEN) {
     throw new Error("You're being stupid, no token dumbass");
   }
@@ -19,12 +19,11 @@ export async function refreshCommands(): Promise<boolean> {
 
     const id = process.env.BOT_ID;
     if (!id) throw new Error("No Bot id");
-    await rest.put(
-      Routes.applicationGuildCommands(id, "1440456875320807576" /*GUILD ID*/),
-      {
-        body: cmdArray
-      }
-    );
+    if (!guild) throw new Error("No Guild");
+
+    await rest.put(Routes.applicationGuildCommands(id, guild.id /*GUILD ID*/), {
+      body: cmdArray
+    });
 
     console.log("Successfully reloaded application (/) commands.");
 
