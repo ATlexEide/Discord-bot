@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "tsc && cp -r ./src/assets ./dist || copy -r ./src/assets ./dist",
     "start": "node --trace-warnings dist/main.js"
   },
   "keywords": [],
