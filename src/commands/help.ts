@@ -15,8 +15,7 @@ import refresh from "./refresh.js";
 import map from "./map.js";
 import hiLove from "./hiLove.js";
 
-export let cmdArr = [ping, tarkovgod, cat, refresh, map, hiLove];
-export default {
+export const help = {
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription("Lists all commands"),
@@ -28,3 +27,5 @@ export default {
     });
   }
 };
+
+export let cmdArr = [help, ping, tarkovgod, cat, refresh, map, hiLove];
