@@ -1,7 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config();
-// @ts-ignore
-import logo from "../woods.png";
 
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
@@ -22,9 +20,9 @@ export default {
     console.log(map?.value);
     switch (map?.value) {
       case "woods":
-        // fileURL = "./assets/images/woods.png";
+        fileURL = "./dist/assets/images/woods.png";
         interaction.reply({
-          files: [{ attachment: logo }]
+          files: [{ attachment: fileURL }]
         });
         break;
 
