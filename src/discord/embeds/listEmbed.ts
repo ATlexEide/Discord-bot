@@ -1,9 +1,8 @@
 import { EmbedBuilder } from "@discordjs/builders";
-import { ICommand } from "../../utils/commands.js";
 
-export default function createListEmbed(title: string, listItems: ICommand[]) {
+export default function createListEmbed(title: string, listItems: any) {
   const test = listItems
-    .map((item: ICommand) => `\n### ${item.name} \n ${item.description}\n`)
+    .map((item: any) => `\n### ${item.name} \n ${item.description}\n`)
     .join(" ");
   const embed = new EmbedBuilder()
     .setTitle(title)
