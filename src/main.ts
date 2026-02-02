@@ -3,8 +3,16 @@ dotenv.config();
 import { Client, GatewayIntentBits } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
 import { startServer } from "./server.js";
-import { refreshCommands } from "./utils/update_commands.js";
-import { cmdArr } from "./commands/help.js";
+
+import ping from "./commands/ping.js";
+import tarkovgod from "./commands/tarkovgod.js";
+import cat from "./commands/cat.js";
+import refresh from "./commands/refresh.js";
+import map from "./commands/map.js";
+import hiLove from "./commands/hiLove.js";
+import help from "./commands/help.js";
+
+export let cmdArr = [help, ping, tarkovgod, cat, refresh, map, hiLove];
 
 /////////
 // Discord Bot
