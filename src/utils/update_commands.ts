@@ -1,6 +1,6 @@
-import { Guild, InteractionCallback, REST, Routes } from "discord.js";
-import { commands, ICommand } from "./commands.js";
+import { Guild, REST, Routes } from "discord.js";
 import dotenv from "dotenv";
+import { commands } from "../main.js";
 dotenv.config();
 
 export async function refreshCommands(guild: Guild): Promise<boolean> {
@@ -11,9 +11,11 @@ export async function refreshCommands(guild: Guild): Promise<boolean> {
   const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
   try {
-    let cmdArray: ICommand[] = [];
+    // console.log(commands);
+    let cmdArray: any = [];
     for (const [key, val] of Object.entries(commands)) {
-      cmdArray.push(val);
+      // @ts-ignore
+      cmdArray.push(val.data);
     }
     console.log("Started refreshing application (/) commands.");
 
@@ -29,6 +31,7 @@ export async function refreshCommands(guild: Guild): Promise<boolean> {
 
     return true;
   } catch (error: any) {
+    console.log(error);
     throw new Error({ ...error });
   }
   return false;
