@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && cp -r ./src/assets ./dist || copy -r ./src/assets ./dist",
+    "build": "tsc",
     "start": "node --trace-warnings dist/main.js"
   },
   "keywords": [],
@@ -15,13 +15,13 @@
   "dependencies": {
     "deno": "^2.1.10",
     "discord-api-types": "^0.38.38",
+    "discord.js": "^14.23.2",
     "docker": "^1.0.0",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "discord.js": "^14.23.2"
+    "dotenv": "^16.6.1",
+    "express": "^4.21.1"
   },
   "devDependencies": {
-    "typescript": "^5.2.2",
-    "@types/express": "^5.0.3"
+    "@types/express": "^5.0.3",
+    "typescript": "^5.2.2"
   }
 }
