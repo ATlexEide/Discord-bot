@@ -4,6 +4,7 @@ import { Client, GatewayIntentBits } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
 import { startServer } from "./server.js";
 import { refreshCommands } from "./utils/update_commands.js";
+import { cmdArr } from "./commands/help.js";
 
 /////////
 // Discord Bot
@@ -16,6 +17,8 @@ export const client = new Client({
     GatewayIntentBits.MessageContent
   ]
 });
+
+const testdata = {};
 
 //////
 // Load bot
@@ -31,6 +34,11 @@ client.on("clientReady", () => {
 client.on("interactionCreate", async (interaction) => {
   handleDiscordEvent(interaction);
 });
+
+export let commands: any = {};
+for (let i = 0; i < cmdArr.length; i++) {
+  commands[cmdArr[i].data.name] = cmdArr[i];
+}
 
 // if (!process.env.DISCORD_CHAT_CHANNEL_ID)
 //   throw new Error("No chat channel id in local enviroment");
