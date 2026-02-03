@@ -23,11 +23,11 @@ export function handleDiscordEvent(interaction: Interaction) {
   //   }
   // }
 
-  // // If interaction is on a button
-  // if (interaction.isButton()) {
-  //   const id = interaction.customId;
-  //   if (id === "remove-proj-message") {
-  //     interaction.message.delete();
-  //   }
-  // }
+  // If interaction is on a button
+  if (interaction.isButton()) {
+    const id = interaction.customId;
+    if (id === "delete-map") {
+      interaction.message.delete();
+    }
+  }
 }
