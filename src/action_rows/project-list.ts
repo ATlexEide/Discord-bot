@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { projects } from "../projects/projects.js";
 
-export async function  (proj: any) {
+export async function createProjectButtons(proj: any) {
   const deleteButton = new ButtonBuilder()
     .setStyle(ButtonStyle.Danger)
     .setLabel("Remove")
