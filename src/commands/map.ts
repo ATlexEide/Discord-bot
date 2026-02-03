@@ -15,29 +15,13 @@ export default {
     .setName("map")
     .setDescription("show a tarkov map")
     .addStringOption((Option) =>
-      Option.setName("map").setDescription("location").setRequired(true)
+      Option.setName("location").setDescription("location").setRequired(true)
     ),
 
   async response(interaction: ChatInputCommandInteraction) {
     if (!interaction.options.get("map")) return;
 
-    const map = interaction.options.get("map");
-    let fileURL: string;
-    console.log("///// MAP /////");
-    console.log(map?.value);
-
-    switch (map?.value) {
-      case "woods":
-        interaction.reply(
-          createMapEmbed(
-            "https://static.wikia.nocookie.net/escapefromtarkov_gamepedia/images/0/05/Glory4lyfeWoods_map_v4_marked.png"
-          )
-        );
-        break;
-
-      default:
-        break;
-    }
+    const map = interaction.options.get("location")?.value;
 
     const deleteBtn = new ButtonBuilder()
       .setCustomId("delete-map")
@@ -47,6 +31,12 @@ export default {
     const row = new ActionRowBuilder().addComponents(deleteBtn);
 
     await interaction.reply({
+      embeds: [
+        createMapEmbed(
+          "https://static.wikia.nocookie.net/escapefromtarkov_gamepedia/images/0/05/Glory4lyfeWoods_map_v4_marked.png"
+        )
+      ],
+      //@ts-ignore
       components: [row]
     });
   }
