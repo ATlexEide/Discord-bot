@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { Client, GatewayIntentBits } from "discord.js";
-import { handleDiscordEvent } from "./discord/event-handler.js";
-import { startServer } from "./server.js";
+import { handleDiscordEvent } from "./discord/event-handler.ts";
+import { startServer } from "./server.ts";
 
 import ping from "./commands/ping.js";
 import tarkovgod from "./commands/tarkovgod.js";
