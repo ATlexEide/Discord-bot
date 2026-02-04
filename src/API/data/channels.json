@@ -1,0 +1,7 @@
+{
+  "minecraft_server": {
+    "chat_channel": "",
+    "log_channel": "",
+    "whitelist_channel": ""
+  }
+}
