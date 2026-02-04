@@ -10,10 +10,8 @@ export function handleDiscordEvent(interaction: Interaction) {
     const cmd = cmdArr.find(
       (item) => item.name === interaction.commandName
     )?.command;
-    console.log(cmd);
 
     if (!cmd) throw new Error("Command not found");
-    console.log(cmd);
     // @ts-ignore
     cmd.response(interaction);
   }
