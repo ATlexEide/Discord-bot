@@ -45,11 +45,6 @@ client.on("interactionCreate", async (interaction) => {
   handleDiscordEvent(interaction);
 });
 
-export let commands: any = {};
-for (let i = 0; i < cmdArr.length; i++) {
-  commands[cmdArr[i].data.name] = cmdArr[i];
-}
-
 // if (!process.env.DISCORD_CHAT_CHANNEL_ID)
 //   throw new Error("No chat channel id in local enviroment");
 
