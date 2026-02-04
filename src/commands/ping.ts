@@ -17,6 +17,5 @@ export default {
       content: "pong but from new file",
       flags: MessageFlags.Ephemeral
     });
-    console.log(interaction);
   }
 };

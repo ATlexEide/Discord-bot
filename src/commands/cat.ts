@@ -18,13 +18,10 @@ export default {
     const currCat = await cat_data.data[
       Math.floor(Math.random() * cat_data.data.length)
     ];
-    console.log(cat_data.data[0]);
     const catGIF = currCat.images.fixed_width_downsampled.url;
     const catEmbed = new EmbedBuilder()
       .setTitle(currCat.title)
       .setImage(catGIF);
-    console.clear();
-    console.log(currCat);
     interaction.reply({ embeds: [catEmbed] });
   }
 };

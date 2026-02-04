@@ -10,6 +10,5 @@ export default function createListEmbed(title: string, listItems: any) {
   const embed = new EmbedBuilder()
     .setTitle(title)
     .setDescription(test.toString());
-  console.log(test);
   return embed;
 }

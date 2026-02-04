@@ -11,7 +11,6 @@ export async function refreshCommands(guild: Guild): Promise<boolean> {
   const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
   try {
-    // console.log(commands);
     let cmdArray: any = [];
     cmdArr.map((cmd) => cmdArray.push(cmd.command.data));
     console.log("Started refreshing application (/) commands.");
