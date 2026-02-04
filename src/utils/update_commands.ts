@@ -1,6 +1,6 @@
 import { Guild, REST, Routes } from "discord.js";
 import dotenv from "dotenv";
-import { commands } from "../main.js";
+import { cmdArr } from "../main.ts";
 dotenv.config();
 
 export async function refreshCommands(guild: Guild): Promise<boolean> {
@@ -13,10 +13,7 @@ export async function refreshCommands(guild: Guild): Promise<boolean> {
   try {
     // console.log(commands);
     let cmdArray: any = [];
-    for (const [key, val] of Object.entries(commands)) {
-      // @ts-ignore
-      cmdArray.push(val.data);
-    }
+    cmdArr.map((cmd) => cmdArray.push(cmd.command.data));
     console.log("Started refreshing application (/) commands.");
 
     const id = process.env.BOT_ID;

@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { client } from "../main.js";
-import { getConnectionEmbed } from "./event_embeds/connection-embed.js";
-import { getGamemodeEmbed } from "./event_embeds/gamemode-embeds.js";
-import { getServerStatusEmbed } from "./event_embeds/serverstatus-embed.js";
-import { getChatEmbed } from "./event_embeds/chat-embed.js";
+import { client } from "../main.ts";
+import { getConnectionEmbed } from "./event_embeds/connection-embed.ts";
+import { getGamemodeEmbed } from "./event_embeds/gamemode-embeds.ts";
+import { getServerStatusEmbed } from "./event_embeds/serverstatus-embed.ts";
+import { getChatEmbed } from "./event_embeds/chat-embed.ts";
 export { lastEvent, serverStatus };
 
 function cacheEvent(event: any) {

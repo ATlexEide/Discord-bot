@@ -3,8 +3,8 @@ dotenv.config();
 
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
-import { refreshCommands } from "../utils/update_commands.js";
-import createInformationalEmbed from "../discord/embeds/informationalEmbed.js";
+import { refreshCommands } from "../utils/update_commands.ts";
+import createInformationalEmbed from "../discord/embeds/informationalEmbed.ts";
 
 export default {
   data: new SlashCommandBuilder()
