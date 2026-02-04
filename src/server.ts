@@ -3,7 +3,7 @@ import {
   handleEvent,
   lastEvent,
   serverStatus
-} from "./minecraft/event-handler.ts";
+} from "./minecraft/event-handler.js";
 export function startServer() {
   const port = 1337;
   const app = express();

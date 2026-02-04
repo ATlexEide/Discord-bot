@@ -1,18 +1,18 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { Client, GatewayIntentBits } from "discord.js";
-import { handleDiscordEvent } from "./discord/event-handler.ts";
-import { startServer } from "./server.ts";
+import { handleDiscordEvent } from "./discord/event-handler.js";
+import { startServer } from "./server.js";
 
-import ping from "./commands/ping.ts";
-import tarkovgod from "./commands/tarkovgod.ts";
-import cat from "./commands/cat.ts";
-import refresh from "./commands/refresh.ts";
-import map from "./commands/map.ts";
-import hiLove from "./commands/hiLove.ts";
-import help from "./commands/help.ts";
+import ping from "./commands/ping.js";
+import tarkovgod from "./commands/tarkovgod.js";
+import cat from "./commands/cat.js";
+import refresh from "./commands/refresh.js";
+import map from "./commands/map.js";
+import hiLove from "./commands/hiLove.js";
+import help from "./commands/help.js";
 
-import test from "./commands/test.ts";
+import test from "./commands/test.js";
 
 export let cmdArr = [
   { name: "help", command: help },

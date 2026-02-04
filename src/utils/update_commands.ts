@@ -1,6 +1,6 @@
 import { Guild, REST, Routes } from "discord.js";
 import dotenv from "dotenv";
-import { cmdArr } from "../main.ts";
+import { cmdArr } from "../main.js";
 dotenv.config();
 
 export async function refreshCommands(guild: Guild): Promise<boolean> {

@@ -2,7 +2,7 @@
   "name": "discordbot",
   "version": "1.0.0",
   "type": "module",
-  "main": "main.ts",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
@@ -14,15 +14,15 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "deno": "^2.1.10",
     "discord-api-types": "^0.38.38",
     "discord.js": "^14.23.2",
-    "docker": "^1.0.0",
     "dotenv": "^16.6.1",
     "express": "^4.21.1"
   },
   "devDependencies": {
+    "docker": "^1.0.0",
+    "deno": "^2.1.10",
     "@types/express": "^5.0.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.9.3"
   }
 }

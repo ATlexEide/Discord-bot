@@ -6,9 +6,9 @@ import {
   SlashCommandBuilder,
   MessageFlags
 } from "discord.js";
-import createListEmbed from "../discord/embeds/listEmbed.ts";
+import createListEmbed from "../discord/embeds/listEmbed.js";
 
-import { cmdArr } from "../main.ts";
+import { cmdArr } from "../main.js";
 
 export default {
   data: new SlashCommandBuilder()

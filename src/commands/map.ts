@@ -8,7 +8,7 @@ import {
   ChatInputCommandInteraction,
   SlashCommandBuilder
 } from "discord.js";
-import createMapEmbed from "../discord/embeds/mapEmbed.ts";
+import createMapEmbed from "../discord/embeds/mapEmbed.js";
 
 export default {
   data: new SlashCommandBuilder()

@@ -7,7 +7,7 @@ import {
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder
 } from "discord.js";
-import { projects } from "../projects/projects.ts";
+import { projects } from "../projects/projects.js";
 
 export async function createProjectButtons(proj: any) {
   const deleteButton = new ButtonBuilder()

@@ -1,5 +1,5 @@
 import { Interaction } from "discord.js";
-import { cmdArr } from "../main.ts";
+import { cmdArr } from "../main.js";
 
 export function handleDiscordEvent(interaction: Interaction) {
   if (!interaction) throw new Error("No interaction");
