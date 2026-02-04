@@ -1,5 +1,5 @@
 import { Interaction } from "discord.js";
-import { commands } from "../main.js";
+import { cmdArr } from "../main.ts";
 
 export function handleDiscordEvent(interaction: Interaction) {
   if (!interaction) throw new Error("No interaction");
@@ -7,12 +7,18 @@ export function handleDiscordEvent(interaction: Interaction) {
     const id = interaction.commandName;
     console.log(`${interaction.user.displayName} used ${id}`);
 
-    const cmd = commands[interaction.commandName];
+    const cmd = cmdArr.find(
+      (item) => item.name === interaction.commandName
+    )?.command;
+    console.log(cmd);
 
-    if (cmd.response) cmd.response(interaction);
+    if (!cmd) throw new Error("Command not found");
+    console.log(cmd);
+    // @ts-ignore
+    cmd.response(interaction);
   }
 
-  // // If interaction is on a select menu
+  // If interaction is on a select menu
   // if (interaction.isStringSelectMenu()) {
   //   if (!interaction) return;
   //   if (!commands[interaction.customId]) return;
