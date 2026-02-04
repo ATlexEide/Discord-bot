@@ -14,7 +14,15 @@ import help from "./commands/help.ts";
 
 import test from "./commands/test.ts";
 
-export let cmdArr = [help, ping, tarkovgod, cat, refresh, map, hiLove];
+export let cmdArr = [
+  { name: "help", command: help },
+  { name: "ping", command: ping },
+  { name: "tarkovgod", command: tarkovgod },
+  { name: "cat", command: cat },
+  { name: "refresh", command: refresh },
+  { name: "map", command: map },
+  { name: "hiLove", command: hiLove }
+];
 
 /////////
 // Discord Bot
