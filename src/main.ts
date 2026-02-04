@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import { Client, GatewayIntentBits } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
-import { startServer } from "./server.js";
+import { startServer } from "./API/server.js";
 
 import ping from "./commands/ping.js";
 import tarkovgod from "./commands/tarkovgod.js";
@@ -11,8 +11,6 @@ import refresh from "./commands/refresh.js";
 import map from "./commands/map.js";
 import hiLove from "./commands/hiLove.js";
 import help from "./commands/help.js";
-
-import test from "./commands/test.js";
 
 export let cmdArr = [
   { name: "help", command: help },
@@ -23,7 +21,6 @@ export let cmdArr = [
   { name: "map", command: map },
   { name: "hiLove", command: hiLove }
 ];
-
 /////////
 // Discord Bot
 export const client = new Client({
@@ -57,6 +54,10 @@ client.on("interactionCreate", async (interaction) => {
 
 let payload;
 client.on("messageCreate", async (message) => {
+  if (message.content === "!setLog") {
+    // setLogChannelId(message.channelId);
+    message.reply("Set this as the server log channel");
+  }
   if (
     message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID &&
     message.author.id !== process.env.BOT_ID
