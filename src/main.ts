@@ -29,8 +29,6 @@ export const client = new Client({
   ]
 });
 
-const testdata = {};
-
 //////
 // Load bot
 client.login(process.env.DISCORD_TOKEN);
