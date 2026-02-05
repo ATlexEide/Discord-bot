@@ -4,14 +4,16 @@ dotenv.config();
 import {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
-  MessageFlags
+  MessageFlags,
+  PermissionFlagsBits
 } from "discord.js";
 import { db } from "../main.js";
 
 export default {
   data: new SlashCommandBuilder()
     .setName("setchatchannel")
-    .setDescription("Sets this channel as the minecraft chat channel"),
+    .setDescription("Sets this channel as the minecraft chat channel")
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   async response(interaction: ChatInputCommandInteraction) {
     db.connect();
