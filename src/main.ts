@@ -73,25 +73,31 @@ client.on("interactionCreate", async (interaction) => {
 // if (!process.env.DISCORD_CHAT_CHANNEL_ID)
 //   throw new Error("No chat channel id in local enviroment");
 
-let payload;
 client.on("messageCreate", async (message) => {
-  if (message.content === "!setLog") {
-    // setLogChannelId(message.channelId);
-    message.reply("Set this as the server log channel");
-  }
-  if (
-    message.channelId === process.env.DISCORD_CHAT_CHANNEL_ID &&
-    message.author.id !== process.env.BOT_ID
-  ) {
-    console.log(message.author.id);
-    payload = `DISCORD <${message.author.username}> ${message.content}`;
-
-    fetch(`http://127.0.0.1:3001/chat`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      },
-      body: JSON.stringify(payload)
-    });
-  }
+  if (message.author.bot) return;
+  let payload = `${message.author.displayName} | ${message.content}`;
+  db.query(
+    `SELECT chat_channel_id FROM guilds WHERE guildId = ${message.guildId}`,
+    (err, res) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      // @ts-expect-error
+      if (!res[0]) {
+        console.error(
+          `couldnt find chat channel for guild id ${message.guildId}`
+        );
+      }
+      // @ts-expect-error
+      if (message.channelId === res[0].chat_channel_id)
+        fetch(`http://127.0.0.1:3001/chat`, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          },
+          body: JSON.stringify(payload)
+        });
+    }
+  );
 });
