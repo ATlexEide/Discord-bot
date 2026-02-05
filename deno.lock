@@ -1340,12 +1340,15 @@
     "packageJson": {
       "dependencies": [
         "npm:@types/express@^5.0.3",
+        "npm:@types/mysql@^2.15.27",
+        "npm:@types/node@^25.2.0",
         "npm:deno@^2.1.10",
         "npm:discord-api-types@~0.38.38",
         "npm:discord.js@^14.23.2",
         "npm:docker@1",
         "npm:dotenv@^16.6.1",
         "npm:express@^4.21.1",
+        "npm:mysql2@^3.16.3",
         "npm:typescript@^5.9.3"
       ]
     }
