@@ -11,6 +11,9 @@ import refresh from "./commands/refresh.js";
 import map from "./commands/map.js";
 import hiLove from "./commands/hiLove.js";
 import help from "./commands/help.js";
+import setchatchannel from "./commands/setchatchannel.js";
+import setlogchannel from "./commands/setlogchannel.js";
+import setwhitelistchannel from "./commands/setwhitelistchannel.js";
 
 export let cmdArr = [
   { name: "help", command: help },
@@ -19,8 +22,26 @@ export let cmdArr = [
   { name: "cat", command: cat },
   { name: "refresh", command: refresh },
   { name: "map", command: map },
-  { name: "hiLove", command: hiLove }
+  { name: "hiLove", command: hiLove },
+  { name: "setchatchannel", command: setchatchannel },
+  { name: "setlogchannel", command: setlogchannel },
+  { name: "setwhitelistchannel", command: setwhitelistchannel }
 ];
+
+// Source - https://stackoverflow.com/a/5818884
+// Posted by mak, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-02-05, License - CC BY-SA 3.0
+
+import mysql from "mysql2";
+
+export const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE
+});
+
 /////////
 // Discord Bot
 export const client = new Client({
