@@ -17,7 +17,7 @@ export function startServer() {
   app.use(express.json());
 
   app.get("/channels", (req: any, res: any) => {
-    res.send();
+    res.send().catch((e: Error) => console.log(e));
   });
 
   app.get("/", (req: any, res: any) => {
@@ -25,15 +25,15 @@ export function startServer() {
   });
 
   app.post("/test", (req: any, res: any) => {
-    res.send("This is a test yippieeee");
+    res.send("This is a test yippieeee").catch((e: Error) => console.log(e));
   });
 
   app.get("/events/last", (req: any, res: any) => {
-    res.send("lastEvent");
+    res.send("lastEvent").catch((e: Error) => console.log(e));
   });
 
   app.get("/server/status", (req: any, res: any) => {
-    res.send("serverStatus");
+    res.send("serverStatus").catch((e: Error) => console.log(e));
   });
 
   app.post("/chat", async (req: any, res: any) => {
