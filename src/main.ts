@@ -15,6 +15,7 @@ import setchatchannel from "./commands/setchatchannel.js";
 import setlogchannel from "./commands/setlogchannel.js";
 import setwhitelistchannel from "./commands/setwhitelistchannel.js";
 import army from "./commands/army.js";
+import test from "./commands/test.js";
 
 export let cmdArr = [
   { name: "help", command: help },
@@ -27,7 +28,8 @@ export let cmdArr = [
   { name: "setchatchannel", command: setchatchannel },
   { name: "setlogchannel", command: setlogchannel },
   { name: "setwhitelistchannel", command: setwhitelistchannel },
-  { name: "army", command: army }
+  { name: "army", command: army },
+  { name: "test", command: test }
 ];
 
 // Source - https://stackoverflow.com/a/5818884
