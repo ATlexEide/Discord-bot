@@ -32,10 +32,6 @@ export let cmdArr = [
   { name: "test", command: test }
 ];
 
-// Source - https://stackoverflow.com/a/5818884
-// Posted by mak, modified by community. See post 'Timeline' for change history
-// Retrieved 2026-02-05, License - CC BY-SA 3.0
-
 import mysql from "mysql2";
 
 export const db = mysql.createConnection({
