@@ -4,8 +4,10 @@ dotenv.config();
 import {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
-  MessageFlags
+  MessageFlags,
+  messageLink
 } from "discord.js";
+import { globalErrorHandler } from "../main.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -13,9 +15,15 @@ export default {
     .setDescription("Replies with Pong!"),
 
   async response(interaction: ChatInputCommandInteraction) {
-    interaction.reply({
-      content: "pong but from new file",
-      flags: MessageFlags.Ephemeral
-    });
+    try {
+      throw new Error("test error");
+
+      interaction.reply({
+        content: "pong but from new file",
+        flags: MessageFlags.Ephemeral
+      });
+    } catch (error: any) {
+      globalErrorHandler(error);
+    }
   }
 };
