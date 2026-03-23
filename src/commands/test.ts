@@ -10,7 +10,9 @@ import {
 } from "discord.js";
 
 export default {
-  data: new SlashCommandBuilder().setName("test").setDescription("test"),
+  data: new SlashCommandBuilder()
+    .setName("test")
+    .setDescription("Test command for development"),
 
   async response() {
     const channel = client.channels.cache.get("1466784440339664971");
