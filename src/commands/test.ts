@@ -1,13 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { client } from "../main.js";
-import {
-  ChannelManager,
-  ChatInputCommandInteraction,
-  GuildChannel,
-  SlashCommandBuilder,
-  TextChannel
-} from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
   data: new SlashCommandBuilder()
