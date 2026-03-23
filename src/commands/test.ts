@@ -15,6 +15,6 @@ export default {
   async response() {
     const channel = client.channels.cache.get("1466784440339664971");
     // @ts-expect-error
-    channel?.send("Bot started lol");
+    channel?.send("Bot started lol").catch((e: Error) => console.log(e));
   }
 };
