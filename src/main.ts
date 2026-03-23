@@ -14,6 +14,7 @@ import help from "./commands/help.js";
 import setchatchannel from "./commands/setchatchannel.js";
 import setlogchannel from "./commands/setlogchannel.js";
 import setwhitelistchannel from "./commands/setwhitelistchannel.js";
+import army from "./commands/army.js";
 
 export let cmdArr = [
   { name: "help", command: help },
@@ -25,7 +26,8 @@ export let cmdArr = [
   { name: "hiLove", command: hiLove },
   { name: "setchatchannel", command: setchatchannel },
   { name: "setlogchannel", command: setlogchannel },
-  { name: "setwhitelistchannel", command: setwhitelistchannel }
+  { name: "setwhitelistchannel", command: setwhitelistchannel },
+  { name: "army", command: army }
 ];
 
 // Source - https://stackoverflow.com/a/5818884
@@ -101,3 +103,16 @@ client.on("messageCreate", async (message) => {
     }
   );
 });
+
+export function globalErrorHandler(error: any) {
+  console.log(error.message);
+  for (const [key, val] of Object.entries(error)) {
+    console.log(key, val);
+  }
+  // const channel = client.channels.cache.get("1466784440339664971");
+  // // @ts-expect-error
+  // channel.send(Object.keys(error) ? error : "hmmm");
+  // // @ts-expect-error
+  // channel.send("yippie");
+  // console.log(error);
+}
