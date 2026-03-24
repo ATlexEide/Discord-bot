@@ -9,9 +9,11 @@ import {
 } from "discord.js";
 import { db } from "../main.js";
 
+const name: string = "setchatchannel";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("setchatchannel")
+    .setName(name)
     .setDescription("Sets this channel as the minecraft chat channel")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
