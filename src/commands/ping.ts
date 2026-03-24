@@ -9,9 +9,11 @@ import {
 } from "discord.js";
 import { globalErrorHandler } from "../main.js";
 
+const name: string = "ping";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("ping")
+    .setName(name)
     .setDescription("Replies with Pong!"),
 
   async response(interaction: ChatInputCommandInteraction) {
