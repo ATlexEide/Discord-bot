@@ -1,16 +1,16 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { client } from "../main.js";
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
+const name: string = "test";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("test")
+    .setName(name)
     .setDescription("Test command for development"),
 
-  async response() {
-    const channel = client.channels.cache.get("1466784440339664971");
-    // @ts-expect-error
-    channel?.send("Bot started lol").catch((e: Error) => console.log(e));
+  async response(interaction: ChatInputCommandInteraction) {
+    interaction.reply("YIPPIEE").catch((e: Error) => console.log(e));
   }
 };
