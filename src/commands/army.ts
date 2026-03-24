@@ -3,9 +3,11 @@ dotenv.config();
 
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
+const name: string = "army";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("army")
+    .setName(name)
     .setDescription("Velvet's army of children!"),
 
   async response(interaction: ChatInputCommandInteraction) {
