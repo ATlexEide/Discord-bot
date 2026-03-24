@@ -3,9 +3,11 @@ dotenv.config();
 
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
+const name: string = "tarkovgod";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("tarkovgod")
+    .setName(name)
     .setDescription("Who is the god of tarkov"),
 
   async response(interaction: ChatInputCommandInteraction) {
