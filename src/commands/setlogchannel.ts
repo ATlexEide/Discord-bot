@@ -9,9 +9,11 @@ import {
 } from "discord.js";
 import { db } from "../main.js";
 
+const name: string = "setlogchannel";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("setlogchannel")
+    .setName(name)
     .setDescription("Sets this channel as the minecraft log channel")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
