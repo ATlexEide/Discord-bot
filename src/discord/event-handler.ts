@@ -5,11 +5,7 @@ export function handleDiscordEvent(interaction: Interaction) {
   if (!interaction) throw new Error("No interaction");
   if (interaction.isCommand()) {
     const id = interaction.commandName;
-    console.log(`${interaction.user.displayName} used ${id}`);
-
-    const cmd = cmdArr.find(
-      (item) => item.name === interaction.commandName
-    )?.command;
+    const cmd = cmdArr.find((item) => item.name === interaction.commandName);
 
     if (!cmd) throw new Error("Command not found");
     // @ts-ignore

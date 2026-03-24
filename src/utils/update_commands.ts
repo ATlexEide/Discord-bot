@@ -11,19 +11,18 @@ export async function refreshCommands(guild: Guild): Promise<boolean> {
   const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
   try {
-    let cmdArray: any = [];
-    cmdArr.map((cmd) => cmdArray.push(cmd.command.data));
-    console.log("Started refreshing application (/) commands.");
+    let _cmdArray: any = [];
+    cmdArr.map((cmd) => {
+      _cmdArray.push(cmd.data);
+    });
 
     const id = process.env.BOT_ID;
     if (!id) throw new Error("No Bot id");
     if (!guild) throw new Error("No Guild");
 
     await rest.put(Routes.applicationGuildCommands(id, guild.id /*GUILD ID*/), {
-      body: cmdArray
+      body: _cmdArray
     });
-
-    console.log("Successfully reloaded application (/) commands.");
 
     return true;
   } catch (error: any) {

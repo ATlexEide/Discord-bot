@@ -3,6 +3,7 @@ dotenv.config();
 import { Client, GatewayIntentBits } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
 import { startServer } from "./API/server.js";
+import mysql from "mysql2";
 
 import ping from "./commands/ping.js";
 import tarkovgod from "./commands/tarkovgod.js";
@@ -16,23 +17,23 @@ import setlogchannel from "./commands/setlogchannel.js";
 import setwhitelistchannel from "./commands/setwhitelistchannel.js";
 import army from "./commands/army.js";
 import test from "./commands/test.js";
+import testing from "./commands/testing.js";
 
 export let cmdArr = [
-  { name: "help", command: help },
-  { name: "ping", command: ping },
-  { name: "tarkovgod", command: tarkovgod },
-  { name: "cat", command: cat },
-  { name: "refresh", command: refresh },
-  { name: "map", command: map },
-  { name: "hiLove", command: hiLove },
-  { name: "setchatchannel", command: setchatchannel },
-  { name: "setlogchannel", command: setlogchannel },
-  { name: "setwhitelistchannel", command: setwhitelistchannel },
-  { name: "army", command: army },
-  { name: "test", command: test }
+  refresh,
+  test,
+  testing,
+  ping,
+  army,
+  setwhitelistchannel,
+  setlogchannel,
+  setchatchannel,
+  help,
+  hiLove,
+  map,
+  cat,
+  tarkovgod
 ];
-
-import mysql from "mysql2";
 
 export const db = mysql.createConnection({
   host: process.env.DB_HOST,
