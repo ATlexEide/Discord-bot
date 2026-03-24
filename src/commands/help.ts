@@ -10,9 +10,11 @@ import createListEmbed from "../discord/embeds/listEmbed.js";
 
 import { cmdArr } from "../main.js";
 
+const name: string = "help";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("help")
+    .setName(name)
     .setDescription("Lists all commands"),
 
   async response(interaction: ChatInputCommandInteraction) {
