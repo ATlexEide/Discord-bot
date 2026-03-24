@@ -7,8 +7,10 @@ import {
   EmbedBuilder
 } from "discord.js";
 
+const name: string = "cat";
 export default {
-  data: new SlashCommandBuilder().setName("cat").setDescription("CAT GIF!"),
+  name,
+  data: new SlashCommandBuilder().setName(name).setDescription("CAT GIF!"),
 
   async response(interaction: ChatInputCommandInteraction) {
     let data = await fetch(
