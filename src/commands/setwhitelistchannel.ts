@@ -9,9 +9,11 @@ import {
 } from "discord.js";
 import { db } from "../main.js";
 
+const name: string = "setwhitelistchannel";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("setwhitelistchannel")
+    .setName(name)
     .setDescription("Sets this channel as the minecraft whitelist channel")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
