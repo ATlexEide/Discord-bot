@@ -10,9 +10,11 @@ import {
 } from "discord.js";
 import createMapEmbed from "../discord/embeds/mapEmbed.js";
 
+const name: string = "map";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("map")
+    .setName(name)
     .setDescription("show a tarkov map")
     .addStringOption((Option) =>
       Option.setName("location").setDescription("location").setRequired(true)
