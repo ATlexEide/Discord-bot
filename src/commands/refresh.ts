@@ -6,9 +6,11 @@ import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { refreshCommands } from "../utils/update_commands.js";
 import createInformationalEmbed from "../discord/embeds/informationalEmbed.js";
 
+const name = "refresh";
 export default {
+  name,
   data: new SlashCommandBuilder()
-    .setName("refresh")
+    .setName(name)
     .setDescription("Refresh commands"),
 
   async response(interaction: ChatInputCommandInteraction) {
