@@ -4,12 +4,19 @@ import { cmdArr } from "../main.js";
 export function handleDiscordEvent(interaction: Interaction) {
   if (!interaction) throw new Error("No interaction");
   if (interaction.isCommand()) {
-    const id = interaction.commandName;
-    const cmd = cmdArr.find((item) => item.name === interaction.commandName);
+    try {
+      const id = interaction.commandName;
+      const cmd = cmdArr.find((item) => item.name === interaction.commandName);
 
-    if (!cmd) throw new Error("Command not found");
-    // @ts-ignore
-    cmd.response(interaction);
+      if (!cmd) throw new Error("Command not found");
+      // @ts-ignore
+      cmd.response(interaction);
+    } catch (err) {
+      interaction.reply({
+        content: "Something went wrong",
+        flags: ["Ephemeral"]
+      });
+    }
   }
 
   // If interaction is on a select menu
