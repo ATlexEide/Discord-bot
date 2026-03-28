@@ -23,8 +23,8 @@ export default {
   data: new SlashCommandBuilder().setName(name).setDescription("MY CHILD!"),
 
   async response(interaction: ChatInputCommandInteraction) {
-    interaction.reply("Picking a child from the burrow...");
     try {
+      await interaction.reply("Picking a child from the burrow...");
       let data = await fetch(
         "https://burrowapi.buskenisse.com/velvet/generate_child",
         {
