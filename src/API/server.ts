@@ -1,7 +1,6 @@
-import fs from "node:fs";
-import path from "node:path";
 import express from "express";
 import { handleEvent } from "../minecraft/event-handler.js";
+import { getChannel, TESTgetChannelOut } from "../utils/DB.js";
 
 let channels = {
   minecraft_server: {
@@ -38,11 +37,18 @@ export function startServer() {
 
   app.post("/chat", async (req: any, res: any) => {
     console.clear();
-    console.log(req.body);
+    console.log(
+      "//////////",
+      "STEP 1:",
+      "Data hit endpoint and calls eventhandler",
+      "//////////"
+    );
     const event = await req.body;
     console.log("Request recieved");
-    console.log(event);
-    handleEvent(event);
+    // console.log(event);
+
+    // getChannel(event);
+    console.log(await TESTgetChannelOut(event));
     res.json({ status: "OK", message: "yipp" });
   });
 
