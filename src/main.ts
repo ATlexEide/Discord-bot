@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { Client, GatewayIntentBits } from "discord.js";
+import { Client, GatewayIntentBits, TextChannel } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
 import { startServer } from "./API/server.js";
 import mysql from "mysql2";
@@ -18,6 +18,7 @@ import setwhitelistchannel from "./commands/setwhitelistchannel.js";
 import army from "./commands/army.js";
 import test from "./commands/test.js";
 import testing from "./commands/testing.js";
+import child from "./commands/child.js";
 
 export let cmdArr = [
   refresh,
@@ -32,7 +33,8 @@ export let cmdArr = [
   hiLove,
   map,
   cat,
-  tarkovgod
+  tarkovgod,
+  child
 ];
 
 export const db = mysql.createConnection({
