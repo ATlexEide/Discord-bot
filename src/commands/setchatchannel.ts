@@ -24,6 +24,7 @@ export default {
       (error, result) => {
         try {
           if (error) console.log(error);
+          // @ts-expect-error
           if (!result[0]) {
             console.log("DID NOT FIND GUILD\nCreating record...");
             const query = `INSERT INTO guilds (guildId, chat_channel_id)
