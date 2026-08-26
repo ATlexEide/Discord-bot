@@ -11,8 +11,7 @@
       <h1 id="guild-name">The Burrow</h1>
       <h2><a href="https://discord.gg/KFQ6gXPtAn">join us on discord</a></h2>
 
-      <section>
-        <h3>Members:</h3>
+      <section id="info-container">
         <div id="members"></div>
       </section>
     </main>
@@ -32,7 +31,9 @@
         memberContainer.appendChild(div);
       });
 
-      console.log(members);
+      const memberCount = document.createElement("p");
+      memberCount.textContent = `${String(members.length)} furry friends`;
+      document.getElementById("info-container").appendChild(memberCount);
     })();
   </script>
 </html>
