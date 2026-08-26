@@ -27,6 +27,6 @@ RUN ls
 # Optional: if you rely on runtime config files
 # COPY --from=builder /app/config ./config
 
-EXPOSE 3000
+EXPOSE 1337
 
 CMD ["node", "dist/main.js"]
