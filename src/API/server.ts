@@ -35,7 +35,7 @@ export let membersCache_lastUpdate = new Date();
 export function startServer() {
   const theBurrow: Guild | undefined = client.guilds.cache.get(theBurrowId);
 
-  const port = 1337;
+  const port = process.env.PORT || 1337;
   const app = express();
 
   // app.use(express.static("public"));
