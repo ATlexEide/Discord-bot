@@ -38,9 +38,7 @@ export function startServer() {
   const port = process.env.PORT || 1337;
   const app = express();
 
-  // app.use(express.static("public"));
-  // app.use(express.static(path.join(__dirname, "public")));
-  app.use(express.static("src/API/public"));
+  app.use(express.static(path.join(__dirname, "public")));
 
   app.use(express.json());
 
