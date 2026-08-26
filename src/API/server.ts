@@ -1,6 +1,7 @@
 import express from "express";
 import { handleEvent } from "../minecraft/event-handler.js";
 import { getChannel, TESTgetChannelOut } from "../utils/DB.js";
+import { fetchEvents } from "./utils/fetchEvents.js";
 
 let channels = {
   minecraft_server: {
@@ -14,6 +15,10 @@ export function startServer() {
   const port = 1337;
   const app = express();
   app.use(express.json());
+
+  app.get("/events", async (req: any, res: any) => {
+    res.json(await fetchEvents());
+  });
 
   app.get("/channels", (req: any, res: any) => {
     res.send().catch((e: Error) => console.log(e));
