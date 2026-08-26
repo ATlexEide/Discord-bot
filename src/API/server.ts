@@ -40,7 +40,7 @@ export function startServer() {
 
   // app.use(express.static("public"));
   // app.use(express.static(path.join(__dirname, "public")));
-  app.use(express.static(path.join(__dirname, "src/API/public")));
+  app.use(express.static("src/API/public"));
 
   app.use(express.json());
 
