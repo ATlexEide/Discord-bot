@@ -106,9 +106,13 @@ client.on("messageCreate", async (message) => {
 });
 
 export function globalErrorHandler(error: any) {
-  console.log(error.message);
-  for (const [key, val] of Object.entries(error)) {
-    console.log(key, val);
+  try {
+    console.log(error.message);
+    for (const [key, val] of Object.entries(error)) {
+      console.log(key, val);
+    }
+  } catch (error: any) {
+    console.log(error);
   }
   // const channel = client.channels.cache.get("1466784440339664971");
   // // @ts-expect-error
