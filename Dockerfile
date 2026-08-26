@@ -22,6 +22,7 @@ COPY package*.json ./
 RUN npm i --omit=dev
 
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/src/API/public ./dist/API/public
 RUN ls
 
 # Optional: if you rely on runtime config files
