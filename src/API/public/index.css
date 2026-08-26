@@ -20,5 +20,28 @@ main {
   height: 100svh;
 }
 
-#guild-name {
+section {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#members {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 50%;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.member-icon {
+  height: 42px;
+  aspect-ratio: 1;
+}
+.member-icon img {
+  width: 100%;
 }
