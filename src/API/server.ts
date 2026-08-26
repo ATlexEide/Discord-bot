@@ -9,8 +9,6 @@ import { client } from "../main.js";
 import { Guild } from "discord.js";
 import { fetchMembers } from "./utils/fetchMembers.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 let channels = {
   minecraft_server: {
     chat_channel: "",
@@ -38,8 +36,8 @@ export function startServer() {
   const port = process.env.PORT || 1337;
   const app = express();
 
-  app.use(express.static(path.join(__dirname, "public")));
-
+  app.use(express.static(path.join(import.meta.dirname, "public")));
+  console.log(path.join(import.meta.dirname, "public"));
   app.use(express.json());
 
   app.get("/members", async (req: any, res: any) => {
