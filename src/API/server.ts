@@ -1,8 +1,16 @@
 import express from "express";
+
 import { handleEvent } from "../minecraft/event-handler.js";
 import { getChannel, TESTgetChannelOut } from "../utils/DB.js";
 import { fetchEvents } from "./utils/fetchEvents.js";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { client } from "../main.js";
+import { Guild } from "discord.js";
+import { fetchMembers } from "./utils/fetchMembers.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 let channels = {
   minecraft_server: {
     chat_channel: "",
@@ -11,21 +19,43 @@ let channels = {
   }
 };
 
+const theBurrowId: string = "1440456875320807576";
+
+interface Member {
+  name: string;
+  avatar: string;
+}
+
+export function updateCache(data: Member[]) {
+  membersCache = data;
+}
+export let membersCache: Member[] = [];
+export let membersCache_lastUpdate = new Date();
+
 export function startServer() {
+  const theBurrow: Guild | undefined = client.guilds.cache.get(theBurrowId);
+
   const port = 1337;
   const app = express();
+
+  // app.use(express.static("public"));
+  app.use(express.static(path.join(__dirname, "public")));
+
   app.use(express.json());
 
+  app.get("/members", async (req: any, res: any) => {
+    // const guild = client.guilds.cache.get("1440456875320807576");
+    console.log("fetching users");
+    if (theBurrow === undefined) res.error("Couldnt find guild");
+    res.json(await fetchMembers(theBurrow));
+  });
   app.get("/events", async (req: any, res: any) => {
-    res.json(await fetchEvents());
+    if (theBurrow === undefined) res.error("Couldnt find guild");
+    res.json(await fetchEvents(theBurrow));
   });
 
   app.get("/channels", (req: any, res: any) => {
     res.send().catch((e: Error) => console.log(e));
-  });
-
-  app.get("/", (req: any, res: any) => {
-    res.json({ status: "OK", message: "yipp" });
   });
 
   app.post("/test", (req: any, res: any) => {
