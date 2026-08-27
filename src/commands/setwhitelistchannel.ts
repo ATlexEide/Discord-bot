@@ -14,8 +14,7 @@ export default {
   name,
   data: new SlashCommandBuilder()
     .setName(name)
-    .setDescription("Sets this channel as the minecraft whitelist channel")
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+    .setDescription("Sets this channel as the minecraft whitelist channel"),
 
   async response(interaction: ChatInputCommandInteraction) {
     const user = await interaction.guild?.members.fetch(interaction.user.id);
