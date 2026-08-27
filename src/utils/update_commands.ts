@@ -20,6 +20,10 @@ export async function refreshCommands(guild: Guild): Promise<boolean> {
     if (!id) throw new Error("No Bot id");
     if (!guild) throw new Error("No Guild");
 
+    await rest.put(Routes.applicationCommands(id /*GUILD ID*/), {
+      body: _cmdArray
+    });
+
     await rest.put(Routes.applicationGuildCommands(id, guild.id /*GUILD ID*/), {
       body: _cmdArray
     });
