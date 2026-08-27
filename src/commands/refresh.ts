@@ -5,6 +5,7 @@ import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import { refreshCommands } from "../utils/update_commands.js";
 import createInformationalEmbed from "../discord/embeds/informationalEmbed.js";
+import { client } from "../main.js";
 
 const name = "refresh";
 export default {
@@ -17,10 +18,13 @@ export default {
     if (!interaction.guild) throw new Error("No guild found");
 
     const res = await refreshCommands(interaction.guild);
-
+    console.log(
+      `Updating commands for ${client.user?.displayName} in ${interaction.guild.name}`
+    );
     const embed = createInformationalEmbed({
       author: interaction.guild.name,
-      title: "Updating commands ... "
+      title: `Updating commands ...`,
+      desc: `Updating commands for ${client.user?.displayName} in ${interaction.guild.name}`
     });
 
     await interaction.reply({
@@ -29,8 +33,8 @@ export default {
     });
 
     res
-      ? embed.setTitle("Commands updated")
-      : embed.setTitle("Failed to update commands");
+      ? embed.setTitle("Commands updated") && embed.setColor(0xaaff00)
+      : embed.setTitle("Failed to update commands") && embed.setColor(0xff0000);
 
     await interaction.editReply({ embeds: [embed] });
   }
