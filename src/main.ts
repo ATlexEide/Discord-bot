@@ -3,7 +3,6 @@ dotenv.config();
 import { Client, GatewayIntentBits, TextChannel } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
 import { startServer } from "./API/server.js";
-import mysql from "mysql2";
 
 import ping from "./commands/ping.js";
 import tarkovgod from "./commands/tarkovgod.js";
@@ -36,14 +35,6 @@ export let cmdArr = [
   tarkovgod,
   child
 ];
-
-export const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE
-});
 
 /////////
 // Discord Bot

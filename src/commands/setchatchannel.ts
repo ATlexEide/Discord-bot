@@ -7,7 +7,7 @@ import {
   MessageFlags,
   PermissionFlagsBits
 } from "discord.js";
-import { db } from "../main.js";
+import mysql from "mysql2";
 
 const name: string = "setchatchannel";
 export default {
@@ -17,6 +17,13 @@ export default {
     .setDescription("Sets this channel as the minecraft chat channel"),
 
   async response(interaction: ChatInputCommandInteraction) {
+    const db = mysql.createConnection({
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE
+    });
     const user = await interaction.guild?.members.fetch(interaction.user.id);
     const userRoles = user?.roles.cache;
     if (!user) return;
