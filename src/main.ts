@@ -94,14 +94,14 @@ client.on("messageCreate", async (message) => {
           );
         }
         // @ts-expect-error
-        if (message.channelId === res[0].chat_channel_id)
-          fetch(`http://127.0.0.1:3001/chat`, {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json; charset=UTF-8"
-            },
-            body: JSON.stringify(payload)
-          });
+        if (message.channelId === res[0].chat_channel_id) return;
+        fetch(`http://127.0.0.1:3001/chat`, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          },
+          body: JSON.stringify(payload)
+        });
       }
     );
   } catch (error: any) {
