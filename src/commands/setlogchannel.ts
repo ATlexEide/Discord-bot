@@ -7,7 +7,7 @@ import {
   MessageFlags,
   PermissionFlagsBits
 } from "discord.js";
-import { db } from "../main.js";
+import { client, db } from "../main.js";
 
 const name: string = "setlogchannel";
 export default {
@@ -18,6 +18,18 @@ export default {
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   async response(interaction: ChatInputCommandInteraction) {
+    const user = await interaction.guild?.members.fetch(interaction.user.id);
+    const userRoles = user?.roles.cache;
+    if (!user) return;
+    if (!userRoles) return;
+    const hasMcAdmin = userRoles.get("1542467267500183552");
+    if (!hasMcAdmin) {
+      await interaction.reply({
+        content: "You must be an mc admin to perform this action.",
+        flags: MessageFlags.Ephemeral
+      });
+      return;
+    }
     db.connect();
     db.query(
       `SELECT guildId FROM guilds WHERE guildId = ${interaction.guildId}`,
@@ -39,12 +51,14 @@ export default {
           });
         } else {
           console.log("FOUND GUILD");
+
           const query = `UPDATE guilds
             SET log_channel_id = ${interaction.channelId}
             WHERE guildId = ${interaction.guildId}`;
           console.log("///// QUERY /////");
           console.log(query);
-          db.query(query, function (error, results) {
+
+          db.query(query, async function (error, results) {
             if (error) throw error;
             console.log("Updated record: \n", results);
 
@@ -53,6 +67,12 @@ export default {
               flags: MessageFlags.Ephemeral
             });
           });
+        }
+
+        if (interaction.guildId) {
+          const guild = client.guilds.cache.get(interaction.guildId);
+          const channel = guild?.channels.cache.get(interaction.channelId);
+          channel?.edit({ topic: "Minecraft log channel" });
         }
       }
     );

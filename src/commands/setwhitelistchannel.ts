@@ -18,6 +18,18 @@ export default {
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   async response(interaction: ChatInputCommandInteraction) {
+    const user = await interaction.guild?.members.fetch(interaction.user.id);
+    const userRoles = user?.roles.cache;
+    if (!user) return;
+    if (!userRoles) return;
+    const hasMcAdmin = userRoles.get("1542467267500183552");
+    if (!hasMcAdmin) {
+      await interaction.reply({
+        content: "You must be an mc admin to perform this action.",
+        flags: MessageFlags.Ephemeral
+      });
+      return;
+    }
     db.connect();
     db.query(
       `SELECT guildId FROM guilds WHERE guildId = ${interaction.guildId}`,
