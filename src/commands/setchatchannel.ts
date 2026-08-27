@@ -71,5 +71,6 @@ export default {
         }
       }
     );
+    db.end();
   }
 };
