@@ -18,6 +18,7 @@ import army from "./commands/army.js";
 import test from "./commands/test.js";
 import testing from "./commands/testing.js";
 import child from "./commands/child.js";
+import mysql from "mysql2";
 
 export let cmdArr = [
   refresh,
@@ -69,6 +70,13 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("messageCreate", async (message) => {
   try {
+    const db = mysql.createConnection({
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE
+    });
     if (message.author.bot) return;
     let payload = `${message.author.displayName} | ${message.content}`;
     db.query(
