@@ -1,4 +1,4 @@
-import { QueryResult } from "mysql2";
+import { QueryError, QueryResult } from "mysql2";
 import mysql from "mysql2";
 
 export async function getChannel(gameData: any) {
@@ -41,7 +41,7 @@ export function getChannelOut(gameData: any) {
     // @ts-expect-error
     const [r, f] = db.query(
       `SELECT ${gameData.eventType}_channel_id FROM guilds WHERE guildId = ${gameData.guild_id}`,
-      (err, res: QueryResult) => {
+      (err: QueryError, res: QueryResult) => {
         if (err) {
           console.error(err);
           return;
