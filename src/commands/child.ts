@@ -6,7 +6,6 @@ import {
   SlashCommandBuilder,
   EmbedBuilder
 } from "discord.js";
-import { error } from "console";
 
 const name: string = "child";
 let headersList = {
