@@ -4,6 +4,8 @@ import {
   membersCache_lastUpdate,
   updateCache
 } from "../server.js";
+import { error } from "node:console";
+import { globalErrorHandler } from "../../main.js";
 
 export async function fetchMembers(guild: Guild | undefined) {
   if (guild === undefined) return { error: "no yippie" };
@@ -23,17 +25,20 @@ export async function fetchMembers(guild: Guild | undefined) {
 
   const members: any = hasCache
     ? membersCache
-    : await guild.members.fetch().then((res) =>
-        res
-          .filter((element) => !element.user.bot)
-          .map((element) => {
-            if (element.user.bot) return false;
-            return {
-              name: element.displayName,
-              avatar: element.user.displayAvatarURL()
-            };
-          })
-      );
+    : await guild.members
+        .fetch()
+        .then((res) =>
+          res
+            .filter((element) => !element.user.bot)
+            .map((element) => {
+              if (element.user.bot) return false;
+              return {
+                name: element.displayName,
+                avatar: element.user.displayAvatarURL()
+              };
+            })
+        )
+        .catch((error) => globalErrorHandler(error));
   updateCache(members);
   console.log("members: ", members);
 

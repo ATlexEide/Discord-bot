@@ -6,6 +6,7 @@ import {
   SlashCommandBuilder,
   EmbedBuilder
 } from "discord.js";
+import { error } from "console";
 
 const name: string = "child";
 let headersList = {
@@ -25,7 +26,7 @@ export default {
   async response(interaction: ChatInputCommandInteraction) {
     try {
       await interaction.reply("Picking a child from the burrow...");
-      let data = await fetch(
+      const bnuuy_data = await fetch(
         "https://burrowapi.buskenisse.com/velvet/generate_child",
         {
           method: "POST",
@@ -33,8 +34,10 @@ export default {
           // @ts-expect-error
           headers: headersList
         }
-      );
-      const bnuuy_data = await data.json();
+      )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+
       const bnuuy = await bnuuy_data.result;
       console.log(bnuuy_data);
       const bnuuyEmbed = new EmbedBuilder()

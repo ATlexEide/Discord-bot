@@ -7,16 +7,20 @@ import {
   EmbedBuilder
 } from "discord.js";
 
+import { globalErrorHandler } from "../main.js";
+
 const name: string = "cat";
 export default {
   name,
   data: new SlashCommandBuilder().setName(name).setDescription("CAT GIF!"),
 
   async response(interaction: ChatInputCommandInteraction) {
-    let data = await fetch(
+    const cat_data = await fetch(
       `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_KEY}&q=CATS&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
-    );
-    const cat_data = await data.json();
+    )
+      .then((res) => res.json())
+      .catch((error) => globalErrorHandler(error));
+
     const currCat = await cat_data.data[
       Math.floor(Math.random() * cat_data.data.length)
     ];
