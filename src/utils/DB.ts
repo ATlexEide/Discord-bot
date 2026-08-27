@@ -1,5 +1,5 @@
 import { QueryResult } from "mysql2";
-import { db } from "../main.js";
+import mysql from "mysql2";
 
 export async function getChannel(gameData: any) {
   console.log("//////////", "STEP 2:", "Calling getChannelOut", "//////////");
@@ -9,6 +9,13 @@ export async function getChannel(gameData: any) {
 // TYPE: chat || log || whitelist
 export function TESTgetChannelOut(gameData: any) {
   try {
+    const db = mysql.createConnection({
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE
+    });
     let result;
     db.query(
       `SELECT ${gameData.eventType}_channel_id FROM guilds WHERE guildId = ${gameData.guild_id}`,
