@@ -21,9 +21,11 @@
   </body>
 
   <script>
-    // (async () => {
+    (async () => {
       const memberContainer = document.getElementById("members");
-      const members = await fetch("/members").then((res) => res.json()).catch(error => console.log(error));
+      const members = await fetch("/members")
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
       members.forEach((member) => {
         const div = document.createElement("div");
         div.id = member.name;
@@ -37,6 +39,6 @@
       const memberCount = document.createElement("p");
       memberCount.textContent = `${String(members.length)} furry friends`;
       document.getElementById("info-container").appendChild(memberCount);
-    // })();
+    })();
   </script>
 </html>
