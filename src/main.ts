@@ -1,6 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { Client, GatewayIntentBits, TextChannel } from "discord.js";
+import {
+  Client,
+  EmbedBuilder,
+  GatewayIntentBits,
+  TextChannel
+} from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
 import { startServer } from "./API/server.js";
 
@@ -70,6 +75,10 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("messageCreate", async (message) => {
   try {
+    if (message.content === "kys") {
+      console.log(message);
+      throw new Error("furries ate the code");
+    }
     const db = mysql.createConnection({
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT),
@@ -107,12 +116,30 @@ client.on("messageCreate", async (message) => {
       }
     );
   } catch (error: any) {
-    console.log(error);
+    globalErrorHandler(error);
+    return;
   }
 });
 
-export function globalErrorHandler(error: any) {
+export async function globalErrorHandler(error: any, interaction = null) {
+  const embed = new EmbedBuilder()
+    .setAuthor({ name: "Error" })
+    .setTitle(error.message)
+    .setColor(0xff0000)
+    .setDescription(error.stack);
+
   try {
+    const channel = await client.guilds.cache
+      .get("1440456875320807576")
+      ?.channels.cache.get("1543265734669504592")
+      ?.fetch();
+
+    if (channel?.isTextBased) {
+      const message = (channel as TextChannel)?.send({ embeds: [embed] });
+      // (await message).reply("```" + error.stack + "```");
+    }
+
+    // console.log(channel);
     console.log(error.message);
     for (const [key, val] of Object.entries(error)) {
       console.log(key, val);
@@ -120,10 +147,5 @@ export function globalErrorHandler(error: any) {
   } catch (error: any) {
     console.log(error);
   }
-  // const channel = client.channels.cache.get("1466784440339664971");
-  // // @ts-expect-error
-  // channel.send(Object.keys(error) ? error : "hmmm");
-  // // @ts-expect-error
-  // channel.send("yippie");
-  // console.log(error);
+  return;
 }
