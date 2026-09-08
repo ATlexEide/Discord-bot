@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import { client } from "../main.js";
 import { Guild } from "discord.js";
 import { fetchMembers } from "./utils/fetchMembers.js";
+import cors from "cors";
 
 let channels = {
   minecraft_server: {
@@ -35,6 +36,12 @@ export function startServer() {
 
   const port = process.env.PORT || 1337;
   const app = express();
+
+  app.use(
+    cors({
+      origin: ["http://localhost:5173", "https://theburrow.no"]
+    })
+  );
 
   app.use(express.static(path.join(import.meta.dirname, "public")));
   console.log(path.join(import.meta.dirname, "public"));
