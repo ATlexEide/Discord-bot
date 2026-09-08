@@ -13,7 +13,7 @@ nextUpdate.setMinutes(nextUpdate.getMinutes() + cacheTimeout);
 
 export async function fetchEvents(guild: Guild | undefined) {
   try {
-    const isOutdated: Boolean = nextUpdate < new Date();
+    const isOutdated: Boolean = nextUpdate ? nextUpdate < new Date() : true;
 
     if (guild === undefined) return;
     if (!cache || isOutdated) {
