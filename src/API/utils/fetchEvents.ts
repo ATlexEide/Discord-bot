@@ -1,12 +1,30 @@
-import { Guild } from "discord.js";
+import {
+  Guild,
+  GuildScheduledEvent,
+  GuildScheduledEventStatus
+} from "discord.js";
 import { globalErrorHandler } from "../../main.js";
 
-export async function fetchEvents(guild: Guild | undefined) {
-  if (guild === undefined) return;
-  const events = await guild?.scheduledEvents
-    .fetch()
-    .then((res) => res.toJSON())
-    .catch((e) => globalErrorHandler(e));
+const cacheTimeout = 5; //minutes
 
-  return events;
+let cache: void | GuildScheduledEvent<GuildScheduledEventStatus>[] = undefined;
+let nextUpdate: Date = new Date();
+nextUpdate.setMinutes(nextUpdate.getMinutes() + cacheTimeout);
+
+export async function fetchEvents(guild: Guild | undefined) {
+  try {
+    const isOutdated: Boolean = nextUpdate < new Date();
+
+    if (guild === undefined) return;
+    if (!cache || isOutdated) {
+      const events = await guild?.scheduledEvents
+        .fetch()
+        .then((res) => res.toJSON())
+        .catch((e) => globalErrorHandler(e));
+      cache = events;
+    }
+    return cache;
+  } catch (e) {
+    globalErrorHandler(e);
+  }
 }
