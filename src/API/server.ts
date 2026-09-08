@@ -37,11 +37,12 @@ export function startServer() {
   const port = process.env.PORT || 1337;
   const app = express();
 
-  app.use(
-    cors({
-      origin: ["localhost:5173/events", "https://theburrow.no/events"]
-    })
-  );
+  app.use(cors());
+  // app.use(
+  //   cors({
+  //     origin: ["localhost:5173/events", "https://theburrow.no/events"]
+  //   })
+  // );
 
   app.use(express.static(path.join(import.meta.dirname, "public")));
   console.log(path.join(import.meta.dirname, "public"));
