@@ -22,8 +22,10 @@ export async function fetchEvents(guild: Guild | undefined) {
         .fetch()
         .then((res) => res.toJSON())
         .catch((e) => globalErrorHandler(e));
+      nextUpdate = new Date();
       cache = events;
       lastUpdate = new Date();
+      nextUpdate.setMinutes(nextUpdate.getMinutes() + cacheTimeout);
     }
     return { last_update: lastUpdate, events: cache };
   } catch (e) {
