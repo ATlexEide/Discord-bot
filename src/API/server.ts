@@ -39,7 +39,7 @@ export function startServer() {
 
   app.use(
     cors({
-      origin: ["http://localhost:5173", "https://theburrow.no"]
+      origin: ["http://localhost:5173/events", "https://theburrow.no/events"]
     })
   );
 
