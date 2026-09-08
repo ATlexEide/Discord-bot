@@ -9,6 +9,7 @@ const cacheTimeout = 5; //minutes
 
 let cache: void | GuildScheduledEvent<GuildScheduledEventStatus>[] = undefined;
 let nextUpdate: Date = new Date();
+let lastUpdate: Date = new Date();
 nextUpdate.setMinutes(nextUpdate.getMinutes() + cacheTimeout);
 
 export async function fetchEvents(guild: Guild | undefined) {
@@ -22,8 +23,9 @@ export async function fetchEvents(guild: Guild | undefined) {
         .then((res) => res.toJSON())
         .catch((e) => globalErrorHandler(e));
       cache = events;
+      lastUpdate = new Date();
     }
-    return cache;
+    return { last_update: lastUpdate, events: cache };
   } catch (e) {
     globalErrorHandler(e);
   }
