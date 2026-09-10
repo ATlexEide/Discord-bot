@@ -141,3 +141,17 @@ export async function globalErrorHandler(error: any, interaction = null) {
 //         }
 //       }
 //     );
+
+import { createClient } from "@libsql/client/web";
+if (!process.env.BUNNY_DATABASE_URL || !process.env.BUNNY_DATABASE_AUTH_TOKEN) {
+  throw new Error("Missing env variable");
+}
+
+const dbUrl: string = process.env.BUNNY_DATABASE_URL;
+const authToken: string = process.env.BUNNY_DATABASE_AUTH_TOKEN;
+
+console.log("Started bunny client");
+export const dbClient = createClient({
+  url: dbUrl,
+  authToken: authToken
+});
