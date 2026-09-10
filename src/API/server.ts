@@ -5,7 +5,7 @@ import { getChannel, TESTgetChannelOut } from "../utils/DB.js";
 import { fetchEvents } from "./utils/fetchEvents.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { client } from "../main.js";
+import { client, dbClient } from "../main.js";
 import { Guild } from "discord.js";
 import { fetchMembers } from "./utils/fetchMembers.js";
 import cors from "cors";
@@ -63,8 +63,17 @@ export function startServer() {
     res.send().catch((e: Error) => console.log(e));
   });
 
-  app.post("/test", (req: any, res: any) => {
-    res.send("This is a test yippieeee").catch((e: Error) => console.log(e));
+  app.get("/test", async (req: any, res: any) => {
+    try {
+      const result = await dbClient?.execute({
+        sql: "SELECT * FROM test WHERE id = ?",
+        args: [1]
+      });
+      console.log(result.rows);
+      res.send(result.rows);
+    } catch (e) {
+      console.log(e);
+    }
   });
 
   app.get("/events/last", (req: any, res: any) => {
