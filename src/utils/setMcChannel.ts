@@ -1,5 +1,4 @@
-import { client, globalErrorHandler } from "../main.js";
-import mysql from "mysql2/promise";
+import { client, dbClient, globalErrorHandler } from "../main.js";
 import dotenv from "dotenv";
 import { ChatInputCommandInteraction, MessageFlags } from "discord.js";
 dotenv.config();
@@ -25,14 +24,6 @@ export default async function setMcChannel(
     });
     return;
   }
-  const connection = await mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-  });
-  connection.connect();
 
   const user = await interaction.guild?.members.fetch(interaction.user.id);
   const userRoles = user?.roles.cache;
@@ -51,9 +42,9 @@ export default async function setMcChannel(
 
   //////
   try {
-    const [res] = await connection.query(
-      `SELECT guildId FROM guilds WHERE guildId = ${interaction.guildId}`
-      //   `SELECT guildId FROM guilds WHERE guildId = 222`
+    if (dbClient.closed) dbClient.reconnect();
+    const result = await dbClient.execute(
+      `SELECT guild_id FROM guild_channels WHERE guild_id = ${interaction.guildId}`
     );
 
     async function previousReply() {
@@ -63,17 +54,17 @@ export default async function setMcChannel(
       });
     }
     // @ts-ignore
-    if (!res[0]) {
+    if (!result.rows) {
       interaction.editReply({
         content: `~~${await previousReply()}~~\nGuild not found, creating record. . .`
       });
 
-      const [res2] = await connection.query(`
-          INSERT INTO guilds (guildId, ${type}_channel_id)
+      const result = await dbClient.execute(`
+          INSERT INTO guild_channels (guild_id, ${type}_channel_id)
           VALUES (${interaction.guildId}, ${interaction.channelId})
           `);
 
-      if (!res2) {
+      if (!result) {
         interaction.editReply({
           content: `~~${await previousReply()}~~ \n Creating record failed.`
         });
@@ -88,13 +79,13 @@ export default async function setMcChannel(
         content: `~~${await previousReply()}~~ \n Guild found, updating ${type} channel. . .`
       });
 
-      const [res3] = await connection.query(`
-            UPDATE guilds
+      const result = await dbClient.execute(`
+            UPDATE guild_channels
             SET ${type}_channel_id = ${interaction.channelId}
-            WHERE guildId = ${interaction.guildId}
+            WHERE guild_id = ${interaction.guildId}
             `);
 
-      if (!res3) {
+      if (!result) {
         interaction.editReply({
           content: `~~${await previousReply()}~~ \n Update failed. `
         });
@@ -109,8 +100,11 @@ export default async function setMcChannel(
     const channel = guild?.channels.cache.get(interaction.channelId);
     channel?.edit({ topic: `Minecraft ${type} channel` });
   } catch (error) {
+    interaction.editReply({
+      content: `Action failed `
+    });
     globalErrorHandler(error);
   }
 
-  connection.end();
+  dbClient.close();
 }
