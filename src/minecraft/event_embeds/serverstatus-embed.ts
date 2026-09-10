@@ -7,18 +7,18 @@ export function getServerStatusEmbed(event: any) {
     .setAuthor({
       name: "Server",
       iconURL:
-        event.event === "ServerStart"
+        event.name === "ServerStart"
           ? "https://i.imgur.com/wojm0r1.png"
           : "https://i.imgur.com/E0VyRDS.png"
     })
     .setTitle(
-      event.event === "ServerStart" ? "Server started" : "Server stopped"
+      event.name === "ServerStart" ? "Server started" : "Server stopped"
     );
-  if (event.event === "ServerStart") {
+  if (event.name === "ServerStart") {
     chatEmbed.setDescription(
-      `${event.server_message}
+      `${event.motd}
 
-      IP: *${event.server_ip}:${event.server_port}*`
+      IP: *mc.theburrow.no*`
     );
   }
   return { embeds: [chatEmbed] };
