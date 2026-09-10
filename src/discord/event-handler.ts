@@ -1,5 +1,6 @@
-import { Interaction } from "discord.js";
+import { Interaction, MessageFlags } from "discord.js";
 import { cmdArr } from "../main.js";
+import { removeWhitelist } from "../API/server.js";
 
 export function handleDiscordEvent(interaction: Interaction) {
   if (!interaction) throw new Error("No interaction");
@@ -34,6 +35,20 @@ export function handleDiscordEvent(interaction: Interaction) {
   if (interaction.isButton()) {
     const id = interaction.customId;
     if (id === "delete-map") {
+      interaction.message.delete();
+    }
+    if (id.includes("whitelist-remove")) {
+      const whitelistId = id.split("-").pop();
+      if (interaction.user.id != whitelistId) {
+        interaction.reply({
+          content: "Access denied",
+          flags: MessageFlags.Ephemeral
+        });
+        return;
+      }
+      removeWhitelist(whitelistId, interaction);
+    }
+    if (id.includes("username-invalid")) {
       interaction.message.delete();
     }
   }
