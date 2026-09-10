@@ -1,4 +1,4 @@
-import { client, dbClient, globalErrorHandler } from "../main.js";
+import { channel_ids, client, dbClient, globalErrorHandler } from "../main.js";
 import dotenv from "dotenv";
 import { ChatInputCommandInteraction, MessageFlags } from "discord.js";
 dotenv.config();
@@ -54,7 +54,7 @@ export default async function setMcChannel(
       });
     }
     // @ts-ignore
-    if (!result.rows) {
+    if (!result.rows.length) {
       interaction.editReply({
         content: `~~${await previousReply()}~~\nGuild not found, creating record. . .`
       });
@@ -64,7 +64,7 @@ export default async function setMcChannel(
           VALUES (${interaction.guildId}, ${interaction.channelId})
           `);
 
-      if (!result) {
+      if (!result.rowsAffected) {
         interaction.editReply({
           content: `~~${await previousReply()}~~ \n Creating record failed.`
         });
@@ -84,8 +84,9 @@ export default async function setMcChannel(
             SET ${type}_channel_id = ${interaction.channelId}
             WHERE guild_id = ${interaction.guildId}
             `);
+      console.log(result);
 
-      if (!result) {
+      if (!result.rowsAffected) {
         interaction.editReply({
           content: `~~${await previousReply()}~~ \n Update failed. `
         });
@@ -98,6 +99,8 @@ export default async function setMcChannel(
 
     const guild = client.guilds.cache.get(interaction.guildId);
     const channel = guild?.channels.cache.get(interaction.channelId);
+    // @ts-ignore
+    channel_ids[`${type}_channel_id`] = interaction.channelId;
     channel?.edit({ topic: `Minecraft ${type} channel` });
   } catch (error) {
     interaction.editReply({
