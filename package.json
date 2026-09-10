@@ -14,6 +14,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@libsql/client": "^0.18.0",
     "cors": "^2.8.6",
     "discord-api-types": "^0.38.38",
     "discord.js": "^14.23.2",

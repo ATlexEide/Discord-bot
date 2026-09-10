@@ -1339,6 +1339,7 @@
     ],
     "packageJson": {
       "dependencies": [
+        "npm:@libsql/client@0.18",
         "npm:@types/cors@^2.8.19",
         "npm:@types/express@^5.0.3",
         "npm:@types/mysql@^2.15.27",
