@@ -1,14 +1,26 @@
 import express from "express";
-
-import { handleEvent } from "../minecraft/event-handler.js";
-import { getChannel, TESTgetChannelOut } from "../utils/DB.js";
 import { fetchEvents } from "./utils/fetchEvents.js";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { client, dbClient } from "../main.js";
-import { Guild } from "discord.js";
+
+import { client, globalErrorHandler } from "../main.js";
+import {
+  escapeSpoiler,
+  Guild,
+  Interaction,
+  Message,
+  MessageFlags,
+  TextChannel
+} from "discord.js";
 import { fetchMembers } from "./utils/fetchMembers.js";
 import cors from "cors";
+import { getChannelId } from "../utils/DB.js";
+import { getChatEmbed } from "../minecraft/event_embeds/chat-embed.js";
+import { getConnectionEmbed } from "../minecraft/event_embeds/connection-embed.js";
+import { getServerStatusEmbed } from "../minecraft/event_embeds/serverstatus-embed.js";
+import {
+  getFailedWhitelistEmbed,
+  getWhitelistEmbed
+} from "../minecraft/event_embeds/whitelistEmbed.js";
 
 let channels = {
   minecraft_server: {
@@ -38,11 +50,6 @@ export function startServer() {
   const app = express();
 
   app.use(cors());
-  // app.use(
-  //   cors({
-  //     origin: ["localhost:5173/events", "https://theburrow.no/events"]
-  //   })
-  // );
 
   app.use(express.static(path.join(import.meta.dirname, "public")));
   console.log(path.join(import.meta.dirname, "public"));
@@ -59,49 +66,128 @@ export function startServer() {
     res.json(await fetchEvents(theBurrow));
   });
 
-  app.get("/channels", (req: any, res: any) => {
-    res.send().catch((e: Error) => console.log(e));
-  });
-
-  app.get("/test", async (req: any, res: any) => {
+  app.get("/mc/status", async (req: any, res: any) => {
     try {
-      const result = await dbClient?.execute({
-        sql: "SELECT * FROM test WHERE id = ?",
-        args: [1]
-      });
-      console.log(result.rows);
-      res.send(result.rows);
+      fetch("http://127.0.0.1:3001/status")
+        .then((r) => r.json())
+        .then((r) => res.send(r));
     } catch (e) {
-      console.log(e);
+      globalErrorHandler(e);
     }
   });
+  // app.post("/mc/chat", async (req: any, res: any) => {
+  //   const event = await req.body;
+  //   console.log("Request recieved");
+  //   console.log(event);
 
-  app.get("/events/last", (req: any, res: any) => {
-    res.send("lastEvent").catch((e: Error) => console.log(e));
-  });
-
-  app.get("/server/status", (req: any, res: any) => {
-    res.send("serverStatus").catch((e: Error) => console.log(e));
-  });
-
-  app.post("/chat", async (req: any, res: any) => {
-    console.clear();
-    console.log(
-      "//////////",
-      "STEP 1:",
-      "Data hit endpoint and calls eventhandler",
-      "//////////"
-    );
+  //   res.json({ status: "OK", message: "yipp" });
+  // });
+  app.post("/mc/log", async (req: any, res: any) => {
     const event = await req.body;
     console.log("Request recieved");
-    // console.log(event);
+    console.log(event);
 
-    // getChannel(event);
-    console.log(await TESTgetChannelOut(event));
+    res.json({ status: "OK", message: "yipp" });
+  });
+
+  app.post("/mc/chat", async (req: any, res: any) => {
+    const event = await req.body;
+    console.log(event);
+    handleServerEvent(event, res);
+  });
+
+  app.post("/mc/whitelist", async (req: any, res: any) => {
+    const event = await req.body;
+    console.log("Request recieved");
+    console.log(event);
+
     res.json({ status: "OK", message: "yipp" });
   });
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
+}
+
+export async function sendMcMessage(message: Message) {
+  console.log(message);
+  const bodyContent = `[Discord]<${message.author.displayName}> ${message.content}`;
+
+  console.log(bodyContent);
+  const _message = await fetch("http://127.0.0.1:3001/chat", {
+    method: "POST",
+    body: bodyContent
+    // headers: { "Content-Type": "application/json" }
+  });
+}
+export function removeWhitelist(id, interaction) {
+  console.log("removing " + id);
+  interaction.message.delete();
+}
+export async function whitelistPlayer(message: Message) {
+  const playerInfo = await fetch(
+    `https://playerdb.co/api/player/minecraft/${message.content}`
+  ).then((res) => res.json());
+  console.log(playerInfo);
+
+  if (playerInfo) {
+    const author = message.author;
+    let isValid = false;
+    switch (playerInfo.code) {
+      case "player.found":
+        const username = playerInfo.data.player.username;
+        const uuid = playerInfo.data.player.raw_id;
+        (message.channel as TextChannel).send(
+          getWhitelistEmbed(message.author, playerInfo)
+        );
+        message.delete();
+        break;
+      case "minecraft.invalid_username":
+        message.reply(getFailedWhitelistEmbed(author));
+        message.delete();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  return;
+  const bodyContent = `${message.author.displayName}|${message.content}`;
+
+  console.log(bodyContent);
+  const _message = await fetch("http://127.0.0.1:3001/whitelist", {
+    method: "POST",
+    body: bodyContent
+    // headers: { "Content-Type": "application/json" }
+  });
+}
+
+async function handleServerEvent(event: any, res: any) {
+  try {
+    const eventChannelId = await getChannelId(event);
+    const channel = client.channels.cache.get(eventChannelId);
+
+    switch (event.name) {
+      case "PlayerJoinEvent":
+      case "PlayerQuitEvent":
+        (channel as TextChannel).send(getConnectionEmbed(event));
+        break;
+
+      case "ChatEvent":
+        (channel as TextChannel).send(getChatEmbed(event));
+        break;
+
+      case "ServerStart":
+      case "ServerStop":
+        (channel as TextChannel).send(getServerStatusEmbed(event));
+        break;
+
+      default:
+        break;
+    }
+    res.send("OK");
+  } catch (e) {
+    globalErrorHandler(e);
+  }
 }
