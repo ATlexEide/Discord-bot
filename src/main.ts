@@ -7,7 +7,7 @@ import {
   TextChannel
 } from "discord.js";
 import { handleDiscordEvent } from "./discord/event-handler.js";
-import { startServer } from "./API/server.js";
+import { sendMcMessage, startServer, whitelistPlayer } from "./API/server.js";
 
 import ping from "./commands/ping.js";
 import tarkovgod from "./commands/tarkovgod.js";
@@ -41,6 +41,12 @@ export let cmdArr = [
   child
 ];
 
+export let channel_ids = {
+  chat_channel_id: null,
+  log_channel_id: null,
+  whitelist_channel_id: null
+};
+
 /////////
 // Discord Bot
 export const client = new Client({
@@ -72,14 +78,14 @@ try {
 
   // if (!process.env.DISCORD_CHAT_CHANNEL_ID)
   //   throw new Error("No chat channel id in local enviroment");
-
   client.on("messageCreate", async (message) => {
+    console.log(message);
     try {
       if (message.author.bot) return;
-      if (message.content === "kys") {
-        console.log(message);
-        throw new Error("furries ate the code");
-      }
+      if (message.channelId === channel_ids.chat_channel_id)
+        sendMcMessage(message);
+      if (message.channelId === channel_ids.whitelist_channel_id)
+        whitelistPlayer(message);
     } catch (error: any) {
       globalErrorHandler(error);
       return;
@@ -155,3 +161,21 @@ export const dbClient = createClient({
   url: dbUrl,
   authToken: authToken
 });
+
+(async function syncChannelIds() {
+  if (dbClient.closed) dbClient.reconnect();
+  const result = await dbClient
+    .execute(
+      `SELECT * FROM guild_channels WHERE guild_id = 1440456875320807576 `
+    )
+    .then((res) => res.rows);
+  console.log(result[0]);
+  console.log(result[0].chat_channel_id);
+  // @ts-ignore
+  channel_ids.chat_channel_id = result[0].chat_channel_id;
+  // @ts-ignore
+  channel_ids.log_channel_id = result[0].log_channel_id;
+  // @ts-ignore
+  channel_ids.whitelist_channel_id = result[0].whitelist_channel_id;
+  console.log(channel_ids);
+})();
