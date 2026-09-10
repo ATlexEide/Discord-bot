@@ -13,5 +13,5 @@ export function getChatEmbed(event: any) {
   ///// Keep just in case i decide to use it later for whatever reason
   //   return { embeds: [chatEmbed] };
   console.log("MESSAGE: ", event.message);
-  return `[${hours}:${minutes}]  <\\${event.player}>  ${event.message}`;
+  return `[${hours}:${minutes}]  <${event.player}>  ${event.message}`;
 }
