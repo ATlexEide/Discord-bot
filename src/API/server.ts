@@ -4,6 +4,7 @@ import path from "node:path";
 
 import { client, globalErrorHandler } from "../main.js";
 import {
+  ButtonInteraction,
   escapeSpoiler,
   Guild,
   Interaction,
@@ -120,7 +121,7 @@ export async function sendMcMessage(message: Message) {
     // headers: { "Content-Type": "application/json" }
   });
 }
-export function removeWhitelist(id, interaction) {
+export function removeWhitelist(id: string, interaction: ButtonInteraction) {
   console.log("removing " + id);
   interaction.message.delete();
 }

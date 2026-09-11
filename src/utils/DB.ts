@@ -8,5 +8,5 @@ export async function getChannelId(EventData: any) {
     )
     .then((res) => res.rows[0][0])
     .catch((e) => globalErrorHandler(e));
-  return id;
+  return String(id);
 }

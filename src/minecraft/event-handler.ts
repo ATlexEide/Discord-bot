@@ -1,12 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { client } from "../main.js";
-import { getConnectionEmbed } from "./event_embeds/connection-embed.js";
-import { getGamemodeEmbed } from "./event_embeds/gamemode-embeds.js";
-import { getServerStatusEmbed } from "./event_embeds/serverstatus-embed.js";
-import { getChatEmbed } from "./event_embeds/chat-embed.js";
-import { TextChannel } from "discord.js";
-import { getChannelOut } from "../utils/DB.js";
 
 export async function handleEvent(gameData: any) {
   // try {

@@ -1,7 +1,7 @@
 import { EmbedBuilder } from "@discordjs/builders";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 
-export function getWhitelistEmbed(author, playerInfo) {
+export function getWhitelistEmbed(author: any, playerInfo: any) {
   const chatEmbed = new EmbedBuilder();
   const row = new ActionRowBuilder();
 
@@ -18,13 +18,13 @@ export function getWhitelistEmbed(author, playerInfo) {
     .setDescription(`Whitelisted ${author.displayName}`);
   row.addComponents(removeWhitelistBtn);
 
-  return {
+  return String({
     embeds: [chatEmbed],
     components: [row]
-  };
+  });
 }
 
-export function getFailedWhitelistEmbed(author) {
+export function getFailedWhitelistEmbed(author: any) {
   const chatEmbed = new EmbedBuilder();
   const row = new ActionRowBuilder();
   const okBtn = new ButtonBuilder()
@@ -35,8 +35,8 @@ export function getFailedWhitelistEmbed(author) {
   chatEmbed.setDescription("Invalid username");
   row.addComponents(okBtn);
 
-  return {
+  return String({
     embeds: [chatEmbed],
     components: [row]
-  };
+  });
 }
