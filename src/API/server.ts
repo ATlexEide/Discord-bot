@@ -117,9 +117,10 @@ export function removeWhitelist(id: string, interaction: ButtonInteraction) {
   }
 }
 export async function whitelistPlayer(message: Message) {
+  const _message = message.content.split(" ").join();
   try {
     const playerInfo = await fetch(
-      `https://playerdb.co/api/player/minecraft/${message.content}`
+      `https://playerdb.co/api/player/minecraft/${_message}`
     ).then((res) => res.json());
 
     if (playerInfo) {
