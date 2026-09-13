@@ -21,8 +21,6 @@ export async function fetchMembers(guild: Guild | undefined) {
   const hasCache =
     membersCache.length && membersCache_lastUpdate < date ? true : false;
 
-  console.log("hasCache: ", hasCache);
-
   const members: any = hasCache
     ? membersCache
     : await guild.members
@@ -40,7 +38,6 @@ export async function fetchMembers(guild: Guild | undefined) {
         )
         .catch((error) => globalErrorHandler(error));
   updateCache(members);
-  console.log("members: ", members);
 
   return membersCache;
 }
