@@ -197,7 +197,7 @@ async function handleServerEvent(event: any, res: any) {
   }
   function startTimer() {
     setInterval(() => {
-      minutes += 1;
+      minutes += 5;
 
       if (minutes >= 5 && updateString != lastUpdateString) {
         (category as TextChannel).setName(updateString);
