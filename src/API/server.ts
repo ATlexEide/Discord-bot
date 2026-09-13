@@ -53,7 +53,7 @@ export function startServer() {
   app.use(cors());
   app.use(express.json());
 
-  app.use(express.static(path.join(import.meta.dirname, "public")));
+  // app.use(express.static(path.join(import.meta.dirname, "public")));
 
   app.post("/mc/chat", async (req: any, res: any) => {
     const event = await req.body;
