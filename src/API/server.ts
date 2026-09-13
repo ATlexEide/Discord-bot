@@ -61,8 +61,6 @@ export function startServer() {
 
   app.post("/mc/chat", async (req: any, res: any) => {
     const event = await req.body;
-    res.send("HMMMMM");
-    return;
     await handleServerEvent(event, res);
   });
 
