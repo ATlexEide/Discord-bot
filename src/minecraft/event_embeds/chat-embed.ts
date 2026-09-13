@@ -5,7 +5,7 @@ export function getChatEmbed(event: any) {
   const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
   const minutes =
     date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-  console.log(`${hours}:${minutes}`);
+
   const chatEmbed = new EmbedBuilder().setAuthor({
     name: `[${hours}:${minutes}]  <${event.player}>  ${event.messsage}`,
     iconURL: `https://minotar.net/avatar/${event.player}.png`
