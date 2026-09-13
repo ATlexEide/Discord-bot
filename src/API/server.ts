@@ -67,7 +67,7 @@ export function startServer() {
 
   app.get("/mc/status", async (req: any, res: any) => {
     try {
-      fetch(`${process.env.MC_SERVER_IP}/status`)
+      fetch(`http://${process.env.MC_SERVER_IP}/status`)
         .then((r) => r.json())
         .then((r) => res.send(r));
     } catch (e) {
@@ -100,7 +100,7 @@ export function startServer() {
 export async function sendMcMessage(message: Message) {
   const bodyContent = `[Discord]<${message.author.displayName}> ${message.content}`;
 
-  const _message = await fetch(`${process.env.MC_SERVER_IP}/chat`, {
+  const _message = await fetch(`http://${process.env.MC_SERVER_IP}/chat`, {
     method: "POST",
     body: bodyContent
     // headers: { "Content-Type": "application/json" }
