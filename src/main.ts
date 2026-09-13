@@ -79,7 +79,6 @@ try {
   // if (!process.env.DISCORD_CHAT_CHANNEL_ID)
   //   throw new Error("No chat channel id in local enviroment");
   client.on("messageCreate", async (message) => {
-    console.log(message);
     try {
       if (message.author.bot) return;
       if (message.channelId === channel_ids.chat_channel_id)
@@ -123,31 +122,6 @@ export async function globalErrorHandler(error: any, interaction = null) {
   return;
 }
 
-// const db = mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   port: Number(process.env.DB_PORT),
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_DATABASE
-// });
-
-//     let payload = `${message.author.displayName} | ${message.content}`;
-//     db.query(
-//       `SELECT chat_channel_id FROM guilds WHERE guildId = ${message.guildId}`,
-//       (err, res) => {
-//         if (err) {
-//           console.error(err);
-//           return;
-//         }
-//         // @ts-expect-error
-//         if (!res[0]) {
-//           console.error(
-//             `couldnt find chat channel for guild id ${message.guildId}`
-//           );
-//         }
-//       }
-//     );
-
 import { createClient } from "@libsql/client/web";
 if (!process.env.BUNNY_DATABASE_URL || !process.env.BUNNY_DATABASE_AUTH_TOKEN) {
   throw new Error("Missing env variable");
@@ -169,13 +143,10 @@ export const dbClient = createClient({
       `SELECT * FROM guild_channels WHERE guild_id = 1440456875320807576 `
     )
     .then((res) => res.rows);
-  console.log(result[0]);
-  console.log(result[0].chat_channel_id);
   // @ts-ignore
   channel_ids.chat_channel_id = result[0].chat_channel_id;
   // @ts-ignore
   channel_ids.log_channel_id = result[0].log_channel_id;
   // @ts-ignore
   channel_ids.whitelist_channel_id = result[0].whitelist_channel_id;
-  console.log(channel_ids);
 })();
