@@ -55,17 +55,17 @@ export function startServer() {
   app.use(express.static(path.join(import.meta.dirname, "public")));
   app.use(express.json());
 
-  app.get("/members", async (req: any, res: any) => {
+  app.get("members", async (req: any, res: any) => {
     // const guild = client.guilds.cache.get("1440456875320807576");
     if (theBurrow === undefined) res.error("Couldnt find guild");
     res.json(await fetchMembers(theBurrow));
   });
-  app.get("/events", async (req: any, res: any) => {
+  app.get("events", async (req: any, res: any) => {
     if (theBurrow === undefined) res.error("Couldnt find guild");
     res.json(await fetchEvents(theBurrow));
   });
 
-  app.get("/mc/status", async (req: any, res: any) => {
+  app.get("mc/status", async (req: any, res: any) => {
     try {
       fetch(`http://${process.env.MC_SERVER_IP}/status`)
         .then((r) => r.json())
@@ -75,14 +75,14 @@ export function startServer() {
     }
   });
 
-  app.post("/chat", async (req: any, res: any) => {
+  app.post("mc/chat", async (req: any, res: any) => {
     const event = await req.body;
     res.send("HMMMMM");
     return;
     await handleServerEvent(event, res);
   });
 
-  app.post("/mc/whitelist", async (req: any, res: any) => {
+  app.post("mc/whitelist", async (req: any, res: any) => {
     const event = await req.body;
 
     res.json({ status: "OK", message: "yipp" });
