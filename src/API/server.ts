@@ -75,14 +75,10 @@ export function startServer() {
     }
   });
 
-  app.post("/mc/log", async (req: any, res: any) => {
+  app.get("/mc/chat", async (req: any, res: any) => {
     const event = await req.body;
-
-    res.json({ status: "OK", message: "yipp" });
-  });
-
-  app.post("/mc/chat", async (req: any, res: any) => {
-    const event = await req.body;
+    res.send("HMMMMM");
+    return;
     await handleServerEvent(event, res);
   });
 
