@@ -51,6 +51,7 @@ export function startServer() {
   const app = express();
 
   app.use(cors());
+  app.use(express.json());
 
   app.use(express.static(path.join(import.meta.dirname, "public")));
 
@@ -64,10 +65,9 @@ export function startServer() {
   app.post("/mc/whitelist", async (req: any, res: any) => {
     const event = await req.body;
 
-    res.json({ status: "OK", message: "yipp" });
+    res.send({ status: "OK", message: "yipp" });
   });
 
-  app.use(express.json());
   app.get("/members", async (req: any, res: any) => {
     // const guild = client.guilds.cache.get("1440456875320807576");
     if (theBurrow === undefined) res.error("Couldnt find guild");
