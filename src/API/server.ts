@@ -128,7 +128,7 @@ export async function whitelistPlayer(message: Message) {
       const author = message.author;
       switch (playerInfo.code) {
         case "player.found":
-          fetch(`${process.env.MC_SERVER_IP}/whitelist/add`, {
+          fetch(`http://${process.env.MC_SERVER_IP}/whitelist/add`, {
             method: "POST",
             body: `${message.author.displayName}|${playerInfo.data.player.username}`
           }).then((res) => {
@@ -137,7 +137,7 @@ export async function whitelistPlayer(message: Message) {
               getWhitelistEmbed(message.author, playerInfo)
             );
           });
-          // message.delete();
+          message.delete();
           break;
         case "minecraft.invalid_username":
           // @ts-ignore
