@@ -18,10 +18,10 @@ export function getWhitelistEmbed(author: any, playerInfo: any) {
     .setDescription(`Whitelisted ${author.displayName}`);
   row.addComponents(removeWhitelistBtn);
 
-  return String({
+  return {
     embeds: [chatEmbed],
     components: [row]
-  });
+  };
 }
 
 export function getFailedWhitelistEmbed(author: any) {
@@ -35,8 +35,8 @@ export function getFailedWhitelistEmbed(author: any) {
   chatEmbed.setDescription("Invalid username");
   row.addComponents(okBtn);
 
-  return String({
+  return {
     embeds: [chatEmbed],
     components: [row]
-  });
+  };
 }
