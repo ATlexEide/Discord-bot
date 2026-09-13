@@ -83,7 +83,7 @@ export function startServer() {
 
   app.post("/mc/chat", async (req: any, res: any) => {
     const event = await req.body;
-    handleServerEvent(event, res);
+    await handleServerEvent(event, res);
   });
 
   app.post("/mc/whitelist", async (req: any, res: any) => {
