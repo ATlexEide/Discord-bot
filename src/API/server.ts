@@ -158,7 +158,7 @@ let firstUpdate = true;
 let updateString = "";
 let lastUpdateString = "🟢 Minecraft 0 / 20";
 let minutes = 5;
-const minecraftCategoryId = "1466784362224816314";
+const minecraftCategoryId = "1547254845981859880";
 async function handleServerEvent(event: any, res: any) {
   const eventChannelId = await getChannelId(event);
   const channel = client.channels.cache.get(eventChannelId);
