@@ -4,20 +4,14 @@ import {
   membersCache_lastUpdate,
   updateCache
 } from "../server.js";
-import { error } from "node:console";
+
 import { globalErrorHandler } from "../../main.js";
 
 export async function fetchMembers(guild: Guild | undefined) {
   if (guild === undefined) return { error: "no yippie" };
-  console.log("membersCache: ", membersCache);
-
   const date = new Date();
   date.setDate(membersCache_lastUpdate.getDate() + 1);
 
-  console.log(date);
-  console.log(membersCache_lastUpdate);
-
-  console.log(membersCache_lastUpdate < date);
   const hasCache =
     membersCache.length && membersCache_lastUpdate < date ? true : false;
 
