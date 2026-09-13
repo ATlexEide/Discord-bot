@@ -55,6 +55,13 @@ export function startServer() {
   app.use(express.static(path.join(import.meta.dirname, "public")));
   app.use(express.json());
 
+  app.post("/mc/chat", async (req: any, res: any) => {
+    const event = await req.body;
+    res.send("HMMMMM");
+    return;
+    await handleServerEvent(event, res);
+  });
+
   app.get("/members", async (req: any, res: any) => {
     // const guild = client.guilds.cache.get("1440456875320807576");
     if (theBurrow === undefined) res.error("Couldnt find guild");
@@ -73,13 +80,6 @@ export function startServer() {
     } catch (e) {
       globalErrorHandler(e);
     }
-  });
-
-  app.post("/mc/chat", async (req: any, res: any) => {
-    const event = await req.body;
-    res.send("HMMMMM");
-    return;
-    await handleServerEvent(event, res);
   });
 
   app.post("/mc/whitelist", async (req: any, res: any) => {
