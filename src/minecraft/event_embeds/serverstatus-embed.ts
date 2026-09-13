@@ -14,11 +14,7 @@ export function getServerStatusEmbed(event: any) {
       event.name === "ServerStart" ? "Server started" : "Server stopped"
     );
   if (event.name === "ServerStart") {
-    chatEmbed.setDescription(
-      `${event.motd}
-
-      IP: *mc.theburrow.no*`
-    );
+    chatEmbed.setDescription(`IP: *mc.theburrow.no*`);
   }
   return { embeds: [chatEmbed] };
 }
