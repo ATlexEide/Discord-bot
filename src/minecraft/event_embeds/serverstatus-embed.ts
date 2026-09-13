@@ -2,7 +2,6 @@ import { EmbedBuilder } from "discord.js";
 
 export function getServerStatusEmbed(event: any) {
   console.clear();
-  console.log(event);
   const chatEmbed = new EmbedBuilder()
     .setAuthor({
       name: "Server",
