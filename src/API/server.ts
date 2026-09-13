@@ -53,12 +53,10 @@ export function startServer() {
   app.use(cors());
 
   app.use(express.static(path.join(import.meta.dirname, "public")));
-  console.log(path.join(import.meta.dirname, "public"));
   app.use(express.json());
 
   app.get("/members", async (req: any, res: any) => {
     // const guild = client.guilds.cache.get("1440456875320807576");
-    console.log("fetching users");
     if (theBurrow === undefined) res.error("Couldnt find guild");
     res.json(await fetchMembers(theBurrow));
   });
@@ -69,38 +67,27 @@ export function startServer() {
 
   app.get("/mc/status", async (req: any, res: any) => {
     try {
-      fetch("http://127.0.0.1:3001/status")
+      fetch(`${process.env.MC_SERVER_IP}/status`)
         .then((r) => r.json())
         .then((r) => res.send(r));
     } catch (e) {
       globalErrorHandler(e);
     }
   });
-  // app.post("/mc/chat", async (req: any, res: any) => {
-  //   const event = await req.body;
-  //   console.log("Request recieved");
-  //   console.log(event);
 
-  //   res.json({ status: "OK", message: "yipp" });
-  // });
   app.post("/mc/log", async (req: any, res: any) => {
     const event = await req.body;
-    console.log("Request recieved");
-    console.log(event);
 
     res.json({ status: "OK", message: "yipp" });
   });
 
   app.post("/mc/chat", async (req: any, res: any) => {
     const event = await req.body;
-    console.log(event);
     handleServerEvent(event, res);
   });
 
   app.post("/mc/whitelist", async (req: any, res: any) => {
     const event = await req.body;
-    console.log("Request recieved");
-    console.log(event);
 
     res.json({ status: "OK", message: "yipp" });
   });
@@ -111,68 +98,79 @@ export function startServer() {
 }
 
 export async function sendMcMessage(message: Message) {
-  console.log(message);
   const bodyContent = `[Discord]<${message.author.displayName}> ${message.content}`;
 
-  console.log(bodyContent);
-  const _message = await fetch("http://127.0.0.1:3001/chat", {
+  const _message = await fetch(`${process.env.MC_SERVER_IP}/chat`, {
     method: "POST",
     body: bodyContent
     // headers: { "Content-Type": "application/json" }
   });
 }
 export function removeWhitelist(id: string, interaction: ButtonInteraction) {
-  console.log("removing " + id);
-  interaction.message.delete();
+  try {
+    fetch(`http://${process.env.MC_SERVER_IP}/whitelist/remove`, {
+      method: "POST",
+      body: interaction.message.embeds[0].author?.name
+    })
+      .then((res) => interaction.message.delete())
+      .catch((e) => globalErrorHandler(e));
+  } catch (e) {
+    globalErrorHandler(e);
+  }
 }
 export async function whitelistPlayer(message: Message) {
-  const playerInfo = await fetch(
-    `https://playerdb.co/api/player/minecraft/${message.content}`
-  ).then((res) => res.json());
-  console.log(playerInfo);
+  try {
+    const playerInfo = await fetch(
+      `https://playerdb.co/api/player/minecraft/${message.content}`
+    ).then((res) => res.json());
 
-  if (playerInfo) {
-    const author = message.author;
-    let isValid = false;
-    switch (playerInfo.code) {
-      case "player.found":
-        const username = playerInfo.data.player.username;
-        const uuid = playerInfo.data.player.raw_id;
-        (message.channel as TextChannel).send(
-          getWhitelistEmbed(message.author, playerInfo)
-        );
-        message.delete();
-        break;
-      case "minecraft.invalid_username":
-        message.reply(getFailedWhitelistEmbed(author));
-        message.delete();
-        break;
+    if (playerInfo) {
+      const author = message.author;
+      switch (playerInfo.code) {
+        case "player.found":
+          fetch(`${process.env.MC_SERVER_IP}/whitelist/add`, {
+            method: "POST",
+            body: `${message.author.displayName}|${playerInfo.data.player.username}`
+          }).then((res) => {
+            (message.channel as TextChannel).send(
+              // @ts-ignore
+              getWhitelistEmbed(message.author, playerInfo)
+            );
+          });
+          // message.delete();
+          break;
+        case "minecraft.invalid_username":
+          // @ts-ignore
+          message.reply(getFailedWhitelistEmbed(author));
+          message.delete();
+          break;
 
-      default:
-        break;
+        default:
+          break;
+      }
     }
+
+    return;
+  } catch (e) {
+    globalErrorHandler(e);
   }
-
-  return;
-  const bodyContent = `${message.author.displayName}|${message.content}`;
-
-  console.log(bodyContent);
-  const _message = await fetch("http://127.0.0.1:3001/whitelist", {
-    method: "POST",
-    body: bodyContent
-    // headers: { "Content-Type": "application/json" }
-  });
 }
 
+let firstUpdate = true;
+let updateString = "";
+let lastUpdateString = "🟢 Minecraft 0 / 20";
+let minutes = 5;
+const minecraftCategoryId = "1466784362224816314";
 async function handleServerEvent(event: any, res: any) {
+  const eventChannelId = await getChannelId(event);
+  const channel = client.channels.cache.get(eventChannelId);
+  const category = client.channels.cache.get(minecraftCategoryId);
   try {
-    const eventChannelId = await getChannelId(event);
-    const channel = client.channels.cache.get(eventChannelId);
-
     switch (event.name) {
       case "PlayerJoinEvent":
       case "PlayerQuitEvent":
         (channel as TextChannel).send(getConnectionEmbed(event));
+        updateString = `🟢 Minecraft ${event.player_count} / 20`;
         break;
 
       case "ChatEvent":
@@ -182,13 +180,31 @@ async function handleServerEvent(event: any, res: any) {
       case "ServerStart":
       case "ServerStop":
         (channel as TextChannel).send(getServerStatusEmbed(event));
+        updateString =
+          event.name === "ServerStart" ? "🟢 Minecraft 0 / 20" : "🔴 Minecraft";
         break;
 
       default:
         break;
     }
+
+    if (firstUpdate) {
+      firstUpdate = false;
+      startTimer();
+    }
     res.send("OK");
   } catch (e) {
     globalErrorHandler(e);
+  }
+  function startTimer() {
+    setInterval(() => {
+      minutes += 1;
+
+      if (minutes >= 5 && updateString != lastUpdateString) {
+        (category as TextChannel).setName(updateString);
+        lastUpdateString = updateString;
+        minutes = 0;
+      }
+    }, 5 * 60 * 1000);
   }
 }
