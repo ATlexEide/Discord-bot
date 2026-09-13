@@ -53,7 +53,6 @@ export function startServer() {
   app.use(cors());
 
   app.use(express.static(path.join(import.meta.dirname, "public")));
-  app.use(express.json());
 
   app.get("/members", async (req: any, res: any) => {
     // const guild = client.guilds.cache.get("1440456875320807576");
@@ -75,7 +74,7 @@ export function startServer() {
     }
   });
 
-  app.get("/mc/chat", async (req: any, res: any) => {
+  app.post("/mc/chat", async (req: any, res: any) => {
     const event = await req.body;
     res.send("HMMMMM");
     return;
@@ -87,6 +86,8 @@ export function startServer() {
 
     res.json({ status: "OK", message: "yipp" });
   });
+
+  app.use(express.json());
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
