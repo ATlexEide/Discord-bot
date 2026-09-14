@@ -205,7 +205,7 @@ async function handleServerEvent(event: any, res: any) {
         (category as TextChannel).setName(updateString);
         lastUpdateString = updateString;
         minutes = 0;
-      } else if (minutes >= 5 && updateString === lastUpdateString) {
+      } else if (minutes > 5 && updateString === lastUpdateString) {
         console.log("No updates in 5 minutes, pausing check");
         firstUpdate = true;
         clearInterval(timer);
