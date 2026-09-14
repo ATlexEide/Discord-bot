@@ -22,6 +22,7 @@ import {
   getFailedWhitelistEmbed,
   getWhitelistEmbed
 } from "../minecraft/event_embeds/whitelistEmbed.js";
+import { getDeathEmbed } from "../minecraft/event_embeds/deathEmbed.js";
 
 let channels = {
   minecraft_server: {
@@ -158,7 +159,7 @@ export async function whitelistPlayer(message: Message) {
 let firstUpdate = true;
 let updateString = "";
 let lastUpdateString = "🟢 Minecraft 0 / 20";
-let minutes = 5;
+let minutes = 0;
 const minecraftCategoryId = "1547254845981859880";
 async function handleServerEvent(event: any, res: any) {
   const eventChannelId = await getChannelId(event);
@@ -166,6 +167,9 @@ async function handleServerEvent(event: any, res: any) {
   const category = client.channels.cache.get(minecraftCategoryId);
   try {
     switch (event.name) {
+      case "PlayerDeathEvent":
+        (channel as TextChannel).send(getDeathEmbed(event));
+        break;
       case "PlayerJoinEvent":
       case "PlayerQuitEvent":
         (channel as TextChannel).send(getConnectionEmbed(event));
