@@ -196,14 +196,18 @@ async function handleServerEvent(event: any, res: any) {
     globalErrorHandler(e);
   }
   function startTimer() {
-    setInterval(() => {
-      minutes += 5;
+    const timer = setInterval(() => {
+      minutes += 1;
 
       if (minutes >= 5 && updateString != lastUpdateString) {
         (category as TextChannel).setName(updateString);
         lastUpdateString = updateString;
         minutes = 0;
+      } else if (minutes >= 5 && updateString === lastUpdateString) {
+        console.log("No updates in 5 minutes, pausing check");
+        firstUpdate = true;
+        clearInterval(timer);
       }
-    }, 5 * 60 * 1000);
+    }, 1 * 60 * 1000);
   }
 }
