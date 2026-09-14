@@ -196,6 +196,7 @@ async function handleServerEvent(event: any, res: any) {
     globalErrorHandler(e);
   }
   function startTimer() {
+    (category as TextChannel).setName(updateString);
     const timer = setInterval(() => {
       minutes += 1;
 
