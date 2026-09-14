@@ -197,7 +197,7 @@ async function handleServerEvent(event: any, res: any) {
   }
   function startTimer() {
     (category as TextChannel).setName(updateString);
-    console.log("New event, checking for updates in 5 minutes");
+    console.log("Status changed, checking again in 5 minutes");
     const timer = setInterval(() => {
       minutes += 1;
 
@@ -206,7 +206,7 @@ async function handleServerEvent(event: any, res: any) {
         lastUpdateString = updateString;
         minutes = 0;
       } else if (minutes > 5 && updateString === lastUpdateString) {
-        console.log("No updates in 5 minutes, pausing check");
+        console.log("No status change, pausing check");
         firstUpdate = true;
         clearInterval(timer);
       }
