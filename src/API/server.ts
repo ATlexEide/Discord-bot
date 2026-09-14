@@ -197,6 +197,7 @@ async function handleServerEvent(event: any, res: any) {
   }
   function startTimer() {
     (category as TextChannel).setName(updateString);
+    console.log("New event, checking for updates in 5 minutes");
     const timer = setInterval(() => {
       minutes += 1;
 
