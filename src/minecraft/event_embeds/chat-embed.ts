@@ -1,6 +1,7 @@
 export function getChatEmbed(event: any) {
-  console.log(removeColorCode(event.player.includes("§")));
-  console.log(removeColorCode(event.player));
+  console.log(event.player.includes("§"));
+  console.log(typeof event.player);
+  // console.log(removeColorCode(event.player));
   // const username = event.player.includes("§")
   //   ? removeColorCode(event.player)
   //   : event.player;
