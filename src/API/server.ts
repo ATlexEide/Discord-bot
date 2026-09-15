@@ -170,6 +170,7 @@ async function handleServerEvent(event: any, res: any) {
         break;
 
       case "ChatEvent":
+        // @ts-ignore
         (channel as TextChannel).send(getChatEmbed(event));
         break;
 
