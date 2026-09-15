@@ -1,16 +1,15 @@
-import { EmbedBuilder } from "@discordjs/builders";
-
 export function getChatEmbed(event: any) {
+  if (event.player.contains("§")) event.player = removeColorCode(event.player);
+
   const date = new Date();
   const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
   const minutes =
     date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
 
-  const chatEmbed = new EmbedBuilder().setAuthor({
-    name: `[${hours}:${minutes}]  <${event.player}>  ${event.messsage}`,
-    iconURL: `https://minotar.net/avatar/${event.player}.png`
-  });
-  ///// Keep just in case i decide to use it later for whatever reason
-  //   return { embeds: [chatEmbed] };
   return `[${hours}:${minutes}]  <${event.player}>  ${event.message}`;
+}
+
+function removeColorCode(name: any) {
+  let regex = /§(.)/g;
+  return name.replaceAll(regex, "");
 }
