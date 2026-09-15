@@ -13,3 +13,4 @@ function removeColorCode(name: any) {
   let regex = /§(.)/g;
   return name.replaceAll(regex, "");
 }
+// comment
