@@ -1,6 +1,6 @@
 export function getChatEmbed(event: any) {
-  console.log(event.player.includes("§"));
-  console.log(typeof event.player);
+  // console.log(event.player.includes("§"));
+  // console.log(typeof event.player);
   // console.log(removeColorCode(event.player));
   // const username = event.player.includes("§")
   //   ? removeColorCode(event.player)
@@ -15,7 +15,7 @@ export function getChatEmbed(event: any) {
   return `[${hours}:${minutes}]  <${username}>  ${event.message}`;
 }
 
-function removeColorCode(name: any) {
+function removeColorCode(name: string) {
   let regex = /§(.)/g;
   return name.replace(regex, "");
 }
