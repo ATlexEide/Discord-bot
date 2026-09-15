@@ -110,6 +110,17 @@ export function removeWhitelist(id: string, interaction: ButtonInteraction) {
     globalErrorHandler(e);
   }
 }
+
+function formatDiscordName(name: string) {
+  const arr = name.split("");
+  arr[0] = arr[0].toUpperCase();
+  const str = arr
+    .join("")
+    .replace(/\s+([a-zA-Z])/g, (_, letter) => letter.toUpperCase());
+
+  return str;
+}
+
 export async function whitelistPlayer(message: Message) {
   const _message = message.content.split(" ").join();
   try {
@@ -121,9 +132,13 @@ export async function whitelistPlayer(message: Message) {
       const author = message.author;
       switch (playerInfo.code) {
         case "player.found":
+          const username = message.author.displayName.includes(" ")
+            ? formatDiscordName(message.author.displayName)
+            : message.author.displayName;
+
           fetch(`http://${process.env.MC_SERVER_IP}/whitelist/add`, {
             method: "POST",
-            body: `${message.author.displayName}|${playerInfo.data.player.username}`
+            body: `${username}|${playerInfo.data.player.username}`
           }).then((res) => {
             (message.channel as TextChannel).send(
               getWhitelistEmbed(message.author, playerInfo)
