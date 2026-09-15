@@ -3,15 +3,7 @@ import { fetchEvents } from "./utils/fetchEvents.js";
 import path from "node:path";
 
 import { client, globalErrorHandler } from "../main.js";
-import {
-  ButtonInteraction,
-  escapeSpoiler,
-  Guild,
-  Interaction,
-  Message,
-  MessageFlags,
-  TextChannel
-} from "discord.js";
+import { ButtonInteraction, Guild, Message, TextChannel } from "discord.js";
 import { fetchMembers } from "./utils/fetchMembers.js";
 import cors from "cors";
 import { getChannelId } from "../utils/DB.js";
@@ -163,6 +155,7 @@ let minutes = 0;
 const minecraftCategoryId = "1547254845981859880";
 async function handleServerEvent(event: any, res: any) {
   const eventChannelId = await getChannelId(event);
+  // @ts-expect-error
   const channel = client.channels.cache.get(eventChannelId);
   const category = client.channels.cache.get(minecraftCategoryId);
   try {
