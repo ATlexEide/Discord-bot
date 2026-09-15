@@ -1,9 +1,10 @@
 import { EmbedBuilder } from "@discordjs/builders";
+import { removeColorCode } from "./chat-embed.js";
 
 export function getConnectionEmbed(event: any) {
   const chatEmbed = new EmbedBuilder()
     .setAuthor({
-      name: event.player,
+      name: removeColorCode(event.player),
       iconURL: `https://mineskin.eu/avatar/${event.player_uuid}`
     })
     .setTitle(

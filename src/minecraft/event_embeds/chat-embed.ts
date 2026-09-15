@@ -19,7 +19,7 @@ export function getChatFormat(event: any): string {
   }
   return formatted;
 }
-function removeColorCode(name: string) {
+export function removeColorCode(name: string) {
   if (!name.includes("§")) return name;
   let regex = /§(.)/g;
   return name.replace(regex, "");
