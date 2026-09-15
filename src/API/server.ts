@@ -204,6 +204,7 @@ async function handleServerEvent(event: any, res: any) {
     console.log("Status changed, checking again in 5 minutes");
     lastUpdateString = updateString;
     const timer = setInterval(() => {
+      if (!updateString) return;
       minutes += 1;
 
       if (minutes >= 5 && updateString != lastUpdateString) {
