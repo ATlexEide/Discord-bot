@@ -137,16 +137,20 @@ export const dbClient = createClient({
 });
 
 (async function syncChannelIds() {
-  if (dbClient.closed) dbClient.reconnect();
-  const result = await dbClient
-    .execute(
-      `SELECT * FROM guild_channels WHERE guild_id = 1440456875320807576 `
-    )
-    .then((res) => res.rows);
-  // @ts-ignore
-  channel_ids.chat_channel_id = result[0].chat_channel_id;
-  // @ts-ignore
-  channel_ids.log_channel_id = result[0].log_channel_id;
-  // @ts-ignore
-  channel_ids.whitelist_channel_id = result[0].whitelist_channel_id;
+  try {
+    if (dbClient.closed) dbClient.reconnect();
+    const result = await dbClient
+      .execute(
+        `SELECT * FROM guild_channels WHERE guild_id = 1440456875320807576 `
+      )
+      .then((res) => res.rows);
+    // @ts-ignore
+    channel_ids.chat_channel_id = result[0].chat_channel_id;
+    // @ts-ignore
+    channel_ids.log_channel_id = result[0].log_channel_id;
+    // @ts-ignore
+    channel_ids.whitelist_channel_id = result[0].whitelist_channel_id;
+  } catch (e) {
+    globalErrorHandler(e);
+  }
 })();
