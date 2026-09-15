@@ -7,7 +7,7 @@ import { ButtonInteraction, Guild, Message, TextChannel } from "discord.js";
 import { fetchMembers } from "./utils/fetchMembers.js";
 import cors from "cors";
 import { getChannelId } from "../utils/DB.js";
-import { getChatEmbed } from "../minecraft/event_embeds/chat-embed.js";
+import { getChatFormat } from "../minecraft/event_embeds/chat-embed.js";
 import { getConnectionEmbed } from "../minecraft/event_embeds/connection-embed.js";
 import { getServerStatusEmbed } from "../minecraft/event_embeds/serverstatus-embed.js";
 import {
@@ -125,7 +125,6 @@ export async function whitelistPlayer(message: Message) {
             body: `${message.author.displayName}|${playerInfo.data.player.username}`
           }).then((res) => {
             (message.channel as TextChannel).send(
-              // @ts-ignore
               getWhitelistEmbed(message.author, playerInfo)
             );
           });
@@ -155,7 +154,6 @@ let minutes = 0;
 const minecraftCategoryId = "1547254845981859880";
 async function handleServerEvent(event: any, res: any) {
   const eventChannelId = await getChannelId(event);
-  // @ts-expect-error
   const channel = client.channels.cache.get(eventChannelId);
   const category = client.channels.cache.get(minecraftCategoryId);
   try {
@@ -170,8 +168,7 @@ async function handleServerEvent(event: any, res: any) {
         break;
 
       case "ChatEvent":
-        // @ts-ignore
-        (channel as TextChannel).send(getChatEmbed(event));
+        (channel as TextChannel).send(getChatFormat(event));
         break;
 
       case "ServerStart":

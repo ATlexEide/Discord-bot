@@ -1,9 +1,18 @@
 import { EmbedBuilder } from "@discordjs/builders";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import {
+  ActionRowBuilder,
+  AnyComponentBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  MessageCreateOptions
+} from "discord.js";
 
-export function getWhitelistEmbed(author: any, playerInfo: any) {
+export function getWhitelistEmbed(
+  author: any,
+  playerInfo: any
+): MessageCreateOptions {
   const chatEmbed = new EmbedBuilder();
-  const row = new ActionRowBuilder();
+  const row = new ActionRowBuilder<ButtonBuilder>();
 
   const removeWhitelistBtn = new ButtonBuilder()
     .setCustomId(`whitelist-remove-${author.id}`)

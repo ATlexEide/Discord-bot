@@ -1,6 +1,7 @@
 import { globalErrorHandler } from "../../main.js";
 
-export function getChatEmbed(event: any) {
+export function getChatFormat(event: any): string {
+  let formatted = "";
   try {
     const username = event.player;
     const date = new Date();
@@ -9,8 +10,17 @@ export function getChatEmbed(event: any) {
     const minutes =
       date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
 
-    return `[${hours}:${minutes}]  <${username}>  ${event.message}`;
+    formatted = `[${hours}:${minutes}]  <${removeColorCode(username)}>  ${
+      event.message
+    }`;
+    return formatted;
   } catch (e) {
     globalErrorHandler(e);
   }
+  return formatted;
+}
+function removeColorCode(name: string) {
+  if (!name.includes("§")) return name;
+  let regex = /§(.)/g;
+  return name.replace(regex, "");
 }
