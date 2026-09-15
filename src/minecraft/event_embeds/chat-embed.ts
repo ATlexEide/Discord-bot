@@ -15,7 +15,7 @@ export function getChatEmbed(event: any) {
   return `[${hours}:${minutes}]  <${username}>  ${event.message}`;
 }
 
-function removeColorCode(name: string) {
-  let regex = /§(.)/g;
-  return name.replace(regex, "");
-}
+// function removeColorCode(name: string) {
+//   let regex = /§(.)/g;
+//   return name.replace(regex, "");
+// }
