@@ -16,5 +16,5 @@ export function getChatEmbed(event: any) {
 
 function removeColorCode(name: any) {
   let regex = /§(.)/g;
-  return name.replaceAll(regex, "");
+  return name.replace(regex, "");
 }
