@@ -1,9 +1,10 @@
 export function getChatEmbed(event: any) {
   console.log(event);
-  const username = event.player.includes("§")
-    ? removeColorCode(event.player)
-    : event.player;
+  // const username = event.player.includes("§")
+  //   ? removeColorCode(event.player)
+  //   : event.player;
 
+  const username = event.player;
   const date = new Date();
   const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
   const minutes =
@@ -12,8 +13,8 @@ export function getChatEmbed(event: any) {
   return `[${hours}:${minutes}]  <${username}>  ${event.message}`;
 }
 
-function removeColorCode(name: any) {
-  let regex = /§(.)/g;
-  return name.replaceAll(regex, "");
-}
+// function removeColorCode(name: any) {
+//   let regex = /§(.)/g;
+//   return name.replaceAll(regex, "");
+// }
 // comment
