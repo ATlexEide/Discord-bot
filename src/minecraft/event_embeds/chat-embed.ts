@@ -1,5 +1,6 @@
 export function getChatEmbed(event: any) {
-  if (event.player.includes("§")) event.player = removeColorCode(event.player);
+  console.log(event);
+  // if (event.player.includes("§")) event.player = removeColorCode(event.player);
 
   const date = new Date();
   const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
