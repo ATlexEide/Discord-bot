@@ -83,7 +83,7 @@ export function startServer() {
 
   app.get("/mc/status", async (req: any, res: any) => {
     try {
-      fetch(`http://${process.env.MC_SERVER_IP}/status`)
+      fetch(`https://${process.env.MC_SERVER_IP}/status`)
         .then((r) => r.json())
         .then((r) => res.send(r));
     } catch (e) {
@@ -99,7 +99,7 @@ export function startServer() {
 export async function sendMcMessage(message: Message) {
   const bodyContent = `[Discord]<${message.author.displayName}> ${message.content}`;
 
-  const _message = await fetch(`http://${process.env.MC_SERVER_IP}/chat`, {
+  const _message = await fetch(`https://${process.env.MC_SERVER_IP}/chat`, {
     method: "POST",
     body: bodyContent
     // headers: { "Content-Type": "application/json" }
@@ -107,7 +107,7 @@ export async function sendMcMessage(message: Message) {
 }
 export function removeWhitelist(id: string, interaction: ButtonInteraction) {
   try {
-    fetch(`http://${process.env.MC_SERVER_IP}/whitelist/remove`, {
+    fetch(`https://${process.env.MC_SERVER_IP}/whitelist/remove`, {
       method: "POST",
       body: interaction.message.embeds[0].author?.name
     })
@@ -128,7 +128,7 @@ export async function whitelistPlayer(message: Message) {
       const author = message.author;
       switch (playerInfo.code) {
         case "player.found":
-          fetch(`http://${process.env.MC_SERVER_IP}/whitelist/add`, {
+          fetch(`https://${process.env.MC_SERVER_IP}/whitelist/add`, {
             method: "POST",
             body: `${message.author.displayName}|${playerInfo.data.player.username}`
           }).then((res) => {
