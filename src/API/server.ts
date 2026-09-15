@@ -149,7 +149,7 @@ export async function whitelistPlayer(message: Message) {
 }
 
 let firstUpdate = true;
-let updateString = "";
+let updateString = "🟢 Minecraft 0 / 20";
 let lastUpdateString = "🟢 Minecraft 0 / 20";
 let minutes = 0;
 const minecraftCategoryId = "1547254845981859880";
@@ -193,9 +193,9 @@ async function handleServerEvent(event: any, res: any) {
     globalErrorHandler(e);
   }
   function startTimer() {
-    (category as TextChannel).setName(updateString);
-    console.log("Status changed, checking again in 5 minutes");
     lastUpdateString = updateString;
+    (category as TextChannel).setName(lastUpdateString);
+    console.log("Status changed, checking again in 5 minutes");
     const timer = setInterval(() => {
       if (!updateString) return;
       minutes += 1;
